@@ -6,7 +6,6 @@ import com.iagora.wingman.auth.otp.domain.model.OTPResponse
 fun OTPResponseDTO.toOTPResponse(): OTPResponse {
     return OTPResponse(
         status = status,
-        code = code,
         message = message
     )
 }
@@ -14,7 +13,6 @@ fun OTPResponseDTO.toOTPResponse(): OTPResponse {
 fun OTPResponse.toOTPResponseDTO(): OTPResponseDTO {
     return OTPResponseDTO(
         status = status,
-        code = code,
         message = message
     )
 }

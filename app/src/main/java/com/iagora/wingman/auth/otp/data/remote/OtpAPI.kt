@@ -10,7 +10,6 @@ import retrofit2.http.POST
 interface OtpAPI {
     @POST("/api/v1/wingman/send-otp-wingman")
     suspend fun requestOTP(
-        @Header(Constants.AUTH_KEY) auth: String,
         @Body phoneNumber: OTPPhoneNumberDTO,
     ): OTPResponseDTO
 }

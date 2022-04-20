@@ -17,18 +17,14 @@ import java.io.IOException
 import java.net.UnknownHostException
 
 class OTPRepositoryImpl(private val otpAPI: OtpAPI) : OTPRepository {
-    override suspend fun postOTP(ssid: String?, phoneNumber: String): Flow<Resource<OTPResponse>> {
+    override suspend fun postOTP(phoneNumber: String): Flow<Resource<OTPResponse>> {
         return flow {
             val requestPhoneNumber = OTPPhoneNumber(phoneNumber).toOTPPhoneNumberDTO()
 
             try {
-                if (ssid.isNullOrEmpty()) {
-                    val sendOTP = otpAPI.requestOTP(ssid ?: "", requestPhoneNumber)
+                val sendOTP = otpAPI.requestOTP(requestPhoneNumber)
 
-                    emit(Resource.Success(sendOTP.toOTPResponse()))
-                } else {
-                    emit(Resource.Error(UIText.DynamicString("SESSID Not Found")))
-                }
+                emit(Resource.Success(sendOTP.toOTPResponse()))
             } catch (e: HttpException) {
                 Timber.e(e.message())
                 emit(

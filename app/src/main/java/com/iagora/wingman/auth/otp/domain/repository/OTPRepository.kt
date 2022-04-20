@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
 interface OTPRepository {
-    suspend fun postOTP(ssid: String?, phoneNumber: String): Flow<Resource<OTPResponse>>
+    suspend fun postOTP(phoneNumber: String): Flow<Resource<OTPResponse>>
 }
