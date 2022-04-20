@@ -10,8 +10,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.iagora.wingman.auth.ssid.presentation.WingmanSSIDViewModel
 import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,7 +33,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, wingmanSSIDViewModel: WingmanSSIDViewModel = hiltViewModel()) {
+fun Greeting(name: String) {
     Text(text = "Hello $name!")
 }
 
