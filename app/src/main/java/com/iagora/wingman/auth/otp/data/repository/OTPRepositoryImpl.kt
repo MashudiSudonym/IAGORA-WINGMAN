@@ -5,7 +5,7 @@ import com.iagora.wingman.auth.otp.data.mapper.toOTPPhoneNumberDTO
 import com.iagora.wingman.auth.otp.data.mapper.toOTPResponse
 import com.iagora.wingman.auth.otp.data.remote.OtpAPI
 import com.iagora.wingman.auth.otp.domain.model.OTPPhoneNumber
-import com.iagora.wingman.auth.otp.domain.model.OTPResponse
+import com.iagora.wingman.auth.otp.domain.model.SendOTPResponse
 import com.iagora.wingman.auth.otp.domain.repository.OTPRepository
 import com.iagora.wingman.common.util.Resource
 import com.iagora.wingman.common.util.UIText
@@ -17,7 +17,7 @@ import java.io.IOException
 import java.net.UnknownHostException
 
 class OTPRepositoryImpl(private val otpAPI: OtpAPI) : OTPRepository {
-    override suspend fun postOTP(phoneNumber: String): Flow<Resource<OTPResponse>> {
+    override suspend fun sendOTP(phoneNumber: String): Flow<Resource<SendOTPResponse>> {
         return flow {
             val requestPhoneNumber = OTPPhoneNumber(phoneNumber).toOTPPhoneNumberDTO()
 

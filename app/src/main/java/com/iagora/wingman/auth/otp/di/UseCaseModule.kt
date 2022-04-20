@@ -1,7 +1,7 @@
 package com.iagora.wingman.auth.otp.di
 
 import com.iagora.wingman.auth.otp.domain.repository.OTPRepository
-import com.iagora.wingman.auth.otp.domain.use_case.post_otp_use_case.PostOTPUseCase
+import com.iagora.wingman.auth.otp.domain.use_case.send_otp_use_case.SendOTPUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,9 +13,9 @@ import javax.inject.Singleton
 object UseCaseModule {
     @Provides
     @Singleton
-    fun providePostOTPUseCase(
+    fun provideSendOTPUseCase(
         otpRepository: OTPRepository
-    ): PostOTPUseCase {
-        return PostOTPUseCase(otpRepository)
+    ): SendOTPUseCase {
+        return SendOTPUseCase(otpRepository)
     }
 }
