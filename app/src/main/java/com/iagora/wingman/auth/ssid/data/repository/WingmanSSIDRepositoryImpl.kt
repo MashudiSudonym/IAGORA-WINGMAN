@@ -19,7 +19,7 @@ class WingmanSSIDRepositoryImpl(private val wingmanSSIDAPI: WingmanSSIDAPI) :
         return flow {
             try {
                 // get sessid from header response
-                val sessid = wingmanSSIDAPI.getWingmanSSID(Constants.AUTH_KEY)
+                val sessid = wingmanSSIDAPI.getWingmanSSID(Constants.AUTH_VALUE)
                     .headers()[Constants.SESSID]
 
                 Timber.d(sessid)

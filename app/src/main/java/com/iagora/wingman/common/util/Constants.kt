@@ -10,4 +10,5 @@ object Constants {
     const val AUTH_KEY = "auth"
     const val AUTH_VALUE = "ini rahasia"
     const val SESSID = "sessid"
+
 }
