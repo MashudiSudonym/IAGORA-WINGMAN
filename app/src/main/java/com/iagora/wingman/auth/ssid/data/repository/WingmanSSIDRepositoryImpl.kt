@@ -24,22 +24,22 @@ class WingmanSSIDRepositoryImpl(private val wingmanSSIDAPI: WingmanSSIDAPI) :
 
                 Timber.d(sessid)
 
-                Resource.Success(sessid)
+                emit(Resource.Success(sessid))
             } catch (e: HttpException) {
                 Timber.e(e.message())
-                Resource.Error(
-                    message = UIText.StringResource(R.string.internet_problem),
-                    data = null
-                )
+                emit(Resource.Error(
+                    message = UIText.StringResource(R.string.internet_problem)
+                ))
             } catch (e: IOException) {
                 Timber.e(e)
-                Resource.Error(
-                    message = UIText.StringResource(R.string.internet_problem),
-                    data = null
-                )
+                emit(Resource.Error(
+                    message = UIText.StringResource(R.string.internet_problem)
+                ))
             } catch (e: UnknownHostException) {
                 Timber.e(e)
-                Resource.Error(message = UIText.StringResource(R.string.error_unknown), data = null)
+                emit(Resource.Error(
+                    message = UIText.StringResource(R.string.error_unknown)
+                ))
             }
         }
     }
