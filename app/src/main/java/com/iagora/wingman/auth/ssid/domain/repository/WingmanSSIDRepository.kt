@@ -5,5 +5,5 @@ import com.iagora.wingman.common.util.SimpleResource
 import kotlinx.coroutines.flow.Flow
 
 interface WingmanSSIDRepository {
-    suspend fun getWingmanSSID(): Flow<Resource<String>>
+    suspend fun getWingmanSSID(): String
 }

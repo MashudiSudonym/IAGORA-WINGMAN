@@ -15,32 +15,20 @@ import java.net.UnknownHostException
 
 class WingmanSSIDRepositoryImpl(private val wingmanSSIDAPI: WingmanSSIDAPI) :
     WingmanSSIDRepository {
-    override suspend fun getWingmanSSID(): Flow<Resource<String>> {
-        return flow {
-            try {
-                // get sessid from header response
-                val sessid = wingmanSSIDAPI.getWingmanSSID(Constants.AUTH_VALUE)
-                    .headers()[Constants.SESSID]
-
-                Timber.d(sessid)
-
-                emit(Resource.Success(sessid))
-            } catch (e: HttpException) {
-                Timber.e(e.message())
-                emit(Resource.Error(
-                    message = UIText.StringResource(R.string.internet_problem)
-                ))
-            } catch (e: IOException) {
-                Timber.e(e)
-                emit(Resource.Error(
-                    message = UIText.StringResource(R.string.internet_problem)
-                ))
-            } catch (e: UnknownHostException) {
-                Timber.e(e)
-                emit(Resource.Error(
-                    message = UIText.StringResource(R.string.error_unknown)
-                ))
-            }
+    override suspend fun getWingmanSSID(): String? {
+        return try {
+            // get sessid from header response
+            wingmanSSIDAPI.getWingmanSSID(Constants.AUTH_VALUE)
+                .headers()[Constants.SESSID].toString()
+        } catch (e: HttpException) {
+            Timber.e(e.message())
+            null
+        } catch (e: IOException) {
+            Timber.e(e)
+            null
+        } catch (e: UnknownHostException) {
+            Timber.e(e)
+            null
         }
     }
 }
