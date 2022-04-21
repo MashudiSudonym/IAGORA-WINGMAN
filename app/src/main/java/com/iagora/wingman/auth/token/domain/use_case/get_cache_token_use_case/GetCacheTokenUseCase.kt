@@ -5,7 +5,6 @@ import com.iagora.wingman.auth.token.domain.repository.TokenDataStorePreferences
 class GetCacheTokenUseCase(private val tokenDataStorePreferencesRepository: TokenDataStorePreferencesRepository) {
     suspend operator fun invoke(): String {
         val result = tokenDataStorePreferencesRepository.getToken()
-        val token = result.getOrNull().orEmpty()
-        return token
+        return result.getOrNull().orEmpty()
     }
 }

@@ -9,6 +9,8 @@
         <entry key="app/src/main/res/drawable/ic_add_24.xml" value="0.115" />
         <entry key="app/src/main/res/drawable/ic_arrow_left_red.xml" value="0.101" />
         <entry key="app/src/main/res/drawable/ic_arrow_right_shimmer.xml" value="0.101" />
+        <entry key="app/src/main/res/drawable/ic_background_home.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_home.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_info_mini.xml" value="0.115" />
         <entry key="app/src/main/res/drawable/ic_location_on.xml" value="0.101" />
         <entry key="app/src/main/res/drawable/ic_scale_23.xml" value="0.115" />

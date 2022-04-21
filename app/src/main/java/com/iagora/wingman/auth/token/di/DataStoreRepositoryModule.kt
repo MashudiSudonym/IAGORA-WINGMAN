@@ -6,6 +6,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.iagora.wingman.auth.token.data.repository.TokenDataStorePreferencesRepositoryImpl
 import com.iagora.wingman.auth.token.domain.repository.TokenDataStorePreferencesRepository
+import com.iagora.wingman.auth.user_id.data.repository.UserIdDataStorePreferencesRepositoryImpl
+import com.iagora.wingman.auth.user_id.domain.repository.UserIdDataStorePreferencesRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

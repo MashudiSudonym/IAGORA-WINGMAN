@@ -11,4 +11,5 @@ object Constants {
     const val X_REFRESH_TOKEN = "x-refresh-token"
     const val BEARER = "Bearer"
     val TOKEN = stringPreferencesKey(name = "x-token")
+    val USERID = stringPreferencesKey(name = "wingmanId")
 }
