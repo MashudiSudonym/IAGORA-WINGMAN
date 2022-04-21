@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../../../layout/compose-model-1650552531369.xml" value="0.3194444444444444" />
+        <entry key="app/src/main/res/drawable/bg_tab.xml" value="0.115" />
+        <entry key="app/src/main/res/drawable/border_bottom.xml" value="0.115" />
+        <entry key="app/src/main/res/drawable/ic_add_24.xml" value="0.115" />
+        <entry key="app/src/main/res/drawable/ic_arrow_left_red.xml" value="0.101" />
+        <entry key="app/src/main/res/drawable/ic_arrow_right_shimmer.xml" value="0.101" />
+        <entry key="app/src/main/res/drawable/ic_info_mini.xml" value="0.115" />
+        <entry key="app/src/main/res/drawable/ic_location_on.xml" value="0.101" />
+        <entry key="app/src/main/res/drawable/ic_scale_23.xml" value="0.115" />
+        <entry key="app/src/main/res/drawable/ic_search.xml" value="0.101" />
+        <entry key="app/src/main/res/drawable/ic_star_rate.xml" value="0.101" />
+        <entry key="app/src/main/res/drawable/ic_user.xml" value="0.115" />
+        <entry key="app/src/main/res/drawable/ic_user_active.xml" value="0.115" />
+        <entry key="app/src/main/res/drawable/ic_warning_order.xml" value="0.115" />
+        <entry key="app/src/main/res/drawable/icon_bottom_nav_home.xml" value="0.115" />
+        <entry key="app/src/main/res/drawable/icon_bottom_nav_profil.xml" value="0.115" />
+        <entry key="app/src/main/res/drawable/ripple_item_for_white_background.xml" value="0.115" />
+        <entry key="app/src/main/res/drawable/shape_half_horizontal_rounded_red.xml" value="0.115" />
+        <entry key="app/src/main/res/drawable/strike_line.xml" value="0.115" />
+        <entry key="app/src/main/res/drawable/track_switch.xml" value="0.115" />
+        <entry key="app/src/main/res/drawable/unselector_tab.xml" value="0.115" />
+        <entry key="app/src/main/res/font/poppins.xml" value="0.11927083333333334" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
