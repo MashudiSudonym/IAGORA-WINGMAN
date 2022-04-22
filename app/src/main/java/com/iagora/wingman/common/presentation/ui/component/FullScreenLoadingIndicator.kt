@@ -17,7 +17,7 @@ import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
 fun FullScreenLoadingIndicator() {
     Column(
         modifier = Modifier
-            .background(color = Color.Black.copy(alpha = 0.6f))
+            .background(color = Color.Black)
             .fillMaxSize()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,

@@ -20,8 +20,8 @@ import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndi
 import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
 import com.ramcosta.composedestinations.annotation.Destination
 
-@Composable
 @Destination
+@Composable
 fun InputOTPCodeScreen() {
     Box {
 //        FullScreenLoadingIndicator()

@@ -4,24 +4,21 @@ import com.iagora.wingman.auth.credential.domain.repository.CredentialDataStoreP
 import com.iagora.wingman.common.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import timber.log.Timber
 
 class IsAuthenticatedUseCase(private val credentialDataStorePreferencesRepository: CredentialDataStorePreferencesRepository) {
     suspend operator fun invoke(): Flow<Resource<Boolean>> {
         val getCacheToken = credentialDataStorePreferencesRepository.getToken()
         val getCacheUserId = credentialDataStorePreferencesRepository.getUserId()
 
-        return if (getCacheToken.getOrDefault("").isNotEmpty() && getCacheUserId.getOrDefault("").isNotEmpty()) {
-            flow {
-                emit(Resource.Loading(true))
-                emit(Resource.Success(true))
-                emit(Resource.Loading(false))
-            }
-        } else {
-            flow {
-                emit(Resource.Loading(true))
-                emit(Resource.Success(false))
-                emit(Resource.Loading(false))
-            }
+        return if (getCacheToken.getOrDefault("").isEmpty() && getCacheUserId.getOrDefault("").isEmpty()) flow {
+            emit(Resource.Loading(true))
+            emit(Resource.Success(false))
+            emit(Resource.Loading(false))
+        } else flow {
+            emit(Resource.Loading(true))
+            emit(Resource.Success(true))
+            emit(Resource.Loading(false))
         }
     }
 }

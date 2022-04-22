@@ -20,9 +20,10 @@ import com.iagora.wingman.R
 import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicator
 import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@Composable
 @Destination
+@Composable
 fun InputPhoneNumberWithApplicationLogoScreen() {
     Box {
 //        FullScreenLoadingIndicator()
@@ -97,6 +98,6 @@ private fun InputPhoneNumberWithApplicationLogoContent() {
 @Composable
 fun InputPhoneNumberWithApplicationLogoScreenPreview() {
     WINGMANTheme {
-        InputPhoneNumberWithApplicationLogoScreen()
+//        InputPhoneNumberWithApplicationLogoScreen()
     }
 }
