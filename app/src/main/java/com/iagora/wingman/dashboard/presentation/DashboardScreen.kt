@@ -15,7 +15,7 @@ fun DashBoardScreen(navigator: DestinationsNavigator) {
 
 @Preview(showBackground = true)
 @Composable
-fun DashboardPreview() {
+fun DashboardScreenPreview() {
     WINGMANTheme {
 //        DashBoardScreen()
     }
