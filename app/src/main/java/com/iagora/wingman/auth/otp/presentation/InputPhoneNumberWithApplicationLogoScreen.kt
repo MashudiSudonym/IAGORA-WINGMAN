@@ -25,13 +25,13 @@ import com.ramcosta.composedestinations.annotation.Destination
 @Destination
 fun InputPhoneNumberWithApplicationLogoScreen() {
     Box {
-        FullScreenLoadingIndicator()
+//        FullScreenLoadingIndicator()
         InputPhoneNumberWithApplicationLogoContent()
     }
 }
 
 @Composable
-fun InputPhoneNumberWithApplicationLogoContent() {
+private fun InputPhoneNumberWithApplicationLogoContent() {
     // googling how to text field value work!
     var phoneNumberText by rememberSaveable {
         mutableStateOf("")

@@ -23,13 +23,13 @@ import com.ramcosta.composedestinations.annotation.Destination
 @Destination
 fun InputPhoneNumberScreen() {
     Box {
-        FullScreenLoadingIndicator()
+//        FullScreenLoadingIndicator()
         InputPhoneNumberContent()
     }
 }
 
 @Composable
-fun InputPhoneNumberContent() {
+private fun InputPhoneNumberContent() {
     // googling how to text field value work!
     var phoneNumberText by rememberSaveable {
         mutableStateOf("")
@@ -51,9 +51,9 @@ fun InputPhoneNumberContent() {
             }
             Text(text = "Pendaftaran WINGMAN", style = MaterialTheme.typography.h6)
         }
-        Spacer(Modifier.size(256.dp))
+        Spacer(modifier = Modifier.size(256.dp))
         Text(text = "Masukkan Nomor HP", style = MaterialTheme.typography.subtitle1)
-        Spacer(Modifier.size(8.dp))
+        Spacer(modifier = Modifier.size(8.dp))
         OutlinedTextField(
             value = phoneNumberText,
             onValueChange = { phoneNumberText = it },
