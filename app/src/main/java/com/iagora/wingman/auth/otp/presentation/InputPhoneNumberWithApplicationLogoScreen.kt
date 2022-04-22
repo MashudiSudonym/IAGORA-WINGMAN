@@ -2,6 +2,9 @@ package com.iagora.wingman.auth.otp.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -14,25 +17,26 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.iagora.wingman.R
-import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicator
-import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
+import com.iagora.wingman.destinations.InputOTPCodeScreenDestination
+import com.iagora.wingman.destinations.InputPhoneNumberScreenDestination
+import com.iagora.wingman.destinations.InputPhoneNumberWithApplicationLogoScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.navigation.popUpTo
 
 @Destination
 @Composable
-fun InputPhoneNumberWithApplicationLogoScreen() {
-    Box {
-//        FullScreenLoadingIndicator()
-        InputPhoneNumberWithApplicationLogoContent()
-    }
+fun InputPhoneNumberWithApplicationLogoScreen(navigator: DestinationsNavigator) {
+    InputPhoneNumberWithApplicationLogoContent(navigator)
 }
 
 @Composable
-private fun InputPhoneNumberWithApplicationLogoContent() {
+private fun InputPhoneNumberWithApplicationLogoContent(navigator: DestinationsNavigator) {
     // googling how to text field value work!
     var phoneNumberText by rememberSaveable {
         mutableStateOf("")
@@ -41,7 +45,9 @@ private fun InputPhoneNumberWithApplicationLogoContent() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp)
+            .navigationBarsWithImePadding()
+            .verticalScroll(state = rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -61,14 +67,27 @@ private fun InputPhoneNumberWithApplicationLogoContent() {
         Spacer(modifier = Modifier.size(128.dp))
         OutlinedTextField(
             value = phoneNumberText,
-            onValueChange = { phoneNumberText = it },
-            label = { Text(text = "Nomor HP (+6285xxxxxxxxx)") },
+            onValueChange = {
+                if (it.length <= 13) {
+                    phoneNumberText = it
+                }
+            },
+            label = { Text(text = "Nomor HP (6285111222333)") },
             singleLine = true,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Done,
+                keyboardType = KeyboardType.Phone
+            )
         )
         Spacer(modifier = Modifier.size(24.dp))
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {
+                navigator.navigate(InputOTPCodeScreenDestination) {
+                    popUpTo(InputPhoneNumberWithApplicationLogoScreenDestination)
+                }
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
@@ -84,20 +103,16 @@ private fun InputPhoneNumberWithApplicationLogoContent() {
             fontWeight = FontWeight.SemiBold
         )
         Spacer(modifier = Modifier.size(16.dp))
-        TextButton(onClick = { /*TODO*/ }) {
+        TextButton(onClick = {
+            navigator.navigate(InputPhoneNumberScreenDestination) {
+                popUpTo(InputPhoneNumberWithApplicationLogoScreenDestination)
+            }
+        }) {
             Text(
                 text = "Daftar Sebagai WINGMAN",
                 style = MaterialTheme.typography.subtitle1,
                 fontWeight = FontWeight.SemiBold
             )
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun InputPhoneNumberWithApplicationLogoScreenPreview() {
-    WINGMANTheme {
-//        InputPhoneNumberWithApplicationLogoScreen()
     }
 }
