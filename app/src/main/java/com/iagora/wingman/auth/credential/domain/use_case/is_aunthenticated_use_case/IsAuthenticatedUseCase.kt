@@ -10,7 +10,7 @@ class IsAuthenticatedUseCase(private val credentialDataStorePreferencesRepositor
         val getCacheToken = credentialDataStorePreferencesRepository.getToken()
         val getCacheUserId = credentialDataStorePreferencesRepository.getUserId()
 
-        return if (getCacheToken.getOrNull().isNullOrEmpty() && getCacheUserId.getOrNull().isNullOrEmpty()) {
+        return if (getCacheToken.getOrDefault("").isNotEmpty() && getCacheUserId.getOrDefault("").isNotEmpty()) {
             flow {
                 emit(Resource.Loading(true))
                 emit(Resource.Success(true))
