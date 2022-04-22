@@ -19,8 +19,10 @@ import androidx.compose.ui.unit.dp
 import com.iagora.wingman.R
 import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicator
 import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
+import com.ramcosta.composedestinations.annotation.Destination
 
 @Composable
+@Destination
 fun InputPhoneNumberWithApplicationLogoScreen() {
     Box {
         FullScreenLoadingIndicator()
