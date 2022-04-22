@@ -87,8 +87,10 @@ private fun InputPhoneNumberWithApplicationLogoContent(navigator: DestinationsNa
         Spacer(modifier = Modifier.size(24.dp))
         Button(
             onClick = {
-                navigator.navigate(InputOTPCodeScreenDestination(phoneNumberText)) {
-                    popUpTo(InputPhoneNumberWithApplicationLogoScreenDestination)
+                if (phoneNumberText.isNotBlank()) {
+                    navigator.navigate(InputOTPCodeScreenDestination(phoneNumberText)) {
+                        popUpTo(InputPhoneNumberWithApplicationLogoScreenDestination)
+                    }
                 }
             },
             modifier = Modifier.fillMaxWidth()
