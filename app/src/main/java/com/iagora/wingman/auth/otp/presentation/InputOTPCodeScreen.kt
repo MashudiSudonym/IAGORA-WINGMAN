@@ -16,21 +16,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.iagora.wingman.R
-import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicator
 import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination
 @Composable
-fun InputOTPCodeScreen() {
-    Box {
-//        FullScreenLoadingIndicator()
-        InputOTPCodeContent()
-    }
+fun InputOTPCodeScreen(navigator: DestinationsNavigator, phoneNumber: String) {
+    InputOTPCodeContent(navigator, phoneNumber)
 }
 
 @Composable
-private fun InputOTPCodeContent() {
+private fun InputOTPCodeContent(navigator: DestinationsNavigator, phoneNumber: String) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -59,7 +56,7 @@ private fun InputOTPCodeContent() {
         )
         Spacer(modifier = Modifier.size(16.dp))
         Text(
-            text = "Kami telah mengirimkan kode OTP pada nomor WA %d silahkan dicek",
+            text = "Kami telah mengirimkan kode OTP pada nomor WA $phoneNumber silahkan dicek",
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.size(64.dp))
@@ -81,13 +78,5 @@ private fun InputOTPCodeContent() {
                 fontWeight = FontWeight.SemiBold
             )
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun InputOTPCodeScreenPreview() {
-    WINGMANTheme {
-        InputOTPCodeScreen()
     }
 }

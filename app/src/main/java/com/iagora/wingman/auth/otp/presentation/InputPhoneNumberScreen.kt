@@ -1,5 +1,6 @@
 package com.iagora.wingman.auth.otp.presentation
 
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
@@ -20,6 +21,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.navigationBarsWithImePadding
+import com.google.accompanist.insets.statusBarsPadding
 import com.iagora.wingman.R
 import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
 import com.ramcosta.composedestinations.annotation.Destination
@@ -42,6 +44,7 @@ private fun InputPhoneNumberContent(navigator: DestinationsNavigator) {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
+            .statusBarsPadding()
             .navigationBarsWithImePadding()
             .verticalScroll(state = rememberScrollState()),
         horizontalAlignment = Alignment.Start,

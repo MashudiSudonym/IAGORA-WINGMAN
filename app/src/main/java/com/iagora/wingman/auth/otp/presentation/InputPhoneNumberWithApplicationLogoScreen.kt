@@ -1,6 +1,9 @@
 package com.iagora.wingman.auth.otp.presentation
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
@@ -84,7 +87,7 @@ private fun InputPhoneNumberWithApplicationLogoContent(navigator: DestinationsNa
         Spacer(modifier = Modifier.size(24.dp))
         Button(
             onClick = {
-                navigator.navigate(InputOTPCodeScreenDestination) {
+                navigator.navigate(InputOTPCodeScreenDestination(phoneNumberText)) {
                     popUpTo(InputPhoneNumberWithApplicationLogoScreenDestination)
                 }
             },
