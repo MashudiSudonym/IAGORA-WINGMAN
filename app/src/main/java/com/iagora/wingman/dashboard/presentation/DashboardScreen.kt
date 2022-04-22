@@ -36,7 +36,7 @@ fun DashBoardScreen(
             popUpTo(
                 DashBoardScreenDestination
             ) {
-                inclusive = false
+                inclusive = true
             }
         }
     }
