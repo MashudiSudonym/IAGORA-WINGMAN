@@ -2,6 +2,8 @@ package com.iagora.wingman.dashboard.presentation
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicator
@@ -21,26 +23,24 @@ fun DashBoardScreen(
     navigator: DestinationsNavigator,
     dashboardViewModel: DashboardViewModel = hiltViewModel()
 ) {
-    val state = dashboardViewModel.state
+    val dashboardAuthenticationState by dashboardViewModel.dashboardAuthenticationState.collectAsState()
 
-    if (state.isLoading) {
-        FullScreenLoadingIndicator()
-    }
-
-    if (state.isError) {
-        Text(text = "Error")
-    }
-
-    if (!state.isAuthenticated) {
-        navigator.navigate(InputPhoneNumberWithApplicationLogoScreenDestination) {
-            popUpTo(
-                DashBoardScreenDestination
-            ) {
-                inclusive = true
+    // check user authentication status
+    when {
+        dashboardAuthenticationState.isLoading -> FullScreenLoadingIndicator()
+        dashboardAuthenticationState.isError -> Text(text = "Error")
+        !dashboardAuthenticationState.isAuthenticated -> {
+            navigator.navigate(InputPhoneNumberWithApplicationLogoScreenDestination) {
+                popUpTo(
+                    DashBoardScreenDestination
+                ) {
+                    inclusive = true
+                }
             }
         }
     }
 
+    // dashboard content
     Text(text = "Dashboard")
 }
 

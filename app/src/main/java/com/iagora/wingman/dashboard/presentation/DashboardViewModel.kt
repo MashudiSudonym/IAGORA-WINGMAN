@@ -1,24 +1,24 @@
 package com.iagora.wingman.dashboard.presentation
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iagora.wingman.auth.credential.domain.use_case.is_aunthenticated_use_case.IsAuthenticatedUseCase
 import com.iagora.wingman.common.util.Resource
-import com.iagora.wingman.dashboard.presentation.state.DashboardState
+import com.iagora.wingman.dashboard.presentation.state.DashboardAuthenticationState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(private val isAuthenticatedUseCase: IsAuthenticatedUseCase) :
     ViewModel() {
-    var state by mutableStateOf(DashboardState())
+    private val _dashboardAuthenticationState = MutableStateFlow(DashboardAuthenticationState())
+    val dashboardAuthenticationState: StateFlow<DashboardAuthenticationState> =
+        _dashboardAuthenticationState.asStateFlow()
 
     init {
         isAuthenticated()
@@ -27,12 +27,16 @@ class DashboardViewModel @Inject constructor(private val isAuthenticatedUseCase:
     private fun isAuthenticated() {
         viewModelScope.launch {
             isAuthenticatedUseCase().collect { result ->
-                state = when (result) {
-                    is Resource.Error -> state.copy(isError = true)
-                    is Resource.Loading -> state.copy(isLoading = result.isLoading)
+                when (result) {
+                    is Resource.Error -> _dashboardAuthenticationState.update { it.copy(isError = true) }
+                    is Resource.Loading -> _dashboardAuthenticationState.update { it.copy(isLoading = result.isLoading) }
                     is Resource.Success -> {
-                        result.data.let {
-                            state.copy(isAuthenticated = it ?: false)
+                        result.data.let { data ->
+                            _dashboardAuthenticationState.update {
+                                it.copy(
+                                    isAuthenticated = data ?: false
+                                )
+                            }
                         }
                     }
                 }
