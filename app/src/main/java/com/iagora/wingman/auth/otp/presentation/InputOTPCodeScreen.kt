@@ -6,6 +6,8 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
@@ -13,21 +15,45 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.iagora.wingman.R
-import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
+import com.iagora.wingman.auth.otp.presentation.state.CountDownState
+import com.iagora.wingman.auth.otp.presentation.state.InputOTPCodeState
+import com.iagora.wingman.common.util.Constants
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination
 @Composable
-fun InputOTPCodeScreen(navigator: DestinationsNavigator, phoneNumber: String) {
-    InputOTPCodeContent(navigator, phoneNumber)
+fun InputOTPCodeScreen(
+    navigator: DestinationsNavigator,
+    phoneNumber: String,
+    authVerifyOTPCodeViewModel: AuthVerifyOTPCodeViewModel = hiltViewModel()
+) {
+    val inputOTPCodeState by authVerifyOTPCodeViewModel.inputOTPCodeState.collectAsState()
+    val countDownState by authVerifyOTPCodeViewModel.countDownState.collectAsState()
+
+    // running count down timer
+    authVerifyOTPCodeViewModel.countDownTimer()
+
+    InputOTPCodeContent(
+        navigator,
+        phoneNumber,
+        authVerifyOTPCodeViewModel,
+        inputOTPCodeState,
+        countDownState
+    )
 }
 
 @Composable
-private fun InputOTPCodeContent(navigator: DestinationsNavigator, phoneNumber: String) {
+private fun InputOTPCodeContent(
+    navigator: DestinationsNavigator,
+    phoneNumber: String,
+    authVerifyOTPCodeViewModel: AuthVerifyOTPCodeViewModel,
+    inputOTPCodeState: InputOTPCodeState,
+    countDownState: CountDownState
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -65,17 +91,21 @@ private fun InputOTPCodeContent(navigator: DestinationsNavigator, phoneNumber: S
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.size(64.dp))
-        Text(
-            text = "BELUM MENDAPATKAN TOKEN ? MINTA KEMBALI DALAM %d DETIK",
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.caption,
-            color = MaterialTheme.colors.primary,
-        )
-        Button(onClick = {}, modifier = Modifier.fillMaxWidth()) {
+        // If count down timer it's end, show up this button
+        if (countDownState.isCountDownStop) {
+            Button(onClick = {}, modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    text = "MINTA OTP",
+                    style = MaterialTheme.typography.subtitle1,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+        } else {
             Text(
-                text = "MINTA OTP",
-                style = MaterialTheme.typography.subtitle1,
-                fontWeight = FontWeight.SemiBold
+                text = "BELUM MENDAPATKAN TOKEN ? MINTA KEMBALI DALAM ${Constants.START_COUNT_DOWN} DETIK",
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.caption,
+                color = MaterialTheme.colors.primary,
             )
         }
     }
