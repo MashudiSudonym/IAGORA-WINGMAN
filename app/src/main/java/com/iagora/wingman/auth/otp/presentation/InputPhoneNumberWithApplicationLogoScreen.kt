@@ -9,11 +9,13 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -38,7 +40,7 @@ fun InputPhoneNumberWithApplicationLogoScreen(
     authViewModel: AuthViewModel = hiltViewModel()
 ) {
     val scaffoldState = rememberScaffoldState()
-//    val context = LocalContext.current
+    val context = LocalContext.current
 
     Scaffold(scaffoldState = scaffoldState) {
 
@@ -46,6 +48,12 @@ fun InputPhoneNumberWithApplicationLogoScreen(
 
         // navigate to input otp code screen after success with phone number input
         when {
+            inputPhoneNumberState.isError -> LaunchedEffect(scaffoldState) {
+                authViewModel.inputPhoneNumberErrors.collect { data ->
+                    scaffoldState.snackbarHostState.showSnackbar(data.asString(context))
+                }
+            }
+            inputPhoneNumberState.isLoading -> FullScreenLoadingIndicator()
             inputPhoneNumberState.isSuccess -> {
                 navigator.navigate(
                     InputOTPCodeScreenDestination(
@@ -64,11 +72,6 @@ fun InputPhoneNumberWithApplicationLogoScreen(
                 authViewModel.onPhoneNumberChange("")
                 authViewModel.changeValidationSuccessScreenStatus()
             }
-        }
-
-        // if state is Loading
-        if (inputPhoneNumberState.isLoading) {
-            FullScreenLoadingIndicator()
         }
 
         // default screen content
@@ -124,9 +127,9 @@ private fun InputPhoneNumberWithApplicationLogoContent(
                     imeAction = ImeAction.Done,
                     keyboardType = KeyboardType.Phone
                 ),
-                isError = inputPhoneNumberState.isError,
+                isError = inputPhoneNumberState.isTextFieldError,
                 trailingIcon = {
-                    if (inputPhoneNumberState.isError) {
+                    if (inputPhoneNumberState.isTextFieldError) {
                         Icon(
                             imageVector = Icons.Default.Error,
                             tint = MaterialTheme.colors.error,
@@ -135,7 +138,7 @@ private fun InputPhoneNumberWithApplicationLogoContent(
                     }
                 }
             )
-            if (inputPhoneNumberState.isError) {
+            if (inputPhoneNumberState.isTextFieldError) {
                 Text(
                     text = inputPhoneNumberState.errorMessage.asString(),
                     color = MaterialTheme.colors.error,

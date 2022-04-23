@@ -60,7 +60,7 @@ class AuthViewModel @Inject constructor(
                     _inputPhoneNumberState.update { data ->
                         data.copy(
                             isLoading = false,
-                            isError = true,
+                            isTextFieldError = true,
                             errorMessage = UIText.StringResource(R.string.phone_number_field_blank)
                         )
                     }
@@ -69,7 +69,7 @@ class AuthViewModel @Inject constructor(
                     _inputPhoneNumberState.update { data ->
                         data.copy(
                             isLoading = false,
-                            isError = true,
+                            isTextFieldError = true,
                             errorMessage = UIText.StringResource(R.string.error_phone_number_less_9_char)
                         )
                     }
@@ -87,7 +87,7 @@ class AuthViewModel @Inject constructor(
                     _inputPhoneNumberState.update { data ->
                         data.copy(
                             isLoading = false,
-                            isError = true,
+                            isTextFieldError = true,
                             errorMessage = UIText.StringResource(R.string.error_phone_number_format)
                         )
                     }
@@ -101,6 +101,7 @@ class AuthViewModel @Inject constructor(
                                     data.copy(
                                         isLoading = false,
                                         isError = true,
+                                        isTextFieldError = false
                                     )
                                 }
                                 inputPhoneNumberErrorChannel.send(
@@ -112,6 +113,7 @@ class AuthViewModel @Inject constructor(
                                 data.copy(
                                     isLoading = false,
                                     isError = false,
+                                    isTextFieldError = false,
                                     isSuccess = true,
                                 )
                             }
