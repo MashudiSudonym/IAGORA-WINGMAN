@@ -4,4 +4,7 @@
     <string name="oops">Oops, something went wrong!</string>
     <string name="internet_problem">Couldn\'t reach server, check your internet connection.</string>
     <string name="logo_wingman_desc">Logo Wingman</string>
+    <string name="error_phone_number_format">Awali dengan angka 62 pada nomor HP</string>
+    <string name="phone_number_lenght_not_valid">Nomor HP tidak valid</string>
+    <string name="phone_number_field_blank">Harap Isi Kolom Nomor HP</string>
 </resources>

@@ -1,30 +1,31 @@
 package com.iagora.wingman.auth.otp.presentation
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Error
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.iagora.wingman.R
+import com.iagora.wingman.auth.otp.presentation.state.InputPhoneNumberState
 import com.iagora.wingman.destinations.InputOTPCodeScreenDestination
 import com.iagora.wingman.destinations.InputPhoneNumberScreenDestination
 import com.iagora.wingman.destinations.InputPhoneNumberWithApplicationLogoScreenDestination
@@ -34,17 +35,49 @@ import com.ramcosta.composedestinations.navigation.popUpTo
 
 @Destination
 @Composable
-fun InputPhoneNumberWithApplicationLogoScreen(navigator: DestinationsNavigator) {
-    InputPhoneNumberWithApplicationLogoContent(navigator)
+fun InputPhoneNumberWithApplicationLogoScreen(
+    navigator: DestinationsNavigator,
+    authViewModel: AuthViewModel = hiltViewModel()
+) {
+    val scaffoldState = rememberScaffoldState()
+//    val context = LocalContext.current
+
+    Scaffold(scaffoldState = scaffoldState) {
+
+        val inputPhoneNumberState by authViewModel.inputPhoneNumberState.collectAsState()
+
+        // navigate to input otp code screen after success with phone number input
+        when {
+            inputPhoneNumberState.isSuccess -> {
+                navigator.navigate(
+                    InputOTPCodeScreenDestination(
+                        authViewModel.phoneNumberText
+                    )
+                ) {
+                    popUpTo(InputPhoneNumberWithApplicationLogoScreenDestination)
+                }
+
+                /*
+                * Reset field validation status
+                * isSuccess to false
+                * phone number text to empty string
+                */
+                authViewModel.validationStatus = false
+                authViewModel.phoneNumberText = ""
+                authViewModel.changeValidationSuccessScreenStatus()
+            }
+        }
+
+        InputPhoneNumberWithApplicationLogoContent(navigator, authViewModel, inputPhoneNumberState)
+    }
 }
 
 @Composable
-private fun InputPhoneNumberWithApplicationLogoContent(navigator: DestinationsNavigator) {
-    // googling how to text field value work!
-    var phoneNumberText by rememberSaveable {
-        mutableStateOf("")
-    }
-
+private fun InputPhoneNumberWithApplicationLogoContent(
+    navigator: DestinationsNavigator,
+    authViewModel: AuthViewModel,
+    inputPhoneNumberState: InputPhoneNumberState
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -68,30 +101,41 @@ private fun InputPhoneNumberWithApplicationLogoContent(navigator: DestinationsNa
             fontWeight = FontWeight.SemiBold
         )
         Spacer(modifier = Modifier.size(128.dp))
-        OutlinedTextField(
-            value = phoneNumberText,
-            onValueChange = {
-                if (it.length <= 13) {
-                    phoneNumberText = it
+        Column {
+            OutlinedTextField(
+                value = authViewModel.phoneNumberText,
+                onValueChange = authViewModel::onPhoneNumberChange,
+                label = { Text(text = "Nomor HP (6285111222333)") },
+                singleLine = true,
+                modifier = Modifier
+                    .fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done,
+                    keyboardType = KeyboardType.Phone
+                ),
+                isError = inputPhoneNumberState.isError,
+                trailingIcon = {
+                    if (inputPhoneNumberState.isError) {
+                        Icon(
+                            imageVector = Icons.Default.Error,
+                            tint = MaterialTheme.colors.error,
+                            contentDescription = null
+                        )
+                    }
                 }
-            },
-            label = { Text(text = "Nomor HP (6285111222333)") },
-            singleLine = true,
-            modifier = Modifier
-                .fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Done,
-                keyboardType = KeyboardType.Phone
             )
-        )
+            if (inputPhoneNumberState.isError) {
+                Text(
+                    text = inputPhoneNumberState.errorMessage.asString(),
+                    color = MaterialTheme.colors.error,
+                    style = MaterialTheme.typography.caption
+                )
+            }
+        }
         Spacer(modifier = Modifier.size(24.dp))
         Button(
             onClick = {
-                if (phoneNumberText.isNotBlank()) {
-                    navigator.navigate(InputOTPCodeScreenDestination(phoneNumberText)) {
-                        popUpTo(InputPhoneNumberWithApplicationLogoScreenDestination)
-                    }
-                }
+                authViewModel.validationPhoneNumberTextField()
             },
             modifier = Modifier.fillMaxWidth()
         ) {

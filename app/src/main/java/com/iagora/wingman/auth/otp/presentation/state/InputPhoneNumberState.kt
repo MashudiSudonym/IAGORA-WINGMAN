@@ -1,9 +1,10 @@
 package com.iagora.wingman.auth.otp.presentation.state
 
+import com.iagora.wingman.common.util.UIText
+
 data class InputPhoneNumberState(
     val isLoading: Boolean = false,
-    val textFieldHasValue: Boolean = false,
-
-    // validation
-    val errorId: Int = 0
+    val isError: Boolean = false,
+    val isSuccess: Boolean = false,
+    val errorMessage: UIText = UIText.DynamicString(""),
 )
