@@ -37,19 +37,19 @@ import com.ramcosta.composedestinations.navigation.popUpTo
 @Composable
 fun InputPhoneNumberWithApplicationLogoScreen(
     navigator: DestinationsNavigator,
-    authViewModel: AuthViewModel = hiltViewModel()
+    authRequestOTPCodeViewModel: AuthRequestOTPCodeViewModel = hiltViewModel()
 ) {
     val scaffoldState = rememberScaffoldState()
     val context = LocalContext.current
 
     Scaffold(scaffoldState = scaffoldState) {
 
-        val inputPhoneNumberState by authViewModel.inputPhoneNumberState.collectAsState()
+        val inputPhoneNumberState by authRequestOTPCodeViewModel.inputPhoneNumberState.collectAsState()
 
         // navigate to input otp code screen after success with phone number input
         when {
             inputPhoneNumberState.isError -> LaunchedEffect(scaffoldState) {
-                authViewModel.inputPhoneNumberErrors.collect { data ->
+                authRequestOTPCodeViewModel.inputPhoneNumberErrors.collect { data ->
                     scaffoldState.snackbarHostState.showSnackbar(data.asString(context))
                 }
             }
@@ -57,7 +57,7 @@ fun InputPhoneNumberWithApplicationLogoScreen(
             inputPhoneNumberState.isSuccess -> {
                 navigator.navigate(
                     InputOTPCodeScreenDestination(
-                        authViewModel.phoneNumberText
+                        authRequestOTPCodeViewModel.phoneNumberText
                     )
                 ) {
                     popUpTo(InputPhoneNumberWithApplicationLogoScreenDestination)
@@ -67,20 +67,20 @@ fun InputPhoneNumberWithApplicationLogoScreen(
                 * Reset field validation status
                 * isSuccess to false
                 */
-                authViewModel.onUpdatedValidationStatusChange(false)
-                authViewModel.changeValidationSuccessScreenStatus()
+                authRequestOTPCodeViewModel.onUpdatedValidationStatusChange(false)
+                authRequestOTPCodeViewModel.changeValidationSuccessScreenStatus()
             }
         }
 
         // default screen content
-        InputPhoneNumberWithApplicationLogoContent(navigator, authViewModel, inputPhoneNumberState)
+        InputPhoneNumberWithApplicationLogoContent(navigator, authRequestOTPCodeViewModel, inputPhoneNumberState)
     }
 }
 
 @Composable
 private fun InputPhoneNumberWithApplicationLogoContent(
     navigator: DestinationsNavigator,
-    authViewModel: AuthViewModel,
+    authRequestOTPCodeViewModel: AuthRequestOTPCodeViewModel,
     inputPhoneNumberState: InputPhoneNumberState
 ) {
     Column(
@@ -115,8 +115,8 @@ private fun InputPhoneNumberWithApplicationLogoContent(
         Spacer(modifier = Modifier.size(24.dp))
         Column {
             OutlinedTextField(
-                value = authViewModel.phoneNumberText,
-                onValueChange = authViewModel::onPhoneNumberChange,
+                value = authRequestOTPCodeViewModel.phoneNumberText,
+                onValueChange = authRequestOTPCodeViewModel::onPhoneNumberChange,
                 label = { Text(text = "Nomor HP (6285111222333)") },
                 singleLine = true,
                 modifier = Modifier
@@ -148,7 +148,7 @@ private fun InputPhoneNumberWithApplicationLogoContent(
         Button(
             enabled = !inputPhoneNumberState.isLoading,
             onClick = {
-                authViewModel.validationPhoneNumberTextField()
+                authRequestOTPCodeViewModel.validationPhoneNumberTextField()
             },
             modifier = Modifier.fillMaxWidth()
         ) {

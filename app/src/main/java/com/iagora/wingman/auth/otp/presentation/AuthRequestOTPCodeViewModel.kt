@@ -6,22 +6,28 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iagora.wingman.R
+import com.iagora.wingman.auth.otp.domain.use_case.count_down_timer_use_case.CountDownTimerUseCase
 import com.iagora.wingman.auth.otp.domain.use_case.send_otp_use_case.SendOTPUseCase
 import com.iagora.wingman.auth.otp.domain.use_case.verify_otp_use_case.VerifyOTPWithSaveCredentialsUseCase
+import com.iagora.wingman.auth.otp.presentation.state.CountDownState
+import com.iagora.wingman.auth.otp.presentation.state.InputOTPCodeState
 import com.iagora.wingman.auth.otp.presentation.state.InputPhoneNumberState
 import com.iagora.wingman.common.util.Resource
 import com.iagora.wingman.common.util.UIText
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthViewModel @Inject constructor(
+class AuthRequestOTPCodeViewModel @Inject constructor(
     private val sendOTPUseCase: SendOTPUseCase,
-    private val verifyOTPWithSaveCredentialsUseCase: VerifyOTPWithSaveCredentialsUseCase
+    private val countDownTimerUseCase: CountDownTimerUseCase
 ) : ViewModel() {
     private val _inputPhoneNumberState = MutableStateFlow(InputPhoneNumberState())
     val inputPhoneNumberState: StateFlow<InputPhoneNumberState> =
@@ -47,8 +53,11 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+    private var job: Job? = null
+
     fun validationPhoneNumberTextField() {
-        viewModelScope.launch {
+        job?.cancel()
+        job = viewModelScope.launch(Dispatchers.IO) {
             val regex = "^628[1-9][0-9]{6,9}$".toRegex()
 
             _inputPhoneNumberState.update { it.copy(isLoading = true) }
@@ -94,7 +103,7 @@ class AuthViewModel @Inject constructor(
                 }
                 else -> {
                     // request otp code from server
-                    sendOTPUseCase(phoneNumberText).collect { result ->
+                    sendOTPUseCase(phoneNumberText).cancellable().collect { result ->
                         when (result) {
                             is Resource.Error -> {
                                 _inputPhoneNumberState.update { data ->

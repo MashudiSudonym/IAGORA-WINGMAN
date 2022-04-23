@@ -12,4 +12,5 @@ object Constants {
     const val BEARER = "Bearer"
     val TOKEN = stringPreferencesKey(name = "x-token")
     val USERID = stringPreferencesKey(name = "wingmanId")
+    const val START_COUNT_DOWN = 30
 }
