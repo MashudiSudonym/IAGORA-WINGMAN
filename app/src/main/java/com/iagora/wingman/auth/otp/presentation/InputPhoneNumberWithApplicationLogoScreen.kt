@@ -9,13 +9,11 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -27,7 +25,6 @@ import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.iagora.wingman.R
 import com.iagora.wingman.auth.otp.presentation.state.InputPhoneNumberState
 import com.iagora.wingman.destinations.InputOTPCodeScreenDestination
-import com.iagora.wingman.destinations.InputPhoneNumberScreenDestination
 import com.iagora.wingman.destinations.InputPhoneNumberWithApplicationLogoScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -101,6 +98,13 @@ private fun InputPhoneNumberWithApplicationLogoContent(
             fontWeight = FontWeight.SemiBold
         )
         Spacer(modifier = Modifier.size(128.dp))
+        Text(
+            text = "Masuk / Daftar sebagai WINGMAN",
+            style = MaterialTheme.typography.subtitle1,
+            color = MaterialTheme.colors.primary,
+            fontWeight = FontWeight.Medium
+        )
+        Spacer(modifier = Modifier.size(24.dp))
         Column {
             OutlinedTextField(
                 value = authViewModel.phoneNumberText,
@@ -141,24 +145,6 @@ private fun InputPhoneNumberWithApplicationLogoContent(
         ) {
             Text(
                 text = "LOGIN",
-                style = MaterialTheme.typography.subtitle1,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
-        Spacer(modifier = Modifier.size(128.dp))
-        Text(
-            text = "Belum ada akun ?",
-            style = MaterialTheme.typography.subtitle1,
-            fontWeight = FontWeight.SemiBold
-        )
-        Spacer(modifier = Modifier.size(16.dp))
-        TextButton(onClick = {
-            navigator.navigate(InputPhoneNumberScreenDestination) {
-                popUpTo(InputPhoneNumberWithApplicationLogoScreenDestination)
-            }
-        }) {
-            Text(
-                text = "Daftar Sebagai WINGMAN",
                 style = MaterialTheme.typography.subtitle1,
                 fontWeight = FontWeight.SemiBold
             )
