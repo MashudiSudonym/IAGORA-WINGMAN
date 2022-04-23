@@ -6,6 +6,7 @@ import com.iagora.wingman.auth.otp.domain.model.VerifyOTPResult
 fun VerifyOTPResultDTO.toVerifyOTPResult(): VerifyOTPResult {
     return VerifyOTPResult(
         wingmanId = wingmanId,
+        isCompleteRegister = isCompleteRegister,
         refreshToken = refreshToken
     )
 }
@@ -13,6 +14,7 @@ fun VerifyOTPResultDTO.toVerifyOTPResult(): VerifyOTPResult {
 fun VerifyOTPResult.toVerifyOTPResultDTO(): VerifyOTPResultDTO {
     return VerifyOTPResultDTO(
         wingmanId = wingmanId,
+        isCompleteRegister = isCompleteRegister,
         refreshToken = refreshToken
     )
 }

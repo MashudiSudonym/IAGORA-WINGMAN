@@ -41,11 +41,9 @@ fun InputPhoneNumberWithApplicationLogoScreen(
 ) {
     val scaffoldState = rememberScaffoldState()
     val context = LocalContext.current
+    val inputPhoneNumberState by authRequestOTPCodeViewModel.inputPhoneNumberState.collectAsState()
 
     Scaffold(scaffoldState = scaffoldState) {
-
-        val inputPhoneNumberState by authRequestOTPCodeViewModel.inputPhoneNumberState.collectAsState()
-
         // navigate to input otp code screen after success with phone number input
         when {
             inputPhoneNumberState.isError -> LaunchedEffect(scaffoldState) {
@@ -73,13 +71,15 @@ fun InputPhoneNumberWithApplicationLogoScreen(
         }
 
         // default screen content
-        InputPhoneNumberWithApplicationLogoContent(navigator, authRequestOTPCodeViewModel, inputPhoneNumberState)
+        InputPhoneNumberWithApplicationLogoContent(
+            authRequestOTPCodeViewModel,
+            inputPhoneNumberState
+        )
     }
 }
 
 @Composable
 private fun InputPhoneNumberWithApplicationLogoContent(
-    navigator: DestinationsNavigator,
     authRequestOTPCodeViewModel: AuthRequestOTPCodeViewModel,
     inputPhoneNumberState: InputPhoneNumberState
 ) {
@@ -148,7 +148,7 @@ private fun InputPhoneNumberWithApplicationLogoContent(
         Button(
             enabled = !inputPhoneNumberState.isLoading,
             onClick = {
-                authRequestOTPCodeViewModel.validationPhoneNumberTextField()
+                authRequestOTPCodeViewModel.validationPhoneNumberTextFieldAndSendOTPRequest()
             },
             modifier = Modifier.fillMaxWidth()
         ) {

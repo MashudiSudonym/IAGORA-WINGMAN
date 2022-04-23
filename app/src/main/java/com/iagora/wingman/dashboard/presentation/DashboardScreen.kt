@@ -1,5 +1,6 @@
 package com.iagora.wingman.dashboard.presentation
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -41,7 +42,14 @@ fun DashBoardScreen(
     }
 
     // dashboard content
-    Text(text = "Dashboard")
+    Column {
+        Text(text = "dashboard")
+        Text(text = "dashboard")
+        Text(text = "dashboard")
+        Text(text = "dashboard")
+        Text(text = "dashboard")
+        Text(text = "dashboard")
+    }
 }
 
 @Preview(showBackground = true)

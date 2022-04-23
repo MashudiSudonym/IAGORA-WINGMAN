@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName
 data class VerifyOTPResultDTO(
     @SerializedName("wingmanId")
     val wingmanId: String,
+    @SerializedName("isComplateRegister")
+    val isCompleteRegister: Boolean,
     @SerializedName("refreshToken")
     val refreshToken: String,
 )

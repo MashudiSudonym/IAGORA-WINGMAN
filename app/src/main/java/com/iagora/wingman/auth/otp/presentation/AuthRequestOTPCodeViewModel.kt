@@ -55,7 +55,7 @@ class AuthRequestOTPCodeViewModel @Inject constructor(
 
     private var job: Job? = null
 
-    fun validationPhoneNumberTextField() {
+    fun validationPhoneNumberTextFieldAndSendOTPRequest() {
         job?.cancel()
         job = viewModelScope.launch(Dispatchers.IO) {
             val regex = "^628[1-9][0-9]{6,9}$".toRegex()
