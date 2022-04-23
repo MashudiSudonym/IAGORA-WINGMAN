@@ -24,6 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.iagora.wingman.R
 import com.iagora.wingman.auth.otp.presentation.state.InputPhoneNumberState
+import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicator
 import com.iagora.wingman.destinations.InputOTPCodeScreenDestination
 import com.iagora.wingman.destinations.InputPhoneNumberWithApplicationLogoScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
@@ -65,6 +66,12 @@ fun InputPhoneNumberWithApplicationLogoScreen(
             }
         }
 
+        // if state is Loading
+        if (inputPhoneNumberState.isLoading) {
+            FullScreenLoadingIndicator()
+        }
+
+        // default screen content
         InputPhoneNumberWithApplicationLogoContent(navigator, authViewModel, inputPhoneNumberState)
     }
 }
@@ -138,6 +145,7 @@ private fun InputPhoneNumberWithApplicationLogoContent(
         }
         Spacer(modifier = Modifier.size(24.dp))
         Button(
+            enabled = !inputPhoneNumberState.isLoading,
             onClick = {
                 authViewModel.validationPhoneNumberTextField()
             },

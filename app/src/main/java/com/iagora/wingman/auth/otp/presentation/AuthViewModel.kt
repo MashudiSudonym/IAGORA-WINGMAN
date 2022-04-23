@@ -9,9 +9,11 @@ import com.iagora.wingman.R
 import com.iagora.wingman.auth.otp.domain.use_case.send_otp_use_case.SendOTPUseCase
 import com.iagora.wingman.auth.otp.domain.use_case.verify_otp_use_case.VerifyOTPWithSaveCredentialsUseCase
 import com.iagora.wingman.auth.otp.presentation.state.InputPhoneNumberState
+import com.iagora.wingman.common.util.Resource
 import com.iagora.wingman.common.util.UIText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -49,10 +51,15 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch {
             val regex = "^628[1-9][0-9]{6,9}$".toRegex()
 
+            _inputPhoneNumberState.update { it.copy(isLoading = true) }
+
+            delay(500L)
+
             when {
                 phoneNumberText.isBlank() -> {
                     _inputPhoneNumberState.update { data ->
                         data.copy(
+                            isLoading = false,
                             isError = true,
                             errorMessage = UIText.StringResource(R.string.phone_number_field_blank)
                         )
@@ -61,6 +68,7 @@ class AuthViewModel @Inject constructor(
                 phoneNumberText.length <= 9 -> {
                     _inputPhoneNumberState.update { data ->
                         data.copy(
+                            isLoading = false,
                             isError = true,
                             errorMessage = UIText.StringResource(R.string.error_phone_number_less_9_char)
                         )
@@ -69,6 +77,7 @@ class AuthViewModel @Inject constructor(
                 phoneNumberText.length > 14 -> {
                     _inputPhoneNumberState.update { data ->
                         data.copy(
+                            isLoading = false,
                             isError = true,
                             errorMessage = UIText.StringResource(R.string.error_phone_number_more_13_char)
                         )
@@ -77,16 +86,37 @@ class AuthViewModel @Inject constructor(
                 !regex.matches(phoneNumberText) -> {
                     _inputPhoneNumberState.update { data ->
                         data.copy(
+                            isLoading = false,
                             isError = true,
                             errorMessage = UIText.StringResource(R.string.error_phone_number_format)
                         )
                     }
                 }
-                else -> _inputPhoneNumberState.update { data ->
-                    data.copy(
-                        isError = false,
-                        isSuccess = true,
-                    )
+                else -> {
+                    // request otp code from server
+                    sendOTPUseCase(phoneNumberText).collect { result ->
+                        when (result) {
+                            is Resource.Error -> {
+                                _inputPhoneNumberState.update { data ->
+                                    data.copy(
+                                        isLoading = false,
+                                        isError = true,
+                                    )
+                                }
+                                inputPhoneNumberErrorChannel.send(
+                                    result.message ?: UIText.unknownError()
+                                )
+                            }
+                            is Resource.Loading -> _inputPhoneNumberState.update { it.copy(isLoading = true) }
+                            is Resource.Success -> _inputPhoneNumberState.update { data ->
+                                data.copy(
+                                    isLoading = false,
+                                    isError = false,
+                                    isSuccess = true,
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
