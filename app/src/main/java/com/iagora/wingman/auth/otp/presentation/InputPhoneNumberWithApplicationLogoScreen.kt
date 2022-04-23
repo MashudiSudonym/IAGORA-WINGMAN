@@ -66,7 +66,6 @@ fun InputPhoneNumberWithApplicationLogoScreen(
                 /*
                 * Reset field validation status
                 * isSuccess to false
-                * phone number text to empty string
                 */
                 authViewModel.onUpdatedValidationStatusChange(false)
                 authViewModel.changeValidationSuccessScreenStatus()
