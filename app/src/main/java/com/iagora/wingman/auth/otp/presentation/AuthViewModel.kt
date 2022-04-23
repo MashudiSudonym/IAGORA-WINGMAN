@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.iagora.wingman.R
 import com.iagora.wingman.auth.otp.domain.use_case.send_otp_use_case.SendOTPUseCase
 import com.iagora.wingman.auth.otp.domain.use_case.verify_otp_use_case.VerifyOTPWithSaveCredentialsUseCase
@@ -30,10 +29,10 @@ class AuthViewModel @Inject constructor(
     val inputPhoneNumberErrors = inputPhoneNumberErrorChannel.receiveAsFlow()
 
     var phoneNumberText by mutableStateOf("")
-    var validationStatus by mutableStateOf(false)
+    private var validationStatusIsSuccess by mutableStateOf(false)
 
     fun onUpdatedValidationStatusChange(isSuccess: Boolean) {
-        validationStatus = isSuccess
+        validationStatusIsSuccess = isSuccess
     }
 
     fun onPhoneNumberChange(phoneNumber: String) {
@@ -42,7 +41,7 @@ class AuthViewModel @Inject constructor(
 
     fun changeValidationSuccessScreenStatus() {
         viewModelScope.launch {
-            _inputPhoneNumberState.update { it.copy(isSuccess = validationStatus) }
+            _inputPhoneNumberState.update { it.copy(isSuccess = validationStatusIsSuccess) }
         }
     }
 
@@ -59,6 +58,22 @@ class AuthViewModel @Inject constructor(
                         )
                     }
                 }
+                phoneNumberText.length <= 9 -> {
+                    _inputPhoneNumberState.update { data ->
+                        data.copy(
+                            isError = true,
+                            errorMessage = UIText.StringResource(R.string.error_phone_number_less_9_char)
+                        )
+                    }
+                }
+                phoneNumberText.length > 14 -> {
+                    _inputPhoneNumberState.update { data ->
+                        data.copy(
+                            isError = true,
+                            errorMessage = UIText.StringResource(R.string.error_phone_number_more_13_char)
+                        )
+                    }
+                }
                 !regex.matches(phoneNumberText) -> {
                     _inputPhoneNumberState.update { data ->
                         data.copy(
@@ -69,6 +84,7 @@ class AuthViewModel @Inject constructor(
                 }
                 else -> _inputPhoneNumberState.update { data ->
                     data.copy(
+                        isError = false,
                         isSuccess = true,
                     )
                 }

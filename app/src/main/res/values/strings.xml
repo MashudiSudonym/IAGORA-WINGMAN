@@ -7,4 +7,6 @@
     <string name="error_phone_number_format">Awali dengan angka 62 pada nomor HP</string>
     <string name="phone_number_lenght_not_valid">Nomor HP tidak valid</string>
     <string name="phone_number_field_blank">Harap Isi Kolom Nomor HP</string>
+    <string name="error_phone_number_less_9_char">Format nomor HP salah / kurang dari 9 angka</string>
+    <string name="error_phone_number_more_13_char">Format nomor HP salah / lebih dari 13 angka</string>
 </resources>
