@@ -34,16 +34,44 @@
         <entry key="app/src/main/res/drawable/ic_add_24.xml" value="0.115" />
         <entry key="app/src/main/res/drawable/ic_arrow_left.xml" value="0.115" />
         <entry key="app/src/main/res/drawable/ic_arrow_left_red.xml" value="0.101" />
+        <entry key="app/src/main/res/drawable/ic_arrow_left_white.xml" value="0.108" />
+        <entry key="app/src/main/res/drawable/ic_arrow_right.xml" value="0.108" />
+        <entry key="app/src/main/res/drawable/ic_arrow_right_rounded.xml" value="0.108" />
         <entry key="app/src/main/res/drawable/ic_arrow_right_shimmer.xml" value="0.101" />
+        <entry key="app/src/main/res/drawable/ic_arrow_up.xml" value="0.108" />
         <entry key="app/src/main/res/drawable/ic_background_home.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_camera_rounded.xml" value="0.108" />
+        <entry key="app/src/main/res/drawable/ic_chat.xml" value="0.108" />
+        <entry key="app/src/main/res/drawable/ic_chat2.xml" value="0.108" />
+        <entry key="app/src/main/res/drawable/ic_check.xml" value="0.108" />
+        <entry key="app/src/main/res/drawable/ic_close.xml" value="0.108" />
+        <entry key="app/src/main/res/drawable/ic_close_round_red_20dp.xml" value="0.108" />
+        <entry key="app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.108" />
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_home_active.xml" value="0.108" />
+        <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.108" />
         <entry key="app/src/main/res/drawable/ic_info_mini.xml" value="0.115" />
         <entry key="app/src/main/res/drawable/ic_location_on.xml" value="0.101" />
+        <entry key="app/src/main/res/drawable/ic_merchant.xml" value="0.108" />
+        <entry key="app/src/main/res/drawable/ic_next_red_cirlce.xml" value="0.108" />
+        <entry key="app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.108" />
+        <entry key="app/src/main/res/drawable/ic_oum.xml" value="0.108" />
+        <entry key="app/src/main/res/drawable/ic_photo_profile_empty.xml" value="0.108" />
+        <entry key="app/src/main/res/drawable/ic_plus.xml" value="0.108" />
+        <entry key="app/src/main/res/drawable/ic_quetion_chat.xml" value="0.108" />
+        <entry key="app/src/main/res/drawable/ic_rupiah_23.xml" value="0.108" />
         <entry key="app/src/main/res/drawable/ic_scale_23.xml" value="0.115" />
         <entry key="app/src/main/res/drawable/ic_search.xml" value="0.101" />
+        <entry key="app/src/main/res/drawable/ic_select.xml" value="0.108" />
+        <entry key="app/src/main/res/drawable/ic_selected.xml" value="0.108" />
+        <entry key="app/src/main/res/drawable/ic_setting.xml" value="0.108" />
+        <entry key="app/src/main/res/drawable/ic_shopping_bag.xml" value="0.108" />
         <entry key="app/src/main/res/drawable/ic_star_rate.xml" value="0.101" />
+        <entry key="app/src/main/res/drawable/ic_toko.xml" value="0.108" />
+        <entry key="app/src/main/res/drawable/ic_toko_shimmer.xml" value="0.108" />
         <entry key="app/src/main/res/drawable/ic_user.xml" value="0.115" />
         <entry key="app/src/main/res/drawable/ic_user_active.xml" value="0.115" />
+        <entry key="app/src/main/res/drawable/ic_wallet.xml" value="0.108" />
         <entry key="app/src/main/res/drawable/ic_warning_order.xml" value="0.115" />
         <entry key="app/src/main/res/drawable/icon_bottom_nav_home.xml" value="0.115" />
         <entry key="app/src/main/res/drawable/icon_bottom_nav_profil.xml" value="0.115" />
