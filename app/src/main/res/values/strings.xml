@@ -11,4 +11,7 @@
     <string name="error_phone_number_less_9_char">Format nomor HP salah / kurang dari 9 angka</string>
     <string name="error_phone_number_more_13_char">Format nomor HP salah / lebih dari 13 angka</string>
     <string name="error_otp_code_not_valid">Kode OTP tidak Benar</string>
+    <string name="home_title">Home</string>
+    <string name="customer_care_title">Customer Care</string>
+    <string name="profile_title">Profile</string>
 </resources>

@@ -3,7 +3,6 @@ package com.iagora.wingman.auth.otp.presentation
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
@@ -31,8 +30,8 @@ import com.iagora.wingman.auth.otp.presentation.state.CountDownState
 import com.iagora.wingman.auth.otp.presentation.state.InputOTPCodeState
 import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicator
 import com.iagora.wingman.common.util.Constants
-import com.iagora.wingman.destinations.DashBoardScreenDestination
 import com.iagora.wingman.destinations.InputPhoneNumberWithApplicationLogoScreenDestination
+import com.iagora.wingman.destinations.RootScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
@@ -65,7 +64,7 @@ fun InputOTPCodeScreen(
                 // check if not user complete registration, open registration screen
                 if (!inputOTPCodeState.isCompleteRegister) {
                     navigator.navigate(
-                        DashBoardScreenDestination
+                        RootScreenDestination
                     ) {
                         popUpTo(InputPhoneNumberWithApplicationLogoScreenDestination) {
                             inclusive = true
@@ -75,7 +74,7 @@ fun InputOTPCodeScreen(
 
                 // if user complete registration, open dashboard screen
                 navigator.navigate(
-                    DashBoardScreenDestination
+                    RootScreenDestination
                 ) {
                     popUpTo(InputPhoneNumberWithApplicationLogoScreenDestination) {
                         inclusive = true

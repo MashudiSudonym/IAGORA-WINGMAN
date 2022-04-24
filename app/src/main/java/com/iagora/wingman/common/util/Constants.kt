@@ -11,4 +11,7 @@ object Constants {
     val TOKEN = stringPreferencesKey(name = "x-token")
     val USERID = stringPreferencesKey(name = "wingmanId")
     const val START_COUNT_DOWN = 30
+    const val HOME = "Home"
+    const val CUSTOMER_CARE = "Customer Care"
+    const val PROFILE = "Profile"
 }

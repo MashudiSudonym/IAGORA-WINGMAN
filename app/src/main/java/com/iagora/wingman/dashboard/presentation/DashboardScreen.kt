@@ -1,61 +1,37 @@
 package com.iagora.wingman.dashboard.presentation
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicator
+import androidx.compose.ui.unit.dp
+import com.iagora.wingman.common.presentation.ui.component.BottomNavigationContentWrapper
 import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
-import com.iagora.wingman.destinations.DashBoardScreenDestination
-import com.iagora.wingman.destinations.InputPhoneNumberWithApplicationLogoScreenDestination
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootNavGraph
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.ramcosta.composedestinations.navigation.popUpTo
-import timber.log.Timber
 
-@RootNavGraph(start = true)
-@Destination
 @Composable
-fun DashBoardScreen(
-    navigator: DestinationsNavigator,
-    dashboardViewModel: DashboardViewModel = hiltViewModel()
-) {
-    val dashboardAuthenticationState by dashboardViewModel.dashboardAuthenticationState.collectAsState()
-
-    // check user authentication status
-    when {
-        dashboardAuthenticationState.isLoading -> FullScreenLoadingIndicator()
-        dashboardAuthenticationState.isError -> Text(text = "Error")
-        !dashboardAuthenticationState.isAuthenticated -> {
-            navigator.navigate(InputPhoneNumberWithApplicationLogoScreenDestination) {
-                popUpTo(
-                    DashBoardScreenDestination
-                ) {
-                    inclusive = true
-                }
-            }
+fun DashBoardScreen() {
+    // dashboard content
+    BottomNavigationContentWrapper(modifier = Modifier.verticalScroll(rememberScrollState())) {
+        for (i in 1..45) {
+            Text(text = "dashboard $i")
         }
     }
+}
 
-    // dashboard content
-    Column {
-        Text(text = "dashboard")
-        Text(text = "dashboard")
-        Text(text = "dashboard")
-        Text(text = "dashboard")
-        Text(text = "dashboard")
-        Text(text = "dashboard")
-    }
+@Composable
+private fun DashboardContent() {
+
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DashboardScreenPreview() {
     WINGMANTheme {
-//        DashBoardScreen()
+        DashboardContent()
     }
 }
