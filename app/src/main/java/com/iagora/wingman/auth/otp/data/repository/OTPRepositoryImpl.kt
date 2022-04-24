@@ -1,13 +1,13 @@
 package com.iagora.wingman.auth.otp.data.repository
 
 import com.iagora.wingman.R
-import com.iagora.wingman.auth.otp.data.mapper.toOTPCodePhoneNumberDTO
-import com.iagora.wingman.auth.otp.data.mapper.toOTPPhoneNumberDTO
+import com.iagora.wingman.auth.otp.data.mapper.toOTPCodePhoneNumberDataDTO
+import com.iagora.wingman.auth.otp.data.mapper.toOTPPhoneNumberDataDTO
 import com.iagora.wingman.auth.otp.data.mapper.toOTPResponse
 import com.iagora.wingman.auth.otp.data.mapper.toVerifyOTPResponse
 import com.iagora.wingman.auth.otp.data.remote.OtpAPI
-import com.iagora.wingman.auth.otp.domain.model.OTPCodePhoneNumber
-import com.iagora.wingman.auth.otp.domain.model.OTPPhoneNumber
+import com.iagora.wingman.auth.otp.domain.model.OTPCodePhoneNumberData
+import com.iagora.wingman.auth.otp.domain.model.OTPPhoneNumberData
 import com.iagora.wingman.auth.otp.domain.model.SendOTPResponse
 import com.iagora.wingman.auth.otp.domain.model.VerifyOTPResponse
 import com.iagora.wingman.auth.otp.domain.repository.OTPRepository
@@ -23,7 +23,7 @@ import java.net.UnknownHostException
 class OTPRepositoryImpl(private val otpAPI: OtpAPI) : OTPRepository {
     override suspend fun sendOTP(phoneNumber: String): Flow<Resource<SendOTPResponse>> {
         return flow {
-            val otpPhoneNumberBodyData = OTPPhoneNumber(phoneNumber).toOTPPhoneNumberDTO()
+            val otpPhoneNumberBodyData = OTPPhoneNumberData(phoneNumber).toOTPPhoneNumberDataDTO()
 
             try {
                 val sendOTP = otpAPI.requestOTP(otpPhoneNumberBodyData)
@@ -62,7 +62,7 @@ class OTPRepositoryImpl(private val otpAPI: OtpAPI) : OTPRepository {
             emit(Resource.Loading(true))
 
             val otpCodePhoneNumberBodyData =
-                OTPCodePhoneNumber(phoneNumber, otpCode).toOTPCodePhoneNumberDTO()
+                OTPCodePhoneNumberData(phoneNumber, otpCode).toOTPCodePhoneNumberDataDTO()
 
             try {
                 val verifyOTP = otpAPI.verifyOTP(otpCodePhoneNumberBodyData)

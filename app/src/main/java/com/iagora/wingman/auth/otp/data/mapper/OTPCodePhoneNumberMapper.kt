@@ -1,17 +1,17 @@
 package com.iagora.wingman.auth.otp.data.mapper
 
-import com.iagora.wingman.auth.otp.data.remote.dao.OTPCodePhoneNumberDTO
-import com.iagora.wingman.auth.otp.domain.model.OTPCodePhoneNumber
+import com.iagora.wingman.auth.otp.data.remote.dao.OTPCodePhoneNumberDataDTO
+import com.iagora.wingman.auth.otp.domain.model.OTPCodePhoneNumberData
 
-fun OTPCodePhoneNumberDTO.toOTPCodePhoneNumber(): OTPCodePhoneNumber {
-    return OTPCodePhoneNumber(
+fun OTPCodePhoneNumberDataDTO.toOTPCodePhoneNumberData(): OTPCodePhoneNumberData {
+    return OTPCodePhoneNumberData(
         phoneNumber = phoneNumber,
         otpCode = otpCode
     )
 }
 
-fun OTPCodePhoneNumber.toOTPCodePhoneNumberDTO(): OTPCodePhoneNumberDTO {
-    return OTPCodePhoneNumberDTO(
+fun OTPCodePhoneNumberData.toOTPCodePhoneNumberDataDTO(): OTPCodePhoneNumberDataDTO {
+    return OTPCodePhoneNumberDataDTO(
         phoneNumber = phoneNumber,
         otpCode = otpCode
     )
