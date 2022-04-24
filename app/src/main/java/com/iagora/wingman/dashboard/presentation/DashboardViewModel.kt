@@ -2,7 +2,7 @@ package com.iagora.wingman.dashboard.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.iagora.wingman.auth.credential.domain.use_case.is_aunthenticated_use_case.IsAuthenticatedUseCase
+import com.iagora.wingman.data_store.domain.use_case.is_aunthenticated_use_case.IsAuthenticatedUseCase
 import com.iagora.wingman.common.util.Resource
 import com.iagora.wingman.dashboard.presentation.state.DashboardAuthenticationState
 import dagger.hilt.android.lifecycle.HiltViewModel

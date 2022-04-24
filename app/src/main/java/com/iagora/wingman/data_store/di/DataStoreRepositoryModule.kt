@@ -1,11 +1,11 @@
-package com.iagora.wingman.auth.credential.di
+package com.iagora.wingman.data_store.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import com.iagora.wingman.auth.credential.data.repository.CredentialDataStorePreferencesRepositoryImpl
-import com.iagora.wingman.auth.credential.domain.repository.CredentialDataStorePreferencesRepository
+import com.iagora.wingman.data_store.data.repository.DataStorePreferencesRepositoryImpl
+import com.iagora.wingman.data_store.domain.repository.DataStorePreferencesRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -24,8 +24,8 @@ abstract class DataStoreRepositoryModule {
     @Binds
     @Singleton
     abstract fun bindCredentialDataStorePreferencesRepository(
-        credentialDataStorePreferencesRepositoryImpl: CredentialDataStorePreferencesRepositoryImpl
-    ): CredentialDataStorePreferencesRepository
+        dataStorePreferencesRepositoryImpl: DataStorePreferencesRepositoryImpl
+    ): DataStorePreferencesRepository
 
     companion object {
         @Provides

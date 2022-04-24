@@ -1,10 +1,10 @@
-package com.iagora.wingman.auth.credential.data.repository
+package com.iagora.wingman.data_store.data.repository
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
-import com.iagora.wingman.auth.credential.domain.repository.CredentialDataStorePreferencesRepository
+import com.iagora.wingman.data_store.domain.repository.DataStorePreferencesRepository
 import com.iagora.wingman.common.util.Constants
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.firstOrNull
@@ -12,8 +12,8 @@ import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
 
-class CredentialDataStorePreferencesRepositoryImpl @Inject constructor(private val credentialDataStoragePreferences: DataStore<Preferences>) :
-    CredentialDataStorePreferencesRepository {
+class DataStorePreferencesRepositoryImpl @Inject constructor(private val credentialDataStoragePreferences: DataStore<Preferences>) :
+    DataStorePreferencesRepository {
     override suspend fun setToken(token: String) {
         Result.runCatching {
             credentialDataStoragePreferences.edit { preferences ->

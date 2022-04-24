@@ -1,7 +1,7 @@
 package com.iagora.wingman.auth.otp.domain.use_case.verify_otp_use_case
 
 import com.iagora.wingman.R
-import com.iagora.wingman.auth.credential.domain.repository.CredentialDataStorePreferencesRepository
+import com.iagora.wingman.data_store.domain.repository.DataStorePreferencesRepository
 import com.iagora.wingman.auth.otp.domain.model.VerifyOTPResult
 import com.iagora.wingman.auth.otp.domain.repository.OTPRepository
 import com.iagora.wingman.common.util.Resource
@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.flow
 
 class VerifyOTPWithSaveCredentialsUseCase(
     private val otpRepository: OTPRepository,
-    private val credentialDataStorePreferencesRepository: CredentialDataStorePreferencesRepository
+    private val dataStorePreferencesRepository: DataStorePreferencesRepository
 ) {
     suspend operator fun invoke(
         phoneNumber: String,
@@ -29,8 +29,8 @@ class VerifyOTPWithSaveCredentialsUseCase(
                         val userId = result.data?.result?.wingmanId
                         val isCompleteRegister = result.data?.result?.isCompleteRegister
 
-                        credentialDataStorePreferencesRepository.setToken(token ?: "")
-                        credentialDataStorePreferencesRepository.setUserId(userId ?: "")
+                        dataStorePreferencesRepository.setToken(token ?: "")
+                        dataStorePreferencesRepository.setUserId(userId ?: "")
 
                         emit(
                             Resource.Success(

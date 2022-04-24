@@ -1,6 +1,6 @@
 package com.iagora.wingman.auth.otp.di
 
-import com.iagora.wingman.auth.credential.domain.repository.CredentialDataStorePreferencesRepository
+import com.iagora.wingman.data_store.domain.repository.DataStorePreferencesRepository
 import com.iagora.wingman.auth.otp.domain.repository.OTPRepository
 import com.iagora.wingman.auth.otp.domain.use_case.count_down_timer_use_case.CountDownTimerUseCase
 import com.iagora.wingman.auth.otp.domain.use_case.send_otp_use_case.SendOTPUseCase
@@ -26,11 +26,11 @@ object UseCaseModule {
     @Singleton
     fun provideVerifyOTPWithSaveCredentialUseCase(
         otpRepository: OTPRepository,
-        credentialDataStorePreferencesRepository: CredentialDataStorePreferencesRepository
+        dataStorePreferencesRepository: DataStorePreferencesRepository
     ): VerifyOTPWithSaveCredentialsUseCase {
         return VerifyOTPWithSaveCredentialsUseCase(
             otpRepository,
-            credentialDataStorePreferencesRepository
+            dataStorePreferencesRepository
         )
     }
 

@@ -1,6 +1,6 @@
-package com.iagora.wingman.auth.credential.domain.repository
+package com.iagora.wingman.data_store.domain.repository
 
-interface CredentialDataStorePreferencesRepository {
+interface DataStorePreferencesRepository {
     suspend fun setToken(token: String)
     suspend fun getToken(): Result<String>
     suspend fun setUserId(token: String)

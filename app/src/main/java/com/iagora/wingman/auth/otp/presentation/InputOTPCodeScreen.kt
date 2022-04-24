@@ -3,6 +3,7 @@ package com.iagora.wingman.auth.otp.presentation
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
@@ -149,7 +150,7 @@ private fun InputOTPCodeContent(
                 modifier = Modifier
                     .fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Done,
+                    imeAction = ImeAction.Send,
                     keyboardType = KeyboardType.Number
                 ),
                 isError = inputOTPCodeState.isTextFieldError,

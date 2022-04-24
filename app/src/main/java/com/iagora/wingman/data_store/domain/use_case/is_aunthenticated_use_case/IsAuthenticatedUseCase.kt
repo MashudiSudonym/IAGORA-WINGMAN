@@ -1,15 +1,14 @@
-package com.iagora.wingman.auth.credential.domain.use_case.is_aunthenticated_use_case
+package com.iagora.wingman.data_store.domain.use_case.is_aunthenticated_use_case
 
-import com.iagora.wingman.auth.credential.domain.repository.CredentialDataStorePreferencesRepository
+import com.iagora.wingman.data_store.domain.repository.DataStorePreferencesRepository
 import com.iagora.wingman.common.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import timber.log.Timber
 
-class IsAuthenticatedUseCase(private val credentialDataStorePreferencesRepository: CredentialDataStorePreferencesRepository) {
+class IsAuthenticatedUseCase(private val dataStorePreferencesRepository: DataStorePreferencesRepository) {
     suspend operator fun invoke(): Flow<Resource<Boolean>> {
-        val getCacheToken = credentialDataStorePreferencesRepository.getToken()
-        val getCacheUserId = credentialDataStorePreferencesRepository.getUserId()
+        val getCacheToken = dataStorePreferencesRepository.getToken()
+        val getCacheUserId = dataStorePreferencesRepository.getUserId()
 
         return if (getCacheToken.getOrDefault("").isEmpty() && getCacheUserId.getOrDefault("").isEmpty()) flow {
             emit(Resource.Loading(true))
