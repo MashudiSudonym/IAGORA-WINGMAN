@@ -3,11 +3,8 @@ package com.iagora.wingman.auth.otp.presentation
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Error
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -19,7 +16,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -27,6 +23,7 @@ import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.iagora.wingman.R
 import com.iagora.wingman.auth.otp.presentation.state.InputPhoneNumberState
 import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicator
+import com.iagora.wingman.common.presentation.ui.component.SingleLineOutlineTextFieldCustom
 import com.iagora.wingman.destinations.InputOTPCodeScreenDestination
 import com.iagora.wingman.destinations.InputPhoneNumberWithApplicationLogoScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
@@ -113,37 +110,15 @@ private fun InputPhoneNumberWithApplicationLogoContent(
             fontWeight = FontWeight.Medium
         )
         Spacer(modifier = Modifier.size(24.dp))
-        Column {
-            OutlinedTextField(
-                value = authRequestOTPCodeViewModel.phoneNumberText,
-                onValueChange = authRequestOTPCodeViewModel::onPhoneNumberChange,
-                label = { Text(text = "Nomor HP (6285111222333)") },
-                singleLine = true,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Done,
-                    keyboardType = KeyboardType.Phone
-                ),
-                isError = inputPhoneNumberState.isTextFieldError,
-                trailingIcon = {
-                    if (inputPhoneNumberState.isTextFieldError) {
-                        Icon(
-                            imageVector = Icons.Default.Error,
-                            tint = MaterialTheme.colors.error,
-                            contentDescription = null
-                        )
-                    }
-                }
-            )
-            if (inputPhoneNumberState.isTextFieldError) {
-                Text(
-                    text = inputPhoneNumberState.errorMessage.asString(),
-                    color = MaterialTheme.colors.error,
-                    style = MaterialTheme.typography.caption
-                )
-            }
-        }
+        SingleLineOutlineTextFieldCustom(
+            textValue = authRequestOTPCodeViewModel.phoneNumberText,
+            textValueChange = authRequestOTPCodeViewModel::onPhoneNumberChange,
+            labelText = "Nomor HP (6285111222333)",
+            isError = inputPhoneNumberState.isTextFieldError,
+            errorMessage = inputPhoneNumberState.errorMessage.asString(),
+            keyboardType = KeyboardType.Phone,
+            keyboardActionOnDone = { authRequestOTPCodeViewModel.validationPhoneNumberTextFieldAndSendOTPRequest() }
+        )
         Spacer(modifier = Modifier.size(24.dp))
         Button(
             enabled = !inputPhoneNumberState.isLoading,

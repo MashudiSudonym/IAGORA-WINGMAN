@@ -29,6 +29,7 @@ import com.iagora.wingman.R
 import com.iagora.wingman.auth.otp.presentation.state.CountDownState
 import com.iagora.wingman.auth.otp.presentation.state.InputOTPCodeState
 import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicator
+import com.iagora.wingman.common.presentation.ui.component.SingleLineOutlineTextFieldCustom
 import com.iagora.wingman.common.util.Constants
 import com.iagora.wingman.destinations.InputPhoneNumberWithApplicationLogoScreenDestination
 import com.iagora.wingman.destinations.RootScreenDestination
@@ -140,36 +141,19 @@ private fun InputOTPCodeContent(
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.size(64.dp))
-        Column {
-            OutlinedTextField(
-                value = authVerifyOTPCodeViewModel.otpCodeText,
-                onValueChange = authVerifyOTPCodeViewModel::onOTPCodeChange,
-                label = { Text(text = "Masukkan 6 digit kode OTP Anda") },
-                singleLine = true,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Send,
-                    keyboardType = KeyboardType.Number
-                ),
-                isError = inputOTPCodeState.isTextFieldError,
-                trailingIcon = {
-                    if (inputOTPCodeState.isTextFieldError) {
-                        Icon(
-                            imageVector = Icons.Default.Error,
-                            tint = MaterialTheme.colors.error,
-                            contentDescription = null
-                        )
-                    }
-                })
-            if (inputOTPCodeState.isTextFieldError) {
-                Text(
-                    text = inputOTPCodeState.errorMessage.asString(),
-                    color = MaterialTheme.colors.error,
-                    style = MaterialTheme.typography.caption
+        SingleLineOutlineTextFieldCustom(
+            textValue = authVerifyOTPCodeViewModel.otpCodeText,
+            textValueChange = authVerifyOTPCodeViewModel::onOTPCodeChange,
+            labelText = "Masukkan 6 digit kode OTP Anda",
+            isError = inputOTPCodeState.isTextFieldError,
+            errorMessage = inputOTPCodeState.errorMessage.asString(),
+            keyboardType = KeyboardType.Number,
+            keyboardActionOnDone = {
+                authVerifyOTPCodeViewModel.validationOTPCodeTextFieldAndSendOTPVerification(
+                    phoneNumber
                 )
             }
-        }
+        )
         Spacer(modifier = Modifier.size(16.dp))
         Button(
             enabled = !inputOTPCodeState.isLoading,
