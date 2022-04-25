@@ -14,4 +14,5 @@
     <string name="home_title">Home</string>
     <string name="customer_care_title">Customer Care</string>
     <string name="profile_title">Profile</string>
+    <string name="error_wrong_otp_code">Kode OTP anda salah, harap periksa kembali</string>
 </resources>

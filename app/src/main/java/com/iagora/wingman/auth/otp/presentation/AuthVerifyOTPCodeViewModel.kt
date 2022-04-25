@@ -73,6 +73,8 @@ class AuthVerifyOTPCodeViewModel @Inject constructor(
                             errorMessage = UIText.StringResource(R.string.otp_field_blank)
                         )
                     }
+
+                    reRunCountDown()
                 }
                 otpCodeText.length < 6 -> {
                     _inputOTPCodeState.update { data ->
@@ -82,8 +84,10 @@ class AuthVerifyOTPCodeViewModel @Inject constructor(
                             errorMessage = UIText.StringResource(R.string.error_otp_code_not_valid)
                         )
                     }
+
+                    reRunCountDown()
                 }
-                otpCodeText.length > 6 -> {
+                otpCodeText.length > 7 -> {
                     _inputOTPCodeState.update { data ->
                         data.copy(
                             isLoading = false,
@@ -91,6 +95,8 @@ class AuthVerifyOTPCodeViewModel @Inject constructor(
                             errorMessage = UIText.StringResource(R.string.error_otp_code_not_valid)
                         )
                     }
+
+                    reRunCountDown()
                 }
                 else -> {
                     // send verification code
@@ -102,23 +108,29 @@ class AuthVerifyOTPCodeViewModel @Inject constructor(
                                         data.copy(
                                             isLoading = false,
                                             isError = true,
-                                            isTextFieldError = false
+                                            isTextFieldError = true,
+                                            errorMessage = result.message ?: UIText.unknownError()
                                         )
                                     }
+
                                     inputOTPCodeErrorChannel.send(
                                         result.message ?: UIText.unknownError()
                                     )
                                 }
-                                is Resource.Loading -> _inputOTPCodeState.update { it.copy(isLoading = true) }
-                                is Resource.Success -> _inputOTPCodeState.update { data ->
-                                    data.copy(
-                                        isLoading = false,
-                                        isError = false,
-                                        isTextFieldError = false,
-                                        isSuccess = true,
-                                        isCompleteRegister = result.data?.isCompleteRegister
-                                            ?: false
-                                    )
+                                is Resource.Loading ->
+                                    _inputOTPCodeState.update { it.copy(isLoading = true) }
+                                is Resource.Success -> {
+                                    _inputOTPCodeState.update { data ->
+                                        data.copy(
+                                            isLoading = false,
+                                            isError = false,
+                                            isTextFieldError = false,
+                                            isSuccess = true,
+                                            isCompleteRegister = result.data?.isCompleteRegister
+                                                ?: false,
+                                            errorMessage = UIText.DynamicString("")
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -139,24 +151,22 @@ class AuthVerifyOTPCodeViewModel @Inject constructor(
                                 isError = true,
                             )
                         }
+
                         inputOTPCodeErrorChannel.send(
                             result.message ?: UIText.unknownError()
                         )
+
+                        // run count down again
+                        reRunCountDown()
                     }
-                    is Resource.Loading -> _inputOTPCodeState.update { it.copy(isLoading = true) }
+                    is Resource.Loading -> {
+                        _inputOTPCodeState.update { it.copy(isLoading = true) }
+                    }
                     is Resource.Success -> {
-                        countDownTimer()
-                        _inputOTPCodeState.update { data ->
-                            data.copy(
-                                isLoading = false,
-                                isError = false,
-                                isTextFieldError = false,
-                                isSuccess = true,
-                            )
-                        }
-                        _countDownState.update { data ->
-                            data.copy(isCountDownStop = false)
-                        }
+                        _inputOTPCodeState.update { it.copy(isLoading = false, isError = false) }
+
+                        // run count down again
+                        reRunCountDown()
                     }
                 }
             }
@@ -173,6 +183,13 @@ class AuthVerifyOTPCodeViewModel @Inject constructor(
                     _countDownState.update { it.copy(isCountDownStop = true) }
                 }
             }
+        }
+    }
+
+    private fun reRunCountDown() {
+        countDownTimer()
+        _countDownState.update { data ->
+            data.copy(isCountDownStop = false)
         }
     }
 }

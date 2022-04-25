@@ -80,7 +80,7 @@ class OTPRepositoryImpl(private val otpAPI: OtpAPI) : OTPRepository {
                 Timber.e(e)
                 emit(
                     Resource.Error(
-                        message = UIText.StringResource(R.string.internet_problem)
+                        message = UIText.StringResource(R.string.error_wrong_otp_code)
                     )
                 )
             } catch (e: UnknownHostException) {
