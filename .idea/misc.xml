@@ -25,8 +25,14 @@
         <entry key="../../../../layout/compose-model-1650665643941.xml" value="0.19847972972972974" />
         <entry key="../../../../layout/compose-model-1650665787589.xml" value="2.0" />
         <entry key="../../../../layout/compose-model-1650666985718.xml" value="0.19847972972972974" />
+        <entry key="../../../../layout/compose-model-1650910962936.xml" value="0.33" />
+        <entry key="../../../../layout/compose-model-1650919761956.xml" value="0.19847972972972974" />
+        <entry key="../../../../layout/compose-model-1650921047754.xml" value="0.19847972972972974" />
+        <entry key="../../../../layout/compose-model-1650921093661.xml" value="0.3194444444444444" />
+        <entry key="../../../../layout/compose-model-1650924287733.xml" value="0.19847972972972974" />
         <entry key="app/src/main/res/drawable-hdpi/_12.xml" value="0.115" />
         <entry key="app/src/main/res/drawable-v23/bg_splash_12.xml" value="0.115" />
+        <entry key="app/src/main/res/drawable-v23/ic_wallet_white.xml" value="0.108" />
         <entry key="app/src/main/res/drawable/bg_splash.xml" value="0.115" />
         <entry key="app/src/main/res/drawable/bg_splash_12.xml" value="0.115" />
         <entry key="app/src/main/res/drawable/bg_tab.xml" value="0.115" />
@@ -66,6 +72,7 @@
         <entry key="app/src/main/res/drawable/ic_selected.xml" value="0.108" />
         <entry key="app/src/main/res/drawable/ic_setting.xml" value="0.108" />
         <entry key="app/src/main/res/drawable/ic_shopping_bag.xml" value="0.108" />
+        <entry key="app/src/main/res/drawable/ic_shopping_bag_white.xml" value="0.108" />
         <entry key="app/src/main/res/drawable/ic_star_rate.xml" value="0.101" />
         <entry key="app/src/main/res/drawable/ic_toko.xml" value="0.108" />
         <entry key="app/src/main/res/drawable/ic_toko_shimmer.xml" value="0.108" />

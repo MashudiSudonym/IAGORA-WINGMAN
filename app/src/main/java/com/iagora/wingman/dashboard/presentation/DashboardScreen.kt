@@ -1,39 +1,65 @@
 package com.iagora.wingman.dashboard.presentation
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.iagora.wingman.R
 import com.iagora.wingman.common.presentation.ui.component.BottomNavigationContentWrapper
+import com.iagora.wingman.common.presentation.ui.component.CommonPrimaryColorButton
 import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
+import com.iagora.wingman.dashboard.presentation.component.HeaderDashboardContent
+import com.iagora.wingman.dashboard.presentation.component.WingmanBalanceCard
+import com.iagora.wingman.dashboard.presentation.component.WingmanHelpInformation
+import com.iagora.wingman.dashboard.presentation.component.WingmanOrderInformation
 
 @Composable
 fun DashBoardScreen() {
     // dashboard content
     BottomNavigationContentWrapper {
-        Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-        ) {
-            for (i in 1..45) {
-                Text(text = "dashboard $i")
-            }
-        }
+        DashboardContent()
     }
 }
 
 @Composable
 private fun DashboardContent() {
-
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+    ) {
+        HeaderDashboardContent()
+        WingmanBalanceCard()
+        Spacer(modifier = Modifier.size(16.dp))
+        WingmanOrderInformation()
+        Spacer(modifier = Modifier.size(24.dp))
+        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+            CommonPrimaryColorButton(
+                clickEvent = { /*TODO*/ },
+                buttonTitle = "TAMBAH PRODUK",
+            )
+            Spacer(modifier = Modifier.size(24.dp))
+            Text(
+                text = "Langkah-langkah memproses pesanan",
+                style = MaterialTheme.typography.subtitle1,
+                fontWeight = FontWeight.Medium,
+            )
+        }
+        WingmanHelpInformation()
+        Spacer(modifier = Modifier.size(16.dp))
+    }
 }
 
 @Preview(showBackground = true)

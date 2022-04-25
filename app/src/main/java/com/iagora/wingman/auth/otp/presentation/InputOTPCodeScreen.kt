@@ -3,11 +3,8 @@ package com.iagora.wingman.auth.otp.presentation
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Error
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -19,7 +16,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -28,6 +24,7 @@ import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.iagora.wingman.R
 import com.iagora.wingman.auth.otp.presentation.state.CountDownState
 import com.iagora.wingman.auth.otp.presentation.state.InputOTPCodeState
+import com.iagora.wingman.common.presentation.ui.component.CommonPrimaryColorButton
 import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicator
 import com.iagora.wingman.common.presentation.ui.component.SingleLineOutlineTextFieldCustom
 import com.iagora.wingman.common.util.Constants
@@ -155,21 +152,15 @@ private fun InputOTPCodeContent(
             }
         )
         Spacer(modifier = Modifier.size(16.dp))
-        Button(
-            enabled = !inputOTPCodeState.isLoading,
-            onClick = {
+        CommonPrimaryColorButton(
+            clickEvent = {
                 authVerifyOTPCodeViewModel.validationOTPCodeTextFieldAndSendOTPVerification(
                     phoneNumber
                 )
             },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
-                text = "KIRIM OTP",
-                style = MaterialTheme.typography.subtitle1,
-                fontWeight = FontWeight.SemiBold,
-            )
-        }
+            buttonTitle = "KIRIM OTP",
+            isEnable = !inputOTPCodeState.isLoading,
+        )
         Spacer(modifier = Modifier.size(64.dp))
         // If count down timer it's end, show up this button
         if (countDownState.isCountDownStop) {

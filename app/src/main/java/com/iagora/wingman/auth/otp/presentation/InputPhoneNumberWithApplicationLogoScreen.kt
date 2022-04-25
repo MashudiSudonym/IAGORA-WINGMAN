@@ -22,6 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.iagora.wingman.R
 import com.iagora.wingman.auth.otp.presentation.state.InputPhoneNumberState
+import com.iagora.wingman.common.presentation.ui.component.CommonPrimaryColorButton
 import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicator
 import com.iagora.wingman.common.presentation.ui.component.SingleLineOutlineTextFieldCustom
 import com.iagora.wingman.destinations.InputOTPCodeScreenDestination
@@ -120,18 +121,10 @@ private fun InputPhoneNumberWithApplicationLogoContent(
             keyboardActionOnDone = { authRequestOTPCodeViewModel.validationPhoneNumberTextFieldAndSendOTPRequest() }
         )
         Spacer(modifier = Modifier.size(24.dp))
-        Button(
-            enabled = !inputPhoneNumberState.isLoading,
-            onClick = {
-                authRequestOTPCodeViewModel.validationPhoneNumberTextFieldAndSendOTPRequest()
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
-                text = "LOGIN",
-                style = MaterialTheme.typography.subtitle1,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
+        CommonPrimaryColorButton(
+            clickEvent = { authRequestOTPCodeViewModel.validationPhoneNumberTextFieldAndSendOTPRequest() },
+            buttonTitle = "LOGIN",
+            isEnable = !inputPhoneNumberState.isLoading
+        )
     }
 }
