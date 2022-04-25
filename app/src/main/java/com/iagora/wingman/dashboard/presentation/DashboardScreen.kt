@@ -1,6 +1,7 @@
 package com.iagora.wingman.dashboard.presentation
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -16,9 +17,16 @@ import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
 @Composable
 fun DashBoardScreen() {
     // dashboard content
-    BottomNavigationContentWrapper(modifier = Modifier.verticalScroll(rememberScrollState())) {
-        for (i in 1..45) {
-            Text(text = "dashboard $i")
+    BottomNavigationContentWrapper {
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+        ) {
+            for (i in 1..45) {
+                Text(text = "dashboard $i")
+            }
         }
     }
 }
