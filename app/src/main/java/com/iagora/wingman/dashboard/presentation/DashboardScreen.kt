@@ -7,6 +7,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,6 +18,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.iagora.wingman.R
 import com.iagora.wingman.common.presentation.ui.component.BottomNavigationContentWrapper
 import com.iagora.wingman.common.presentation.ui.component.CommonPrimaryColorButton
@@ -34,7 +37,8 @@ fun DashBoardScreen() {
 }
 
 @Composable
-private fun DashboardContent() {
+private fun DashboardContent(dashboardViewModel: DashboardViewModel = hiltViewModel()) {
+    val greetingState by dashboardViewModel.greetingState.collectAsState()
     val thisScrollState = rememberScrollState()
 
     Column(
@@ -42,7 +46,7 @@ private fun DashboardContent() {
             .fillMaxSize()
             .verticalScroll(thisScrollState)
     ) {
-        HeaderDashboardContent()
+        HeaderDashboardContent(greetingState)
         WingmanBalanceCard()
         Spacer(modifier = Modifier.size(16.dp))
         WingmanOrderInformation()

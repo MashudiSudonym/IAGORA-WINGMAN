@@ -19,9 +19,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.iagora.wingman.R
 import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
+import com.iagora.wingman.dashboard.presentation.state.GreetingState
 
 @Composable
-fun HeaderDashboardContent() {
+fun HeaderDashboardContent(greetingState: GreetingState) {
     val checkedState = remember { mutableStateOf(true) }
 
     Box {
@@ -40,7 +41,7 @@ fun HeaderDashboardContent() {
             ) {
                 Spacer(modifier = Modifier.size(16.dp))
                 Text(
-                    text = "Selamat {Malam}, {Jack}",
+                    text = "Selamat ${greetingState.greeting}, {Jack}",
                     style = MaterialTheme.typography.h6,
                     color = Color.White,
                     fontWeight = FontWeight.SemiBold
@@ -96,6 +97,6 @@ fun HeaderDashboardContent() {
 @Composable
 fun HeaderDashboardContentPreview() {
     WINGMANTheme {
-        HeaderDashboardContent()
+        HeaderDashboardContent(greetingState = GreetingState())
     }
 }
