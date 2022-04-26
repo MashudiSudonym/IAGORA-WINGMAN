@@ -63,7 +63,9 @@ fun InputPhoneNumberWithApplicationLogoScreen(
         }
     }
 
-    Scaffold(scaffoldState = scaffoldState) {
+    Scaffold(
+        scaffoldState = scaffoldState,
+    ) {
         // navigate to input otp code screen after success with phone number input
         when {
             inputPhoneNumberState.isError -> LaunchedEffect(scaffoldState) {
@@ -110,9 +112,7 @@ private fun InputPhoneNumberWithApplicationLogoContent(
             .fillMaxSize()
             .padding(16.dp)
             .statusBarsPadding()
-            .imePadding()
             .navigationBarsWithImePadding()
-            .navigationBarsPadding()
             .verticalScroll(state = thisScrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center

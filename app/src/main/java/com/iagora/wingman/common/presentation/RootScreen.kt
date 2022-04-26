@@ -31,8 +31,6 @@ fun RootScreen() {
     Scaffold(
         modifier = Modifier
             .statusBarsPadding()
-            .imePadding()
-            .navigationBarsWithImePadding()
             .navigationBarsPadding(),
         bottomBar = {
             BottomNavigationScreen(

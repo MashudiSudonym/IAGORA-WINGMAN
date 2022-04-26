@@ -114,9 +114,7 @@ private fun InputOTPCodeContent(
             .fillMaxSize()
             .padding(16.dp)
             .statusBarsPadding()
-            .imePadding()
             .navigationBarsWithImePadding()
-            .navigationBarsPadding()
             .verticalScroll(state = thisScrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
