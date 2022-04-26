@@ -35,17 +35,10 @@ fun WingmanBalanceCard() {
         ) {
             Spacer(modifier = Modifier.size(16.dp))
 
-            if (isSystemInDarkTheme()) {
-                Image(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_wallet_white),
-                    contentDescription = null
-                )
-            } else {
-                Image(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_wallet),
-                    contentDescription = null
-                )
-            }
+            Image(
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_wallet),
+                contentDescription = null
+            )
             Spacer(modifier = Modifier.size(16.dp))
             Column(horizontalAlignment = Alignment.Start) {
                 Text(text = "Pendapatan hari ini", style = MaterialTheme.typography.caption)

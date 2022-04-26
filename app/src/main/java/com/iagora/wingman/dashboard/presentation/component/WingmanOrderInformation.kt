@@ -36,17 +36,10 @@ fun WingmanOrderInformation() {
                 verticalArrangement = Arrangement.SpaceAround,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                if (isSystemInDarkTheme()) {
-                    Image(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_shopping_bag_white),
-                        contentDescription = null
-                    )
-                } else {
-                    Image(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_shopping_bag),
-                        contentDescription = null
-                    )
-                }
+                Image(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_shopping_bag),
+                    contentDescription = null
+                )
                 Text(text = "{1} Pesanan Baru")
             }
         }
@@ -62,7 +55,7 @@ fun WingmanOrderInformation() {
                 Icon(
                     imageVector = Icons.Default.Check,
                     contentDescription = null,
-                    tint = if (isSystemInDarkTheme()) Color.White else Color.Black
+                    tint = Color.Black
                 )
                 Text(text = "Pesanan Selesai")
             }

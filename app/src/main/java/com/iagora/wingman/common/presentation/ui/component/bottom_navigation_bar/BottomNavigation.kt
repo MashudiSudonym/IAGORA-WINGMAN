@@ -33,8 +33,8 @@ fun BottomNavigationScreen(
                     Text(text = stringResource(id = screen.resId))
                 },
                 selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
-                selectedContentColor = if (isSystemInDarkTheme()) Color.White else Color.Black,
-                unselectedContentColor = if (isSystemInDarkTheme()) Color.White.copy(alpha = 0.4f) else Color.Black.copy(
+                selectedContentColor = Color.Black,
+                unselectedContentColor = Color.Black.copy(
                     alpha = 0.4f
                 ),
                 alwaysShowLabel = true,
