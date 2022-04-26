@@ -22,7 +22,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.insets.imePadding
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import com.iagora.wingman.R
@@ -65,6 +64,9 @@ fun InputPhoneNumberWithApplicationLogoScreen(
 
     Scaffold(
         scaffoldState = scaffoldState,
+        modifier = Modifier
+            .statusBarsPadding()
+            .navigationBarsWithImePadding()
     ) {
         // navigate to input otp code screen after success with phone number input
         when {
@@ -111,8 +113,6 @@ private fun InputPhoneNumberWithApplicationLogoContent(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
-            .statusBarsPadding()
-            .navigationBarsWithImePadding()
             .verticalScroll(state = thisScrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
