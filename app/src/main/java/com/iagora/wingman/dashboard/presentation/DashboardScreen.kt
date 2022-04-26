@@ -35,10 +35,12 @@ fun DashBoardScreen() {
 
 @Composable
 private fun DashboardContent() {
+    val thisScrollState = rememberScrollState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(thisScrollState)
     ) {
         HeaderDashboardContent()
         WingmanBalanceCard()

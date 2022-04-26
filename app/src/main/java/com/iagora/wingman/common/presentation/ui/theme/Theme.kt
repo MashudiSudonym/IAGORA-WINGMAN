@@ -48,7 +48,7 @@ private val LightColorPalette = lightColors(
 // Remove this if dark theme feature is support
 @Composable
 fun WINGMANTheme(content: @Composable () -> Unit) {
-    LightColorPalette
+    val colors = LightColorPalette
 
     MaterialTheme(
         colors = colors,

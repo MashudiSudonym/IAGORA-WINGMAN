@@ -6,14 +6,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iagora.wingman.R
-import com.iagora.wingman.auth.otp.domain.use_case.count_down_timer_use_case.CountDownTimerUseCase
 import com.iagora.wingman.auth.otp.domain.use_case.send_otp_use_case.SendOTPUseCase
-import com.iagora.wingman.auth.otp.domain.use_case.verify_otp_use_case.VerifyOTPWithSaveCredentialsUseCase
-import com.iagora.wingman.auth.otp.presentation.state.CountDownState
-import com.iagora.wingman.auth.otp.presentation.state.InputOTPCodeState
 import com.iagora.wingman.auth.otp.presentation.state.InputPhoneNumberState
+import com.iagora.wingman.auth.otp.presentation.state.AuthenticationState
 import com.iagora.wingman.common.util.Resource
 import com.iagora.wingman.common.util.UIText
+import com.iagora.wingman.data_store.domain.use_case.is_aunthenticated_use_case.IsAuthenticatedUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -21,14 +19,17 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class AuthRequestOTPCodeViewModel @Inject constructor(
     private val sendOTPUseCase: SendOTPUseCase,
-    private val countDownTimerUseCase: CountDownTimerUseCase
+    private val isAuthenticatedUseCase: IsAuthenticatedUseCase
 ) : ViewModel() {
+    private val _authenticationState = MutableStateFlow(AuthenticationState())
+    val authenticationState: StateFlow<AuthenticationState> =
+        _authenticationState.asStateFlow()
+
     private val _inputPhoneNumberState = MutableStateFlow(InputPhoneNumberState())
     val inputPhoneNumberState: StateFlow<InputPhoneNumberState> =
         _inputPhoneNumberState.asStateFlow()
@@ -38,6 +39,30 @@ class AuthRequestOTPCodeViewModel @Inject constructor(
 
     var phoneNumberText by mutableStateOf("")
     private var validationStatusIsSuccess by mutableStateOf(false)
+
+    init {
+        isAuthenticated()
+    }
+
+    private fun isAuthenticated() {
+        viewModelScope.launch {
+            isAuthenticatedUseCase().collect { result ->
+                when (result) {
+                    is Resource.Error -> _authenticationState.update { it.copy(isError = true) }
+                    is Resource.Loading -> _authenticationState.update { it.copy(isLoading = result.isLoading) }
+                    is Resource.Success -> {
+                        result.data.let { data ->
+                            _authenticationState.update {
+                                it.copy(
+                                    isAuthenticated = data ?: false
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     fun onUpdatedValidationStatusChange(isSuccess: Boolean) {
         validationStatusIsSuccess = isSuccess

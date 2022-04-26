@@ -4,7 +4,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -19,7 +22,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.accompanist.insets.imePadding
 import com.google.accompanist.insets.navigationBarsWithImePadding
+import com.google.accompanist.insets.statusBarsPadding
 import com.iagora.wingman.R
 import com.iagora.wingman.auth.otp.presentation.state.InputPhoneNumberState
 import com.iagora.wingman.common.presentation.ui.component.CommonPrimaryColorButton
@@ -27,11 +32,12 @@ import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndi
 import com.iagora.wingman.common.presentation.ui.component.SingleLineOutlineTextFieldCustom
 import com.iagora.wingman.destinations.InputOTPCodeScreenDestination
 import com.iagora.wingman.destinations.InputPhoneNumberWithApplicationLogoScreenDestination
+import com.iagora.wingman.destinations.RootScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
 
-@Destination
+@Destination(start = true)
 @Composable
 fun InputPhoneNumberWithApplicationLogoScreen(
     navigator: DestinationsNavigator,
@@ -40,6 +46,22 @@ fun InputPhoneNumberWithApplicationLogoScreen(
     val scaffoldState = rememberScaffoldState()
     val context = LocalContext.current
     val inputPhoneNumberState by authRequestOTPCodeViewModel.inputPhoneNumberState.collectAsState()
+    val authenticationState by authRequestOTPCodeViewModel.authenticationState.collectAsState()
+
+    // check user authentication status
+    when {
+        authenticationState.isLoading -> FullScreenLoadingIndicator()
+        authenticationState.isError -> Text(text = "Error")
+        authenticationState.isAuthenticated -> {
+            navigator.navigate(RootScreenDestination) {
+                popUpTo(
+                    InputPhoneNumberWithApplicationLogoScreenDestination
+                ) {
+                    inclusive = true
+                }
+            }
+        }
+    }
 
     Scaffold(scaffoldState = scaffoldState) {
         // navigate to input otp code screen after success with phone number input
@@ -81,12 +103,17 @@ private fun InputPhoneNumberWithApplicationLogoContent(
     authRequestOTPCodeViewModel: AuthRequestOTPCodeViewModel,
     inputPhoneNumberState: InputPhoneNumberState
 ) {
+    val thisScrollState = rememberScrollState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
+            .statusBarsPadding()
+            .imePadding()
             .navigationBarsWithImePadding()
-            .verticalScroll(state = rememberScrollState()),
+            .navigationBarsPadding()
+            .verticalScroll(state = thisScrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {

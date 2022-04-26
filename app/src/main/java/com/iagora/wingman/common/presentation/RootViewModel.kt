@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iagora.wingman.data_store.domain.use_case.is_aunthenticated_use_case.IsAuthenticatedUseCase
 import com.iagora.wingman.common.util.Resource
-import com.iagora.wingman.common.presentation.state.RootAuthenticationState
+import com.iagora.wingman.auth.otp.presentation.state.AuthenticationState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,8 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class RootViewModel @Inject constructor(private val isAuthenticatedUseCase: IsAuthenticatedUseCase) :
     ViewModel() {
-    private val _rootAuthenticationState = MutableStateFlow(RootAuthenticationState())
-    val rootAuthenticationState: StateFlow<RootAuthenticationState> =
+    private val _rootAuthenticationState = MutableStateFlow(AuthenticationState())
+    val rootAuthenticationState: StateFlow<AuthenticationState> =
         _rootAuthenticationState.asStateFlow()
 
     init {

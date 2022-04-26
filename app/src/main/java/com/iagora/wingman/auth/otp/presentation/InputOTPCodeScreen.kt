@@ -20,7 +20,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.accompanist.insets.imePadding
+import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.navigationBarsWithImePadding
+import com.google.accompanist.insets.statusBarsPadding
 import com.iagora.wingman.R
 import com.iagora.wingman.auth.otp.presentation.state.CountDownState
 import com.iagora.wingman.auth.otp.presentation.state.InputOTPCodeState
@@ -104,12 +107,17 @@ private fun InputOTPCodeContent(
     inputOTPCodeState: InputOTPCodeState,
     countDownState: CountDownState
 ) {
+    val thisScrollState = rememberScrollState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
+            .statusBarsPadding()
+            .imePadding()
             .navigationBarsWithImePadding()
-            .verticalScroll(state = rememberScrollState()),
+            .navigationBarsPadding()
+            .verticalScroll(state = thisScrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {

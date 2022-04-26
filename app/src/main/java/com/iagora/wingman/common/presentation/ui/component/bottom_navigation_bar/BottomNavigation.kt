@@ -20,7 +20,7 @@ fun BottomNavigationScreen(
     items: List<BottomNavigationScreens>
 ) {
     BottomNavigation(
-        backgroundColor = if (isSystemInDarkTheme()) Color.Black else Color.White,
+        backgroundColor = Color.White,
         elevation = 0.dp
     ) {
         val navBackStackEntry by navHostController.currentBackStackEntryAsState()

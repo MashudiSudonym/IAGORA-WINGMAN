@@ -8,7 +8,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.iagora.wingman.NavGraphs
 import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
