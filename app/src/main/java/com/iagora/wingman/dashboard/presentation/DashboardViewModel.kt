@@ -3,8 +3,8 @@ package com.iagora.wingman.dashboard.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iagora.wingman.common.util.Resource
-import com.iagora.wingman.dashboard.domain.use_case.greeting_use_case.GreetingUseCase
-import com.iagora.wingman.dashboard.presentation.state.GreetingState
+import com.iagora.wingman.dashboard.domain.use_case.greeting_message_use_case.GreetingMessageUseCase
+import com.iagora.wingman.dashboard.presentation.state.GreetingMessageState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,10 +14,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DashboardViewModel @Inject constructor(private val greetingUseCase: GreetingUseCase) :
+class DashboardViewModel @Inject constructor(private val greetingMessageUseCase: GreetingMessageUseCase) :
     ViewModel() {
-    private val _greetingState = MutableStateFlow(GreetingState())
-    val greetingState: StateFlow<GreetingState> = _greetingState.asStateFlow()
+    private val _greetingState = MutableStateFlow(GreetingMessageState())
+    val greetingMessageState: StateFlow<GreetingMessageState> = _greetingState.asStateFlow()
 
     init {
         getGreetingMessage()
@@ -25,7 +25,7 @@ class DashboardViewModel @Inject constructor(private val greetingUseCase: Greeti
 
     private fun getGreetingMessage() {
         viewModelScope.launch {
-            greetingUseCase().collect { result ->
+            greetingMessageUseCase().collect { result ->
                 when (result) {
                     is Resource.Error -> _greetingState.update {
                         it.copy(

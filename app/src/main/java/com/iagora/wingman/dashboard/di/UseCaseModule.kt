@@ -1,6 +1,6 @@
 package com.iagora.wingman.dashboard.di
 
-import com.iagora.wingman.dashboard.domain.use_case.greeting_use_case.GreetingUseCase
+import com.iagora.wingman.dashboard.domain.use_case.greeting_message_use_case.GreetingMessageUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,7 +12,7 @@ import javax.inject.Singleton
 object UseCaseModule {
     @Provides
     @Singleton
-    fun provideGreetingUseCase(): GreetingUseCase {
-        return GreetingUseCase()
+    fun provideGreetingMessageUseCase(): GreetingMessageUseCase {
+        return GreetingMessageUseCase()
     }
 }
