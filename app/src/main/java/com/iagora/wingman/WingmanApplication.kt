@@ -22,7 +22,21 @@ class WingmanApplication : Application(), Configuration.Provider {
     @Inject
     lateinit var hiltWorkerFactory: HiltWorkerFactory
 
-    private val applicationScope = CoroutineScope(Dispatchers.IO)
+    private val applicationScope = CoroutineScope(Dispatchers.Default)
+
+    override fun getWorkManagerConfiguration(): Configuration =
+        Configuration.Builder().setWorkerFactory(hiltWorkerFactory).build()
+
+    override fun onCreate() {
+        super.onCreate()
+
+        // running Worker
+        delayInit()
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
+    }
 
     private fun delayInit() {
         applicationScope.launch {
@@ -39,19 +53,5 @@ class WingmanApplication : Application(), Configuration.Provider {
             ExistingPeriodicWorkPolicy.KEEP,
             repeatingRequest
         )
-    }
-
-    override fun getWorkManagerConfiguration(): Configuration =
-        Configuration.Builder().setWorkerFactory(hiltWorkerFactory).build()
-
-    override fun onCreate() {
-        super.onCreate()
-
-        // running Worker
-        delayInit()
-
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-        }
     }
 }
