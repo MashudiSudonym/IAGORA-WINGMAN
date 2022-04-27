@@ -59,11 +59,3 @@ private fun DashboardContent(dashboardViewModel: DashboardViewModel = hiltViewMo
         Spacer(modifier = Modifier.size(16.dp))
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun DashboardScreenPreview() {
-    WINGMANTheme {
-        DashboardContent()
-    }
-}
