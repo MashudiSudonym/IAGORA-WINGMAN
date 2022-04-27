@@ -15,4 +15,5 @@
     <string name="customer_care_title">Customer Care</string>
     <string name="profile_title">Profile</string>
     <string name="error_wrong_otp_code">Kode OTP anda salah, harap periksa kembali</string>
+    <string name="error_access_token_error">Kesalahan akses, harap login kembali</string>
 </resources>

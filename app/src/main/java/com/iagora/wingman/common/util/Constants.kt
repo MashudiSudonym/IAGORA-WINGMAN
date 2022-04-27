@@ -14,4 +14,5 @@ object Constants {
     const val HOME = "Home"
     const val CUSTOMER_CARE = "Customer Care"
     const val PROFILE = "Profile"
+    const val REQUEST_TOKEN_WORKER = "RequestTokenWorker"
 }
