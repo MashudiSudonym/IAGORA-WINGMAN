@@ -15,4 +15,9 @@ object Constants {
     const val CUSTOMER_CARE = "Customer Care"
     const val PROFILE = "Profile"
     const val REQUEST_TOKEN_WORKER = "RequestTokenWorker"
+    const val KTP = "ktp"
+    const val SKCK = "skck"
+    const val BANK = "bank"
+    const val NUMBER_BALANCE_ACCOUNT = "no_rek"
+    const val NAME_BALANCE_ACCOUNT = "nama_rek"
 }
