@@ -54,7 +54,7 @@ class AuthRequestOTPCodeViewModel @Inject constructor(
                         result.data.let { data ->
                             _authenticationState.update {
                                 it.copy(
-                                    isAuthenticated = data ?: false
+                                    isAuthenticated = data?.isAuthenticatedStatus ?: false
                                 )
                             }
                         }

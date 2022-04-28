@@ -17,7 +17,7 @@ import java.net.UnknownHostException
 
 class RequestTokenRepositoryImpl(private val requestTokenAPI: RequestTokenAPI) :
     RequestTokenRepository {
-    override suspend fun RequestToken(token: String): Flow<Resource<RequestTokenResponse>> {
+    override suspend fun requestToken(token: String): Flow<Resource<RequestTokenResponse>> {
         return flow {
             try {
                 val bearerToken = "${Constants.BEARER} $token"

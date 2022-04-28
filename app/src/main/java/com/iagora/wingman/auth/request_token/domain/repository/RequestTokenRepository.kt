@@ -5,5 +5,5 @@ import com.iagora.wingman.common.util.Resource
 import kotlinx.coroutines.flow.Flow
 
 interface RequestTokenRepository {
-    suspend fun RequestToken(token: String): Flow<Resource<RequestTokenResponse>>
+    suspend fun requestToken(token: String): Flow<Resource<RequestTokenResponse>>
 }

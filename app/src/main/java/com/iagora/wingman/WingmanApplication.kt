@@ -6,7 +6,7 @@ import androidx.work.Configuration
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.iagora.wingman.auth.request_token.presentation.RequestTokenWorker
+import com.iagora.wingman.auth.request_token.worker.RequestTokenWorker
 import com.iagora.wingman.common.util.Constants
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
@@ -22,7 +22,7 @@ class WingmanApplication : Application(), Configuration.Provider {
     @Inject
     lateinit var hiltWorkerFactory: HiltWorkerFactory
 
-    private val applicationScope = CoroutineScope(Dispatchers.Default)
+    private val applicationScope = CoroutineScope(Dispatchers.IO)
 
     override fun getWorkManagerConfiguration(): Configuration {
         return if (BuildConfig.DEBUG) {
@@ -57,7 +57,7 @@ class WingmanApplication : Application(), Configuration.Provider {
 
     private fun setupRecurringWork() {
         val repeatingRequest =
-            PeriodicWorkRequestBuilder<RequestTokenWorker>(3, TimeUnit.HOURS).build()
+            PeriodicWorkRequestBuilder<RequestTokenWorker>(1, TimeUnit.HOURS).build()
 
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
             Constants.REQUEST_TOKEN_WORKER,

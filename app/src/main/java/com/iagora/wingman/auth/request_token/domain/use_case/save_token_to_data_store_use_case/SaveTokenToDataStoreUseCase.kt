@@ -7,7 +7,6 @@ import com.iagora.wingman.common.util.UIText
 import com.iagora.wingman.data_store.domain.repository.DataStorePreferencesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import timber.log.Timber
 
 class SaveTokenToDataStoreUseCase(
     private val requestTokenRepository: RequestTokenRepository,
@@ -15,7 +14,7 @@ class SaveTokenToDataStoreUseCase(
 ) {
     suspend operator fun invoke(): Flow<Resource<SaveRequestTokenStatusData>> {
         val getOldToken = dataStorePreferencesRepository.getToken().getOrDefault("")
-        val requestNewToken = requestTokenRepository.RequestToken(getOldToken)
+        val requestNewToken = requestTokenRepository.requestToken(getOldToken)
 
         return flow {
             requestNewToken.collect { result ->

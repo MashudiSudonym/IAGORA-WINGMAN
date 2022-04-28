@@ -1,4 +1,4 @@
-package com.iagora.wingman.auth.request_token.presentation
+package com.iagora.wingman.auth.request_token.worker
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
@@ -8,7 +8,6 @@ import com.iagora.wingman.auth.request_token.domain.use_case.save_token_to_data_
 import com.iagora.wingman.common.util.Resource
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.flow.collect
 import timber.log.Timber
 
 @HiltWorker
