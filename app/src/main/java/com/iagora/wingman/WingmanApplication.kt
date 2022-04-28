@@ -24,8 +24,19 @@ class WingmanApplication : Application(), Configuration.Provider {
 
     private val applicationScope = CoroutineScope(Dispatchers.Default)
 
-    override fun getWorkManagerConfiguration(): Configuration =
-        Configuration.Builder().setWorkerFactory(hiltWorkerFactory).build()
+    override fun getWorkManagerConfiguration(): Configuration {
+        return if (BuildConfig.DEBUG) {
+            Configuration.Builder()
+                .setWorkerFactory(hiltWorkerFactory)
+                .setMinimumLoggingLevel(android.util.Log.DEBUG)
+                .build()
+        } else {
+            Configuration.Builder()
+                .setWorkerFactory(hiltWorkerFactory)
+                .setMinimumLoggingLevel(android.util.Log.ERROR)
+                .build()
+        }
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -46,7 +57,7 @@ class WingmanApplication : Application(), Configuration.Provider {
 
     private fun setupRecurringWork() {
         val repeatingRequest =
-            PeriodicWorkRequestBuilder<RequestTokenWorker>(6, TimeUnit.HOURS).build()
+            PeriodicWorkRequestBuilder<RequestTokenWorker>(3, TimeUnit.HOURS).build()
 
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
             Constants.REQUEST_TOKEN_WORKER,
