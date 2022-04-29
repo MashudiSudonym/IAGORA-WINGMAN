@@ -34,6 +34,9 @@ class VerifyOTPWithSaveCredentialsUseCase(
 
                         dataStorePreferencesRepository.setToken(token ?: "")
                         dataStorePreferencesRepository.setUserId(userId ?: "")
+                        dataStorePreferencesRepository.setUserCompleteDataStatus(
+                            isCompleteRegister ?: false
+                        )
 
                         emit(
                             Resource.Success(

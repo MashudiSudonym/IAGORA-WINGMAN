@@ -30,10 +30,12 @@ import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndi
 import com.iagora.wingman.common.presentation.ui.component.SingleLineOutlineTextFieldCustom
 import com.iagora.wingman.common.util.Constants
 import com.iagora.wingman.destinations.InputPhoneNumberWithApplicationLogoScreenDestination
+import com.iagora.wingman.destinations.RegistrationWingmanDetailDataScreenDestination
 import com.iagora.wingman.destinations.RootScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
+import timber.log.Timber
 
 @Destination
 @Composable
@@ -68,20 +70,20 @@ fun InputOTPCodeScreen(
                 // check if not user complete registration, open registration screen
                 if (!inputOTPCodeState.isCompleteRegister) {
                     navigator.navigate(
-                        RootScreenDestination
+                        RegistrationWingmanDetailDataScreenDestination
                     ) {
                         popUpTo(InputPhoneNumberWithApplicationLogoScreenDestination) {
                             inclusive = true
                         }
                     }
-                }
-
-                // if user complete registration, open dashboard screen
-                navigator.navigate(
-                    RootScreenDestination
-                ) {
-                    popUpTo(InputPhoneNumberWithApplicationLogoScreenDestination) {
-                        inclusive = true
+                } else {
+                    // if user complete registration, open dashboard screen
+                    navigator.navigate(
+                        RootScreenDestination
+                    ) {
+                        popUpTo(InputPhoneNumberWithApplicationLogoScreenDestination) {
+                            inclusive = true
+                        }
                     }
                 }
 

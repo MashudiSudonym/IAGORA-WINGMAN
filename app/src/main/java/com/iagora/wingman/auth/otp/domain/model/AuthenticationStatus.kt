@@ -1,4 +1,4 @@
-package com.iagora.wingman.data_store.domain.model
+package com.iagora.wingman.auth.otp.domain.model
 
 data class AuthenticationStatus(
     val isAuthenticatedStatus: Boolean = false

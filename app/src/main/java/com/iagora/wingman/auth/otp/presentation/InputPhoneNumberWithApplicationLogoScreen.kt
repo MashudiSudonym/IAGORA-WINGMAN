@@ -31,6 +31,7 @@ import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndi
 import com.iagora.wingman.common.presentation.ui.component.SingleLineOutlineTextFieldCustom
 import com.iagora.wingman.destinations.InputOTPCodeScreenDestination
 import com.iagora.wingman.destinations.InputPhoneNumberWithApplicationLogoScreenDestination
+import com.iagora.wingman.destinations.RegistrationWingmanDetailDataScreenDestination
 import com.iagora.wingman.destinations.RootScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -40,24 +41,31 @@ import com.ramcosta.composedestinations.navigation.popUpTo
 @Composable
 fun InputPhoneNumberWithApplicationLogoScreen(
     navigator: DestinationsNavigator,
-    authRequestOTPCodeViewModel: AuthRequestOTPCodeViewModel = hiltViewModel()
+    authRequestOTPCodeViewModel: AuthRequestOTPCodeViewModel = hiltViewModel(),
 ) {
     val scaffoldState = rememberScaffoldState()
     val context = LocalContext.current
     val inputPhoneNumberState by authRequestOTPCodeViewModel.inputPhoneNumberState.collectAsState()
     val authenticationState by authRequestOTPCodeViewModel.authenticationState.collectAsState()
+    val isWingmanCompleteDataState =
+        authRequestOTPCodeViewModel.isWingmanCompleteDataState.collectAsState()
 
     // check user authentication status
     when {
         authenticationState.isLoading -> FullScreenLoadingIndicator()
         authenticationState.isError -> Text(text = "Error")
         authenticationState.isAuthenticated -> {
-            navigator.navigate(RootScreenDestination) {
-                popUpTo(
-                    InputPhoneNumberWithApplicationLogoScreenDestination
-                ) {
-                    inclusive = true
+            // check user complete data
+            if (!isWingmanCompleteDataState.value) {
+                navigator.navigate(RegistrationWingmanDetailDataScreenDestination) {
+                    popUpTo(
+                        InputPhoneNumberWithApplicationLogoScreenDestination
+                    ) {
+                        inclusive = true
+                    }
                 }
+            } else {
+                navigateToRootScreen(navigator)
             }
         }
     }
@@ -78,9 +86,7 @@ fun InputPhoneNumberWithApplicationLogoScreen(
             inputPhoneNumberState.isLoading -> FullScreenLoadingIndicator()
             inputPhoneNumberState.isSuccess -> {
                 navigator.navigate(
-                    InputOTPCodeScreenDestination(
-                        authRequestOTPCodeViewModel.phoneNumberText
-                    )
+                    InputOTPCodeScreenDestination(authRequestOTPCodeViewModel.phoneNumberText)
                 ) {
                     popUpTo(InputPhoneNumberWithApplicationLogoScreenDestination)
                 }
@@ -99,6 +105,17 @@ fun InputPhoneNumberWithApplicationLogoScreen(
             authRequestOTPCodeViewModel,
             inputPhoneNumberState
         )
+    }
+}
+
+
+private fun navigateToRootScreen(navigator: DestinationsNavigator) {
+    navigator.navigate(RootScreenDestination) {
+        popUpTo(
+            InputPhoneNumberWithApplicationLogoScreenDestination
+        ) {
+            inclusive = true
+        }
     }
 }
 

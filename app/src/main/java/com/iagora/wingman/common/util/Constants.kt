@@ -1,5 +1,6 @@
 package com.iagora.wingman.common.util
 
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.iagora.wingman.BuildConfig
 
@@ -10,6 +11,7 @@ object Constants {
     const val BEARER = "Bearer"
     val TOKEN = stringPreferencesKey(name = "x-token")
     val USERID = stringPreferencesKey(name = "wingmanId")
+    val USERCOMPLETEDATASTATUS = booleanPreferencesKey(name = "user-complete-data-status")
     const val START_COUNT_DOWN = 30
     const val HOME = "Home"
     const val CUSTOMER_CARE = "Customer Care"

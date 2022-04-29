@@ -18,6 +18,7 @@ class WingmanLogoutUseCase(private val dataStorePreferencesRepository: DataStore
                 with(dataStorePreferencesRepository) {
                     setUserId("")
                     setToken("")
+                    setUserCompleteDataStatus(false)
                 }
 
                 emit(Resource.Loading(false))

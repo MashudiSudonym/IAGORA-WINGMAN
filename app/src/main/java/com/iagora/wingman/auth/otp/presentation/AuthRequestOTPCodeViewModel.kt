@@ -6,12 +6,13 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iagora.wingman.R
+import com.iagora.wingman.auth.otp.domain.use_case.is_aunthenticated_use_case.IsAuthenticatedUseCase
+import com.iagora.wingman.auth.otp.domain.use_case.is_wingman_complete_data_use_case.IsWingmanCompleteDataUseCase
 import com.iagora.wingman.auth.otp.domain.use_case.send_otp_use_case.SendOTPUseCase
-import com.iagora.wingman.auth.otp.presentation.state.InputPhoneNumberState
 import com.iagora.wingman.auth.otp.presentation.state.AuthenticationState
+import com.iagora.wingman.auth.otp.presentation.state.InputPhoneNumberState
 import com.iagora.wingman.common.util.Resource
 import com.iagora.wingman.common.util.UIText
-import com.iagora.wingman.data_store.domain.use_case.is_aunthenticated_use_case.IsAuthenticatedUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -24,11 +25,15 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthRequestOTPCodeViewModel @Inject constructor(
     private val sendOTPUseCase: SendOTPUseCase,
-    private val isAuthenticatedUseCase: IsAuthenticatedUseCase
+    private val isAuthenticatedUseCase: IsAuthenticatedUseCase,
+    private val isWingmanCompleteDataUseCase: IsWingmanCompleteDataUseCase
 ) : ViewModel() {
     private val _authenticationState = MutableStateFlow(AuthenticationState())
     val authenticationState: StateFlow<AuthenticationState> =
         _authenticationState.asStateFlow()
+
+    private val _isWingmanCompleteDataState = MutableStateFlow(false)
+    val isWingmanCompleteDataState: StateFlow<Boolean> = _isWingmanCompleteDataState.asStateFlow()
 
     private val _inputPhoneNumberState = MutableStateFlow(InputPhoneNumberState())
     val inputPhoneNumberState: StateFlow<InputPhoneNumberState> =
@@ -42,6 +47,13 @@ class AuthRequestOTPCodeViewModel @Inject constructor(
 
     init {
         isAuthenticated()
+        isWingmanCompleteData()
+    }
+
+    private fun isWingmanCompleteData() {
+        viewModelScope.launch {
+            _isWingmanCompleteDataState.value = isWingmanCompleteDataState.value
+        }
     }
 
     private fun isAuthenticated() {
