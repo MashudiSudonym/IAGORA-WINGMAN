@@ -7,9 +7,13 @@ import androidx.navigation.compose.composable
 import com.iagora.wingman.customer_care.presentation.CustomerCareScreen
 import com.iagora.wingman.dashboard.presentation.DashBoardScreen
 import com.iagora.wingman.user_profile.presentation.UserProfileScreen
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Composable
-fun BottomNavigationBarNavigationConfigurations(navHostController: NavHostController) {
+fun BottomNavigationBarNavigationConfigurations(
+    navigator: DestinationsNavigator,
+    navHostController: NavHostController
+) {
     NavHost(
         navController = navHostController,
         startDestination = BottomNavigationScreens.Home.route
@@ -21,7 +25,7 @@ fun BottomNavigationBarNavigationConfigurations(navHostController: NavHostContro
             CustomerCareScreen()
         }
         composable(BottomNavigationScreens.Profile.route) {
-            UserProfileScreen()
+            UserProfileScreen(navigator)
         }
     }
 }

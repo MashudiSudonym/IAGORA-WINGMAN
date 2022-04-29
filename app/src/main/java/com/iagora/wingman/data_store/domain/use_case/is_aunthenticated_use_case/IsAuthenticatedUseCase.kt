@@ -3,11 +3,10 @@ package com.iagora.wingman.data_store.domain.use_case.is_aunthenticated_use_case
 import com.iagora.wingman.auth.request_token.domain.repository.RequestTokenRepository
 import com.iagora.wingman.auth.request_token.domain.use_case.save_token_to_data_store_use_case.SaveTokenToDataStoreUseCase
 import com.iagora.wingman.common.util.Resource
-import com.iagora.wingman.data_store.domain.AuthenticationStatus
+import com.iagora.wingman.data_store.domain.model.AuthenticationStatus
 import com.iagora.wingman.data_store.domain.repository.DataStorePreferencesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import timber.log.Timber
 
 class IsAuthenticatedUseCase(
     private val saveTokenToDataStoreUseCase: SaveTokenToDataStoreUseCase,

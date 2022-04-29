@@ -3,30 +3,62 @@ package com.iagora.wingman.user_profile.presentation
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.*
+import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.iagora.wingman.common.presentation.ui.component.BottomNavigationContentWrapper
-import com.iagora.wingman.common.presentation.ui.component.CustomIconTextButton
-import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
+import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicator
+import com.iagora.wingman.destinations.InputPhoneNumberWithApplicationLogoScreenDestination
+import com.iagora.wingman.destinations.RootScreenDestination
 import com.iagora.wingman.user_profile.presentation.component.HeaderUserProfileContent
-import com.iagora.wingman.user_profile.presentation.component.MenuTitle
 import com.iagora.wingman.user_profile.presentation.component.WingmanUserProfileMenu
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.navigation.popUpTo
 
 @Composable
-fun UserProfileScreen() {
+fun UserProfileScreen(
+    navigator: DestinationsNavigator,
+    userProfileViewModel: UserProfileViewModel = hiltViewModel()
+) {
+    val scaffoldState = rememberScaffoldState()
+    val context = LocalContext.current
+    val logoutState by userProfileViewModel.logoutState.collectAsState()
+
+
     BottomNavigationContentWrapper {
-        UserProfileContent()
+        Scaffold(scaffoldState = scaffoldState) {
+            // user logout screen state
+            when {
+                logoutState.isError -> LaunchedEffect(scaffoldState) {
+                    userProfileViewModel.userProfileErrors.collect { data ->
+                        scaffoldState.snackbarHostState.showSnackbar(data.asString(context))
+                    }
+                }
+                logoutState.isLoading -> FullScreenLoadingIndicator()
+                logoutState.logoutSuccess -> navigator.navigate(
+                    InputPhoneNumberWithApplicationLogoScreenDestination
+                ) {
+                    popUpTo(RootScreenDestination) {
+                        inclusive = true
+                    }
+                }
+            }
+            // default user profile screen
+            UserProfileContent(userProfileViewModel)
+        }
     }
 }
 
 @Composable
-private fun UserProfileContent() {
+private fun UserProfileContent(userProfileViewModel: UserProfileViewModel) {
     val thisScrollState = rememberScrollState()
 
     Column(
@@ -39,6 +71,6 @@ private fun UserProfileContent() {
     ) {
         HeaderUserProfileContent()
         Spacer(modifier = Modifier.size(48.dp))
-        WingmanUserProfileMenu()
+        WingmanUserProfileMenu(userProfileViewModel)
     }
 }
