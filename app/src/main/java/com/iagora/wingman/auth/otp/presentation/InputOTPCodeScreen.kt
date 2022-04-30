@@ -27,7 +27,7 @@ import com.iagora.wingman.auth.otp.presentation.state.CountDownState
 import com.iagora.wingman.auth.otp.presentation.state.InputOTPCodeState
 import com.iagora.wingman.common.presentation.ui.component.CommonPrimaryColorButton
 import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicator
-import com.iagora.wingman.common.presentation.ui.component.SingleLineOutlineTextFieldCustom
+import com.iagora.wingman.common.presentation.ui.component.OutlineTextFieldCustom
 import com.iagora.wingman.common.util.Constants
 import com.iagora.wingman.destinations.InputPhoneNumberWithApplicationLogoScreenDestination
 import com.iagora.wingman.destinations.RegistrationWingmanDetailDataScreenDestination
@@ -35,7 +35,6 @@ import com.iagora.wingman.destinations.RootScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
-import timber.log.Timber
 
 @Destination
 @Composable
@@ -147,7 +146,7 @@ private fun InputOTPCodeContent(
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.size(64.dp))
-        SingleLineOutlineTextFieldCustom(
+        OutlineTextFieldCustom(
             textValue = authVerifyOTPCodeViewModel.otpCodeText,
             textValueChange = authVerifyOTPCodeViewModel::onOTPCodeChange,
             labelText = "Masukkan 6 digit kode OTP Anda",

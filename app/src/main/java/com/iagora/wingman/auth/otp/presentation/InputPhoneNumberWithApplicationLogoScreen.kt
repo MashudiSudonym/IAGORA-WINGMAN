@@ -28,7 +28,7 @@ import com.iagora.wingman.R
 import com.iagora.wingman.auth.otp.presentation.state.InputPhoneNumberState
 import com.iagora.wingman.common.presentation.ui.component.CommonPrimaryColorButton
 import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicator
-import com.iagora.wingman.common.presentation.ui.component.SingleLineOutlineTextFieldCustom
+import com.iagora.wingman.common.presentation.ui.component.OutlineTextFieldCustom
 import com.iagora.wingman.destinations.InputOTPCodeScreenDestination
 import com.iagora.wingman.destinations.InputPhoneNumberWithApplicationLogoScreenDestination
 import com.iagora.wingman.destinations.RegistrationWingmanDetailDataScreenDestination
@@ -155,7 +155,7 @@ private fun InputPhoneNumberWithApplicationLogoContent(
             fontWeight = FontWeight.Medium
         )
         Spacer(modifier = Modifier.size(24.dp))
-        SingleLineOutlineTextFieldCustom(
+        OutlineTextFieldCustom(
             textValue = authRequestOTPCodeViewModel.phoneNumberText,
             textValueChange = authRequestOTPCodeViewModel::onPhoneNumberChange,
             labelText = "Nomor HP (6285111222333)",

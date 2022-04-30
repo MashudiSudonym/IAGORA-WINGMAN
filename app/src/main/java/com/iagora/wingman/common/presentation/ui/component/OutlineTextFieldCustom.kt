@@ -17,12 +17,13 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 
 @Composable
-fun SingleLineOutlineTextFieldCustom(
+fun OutlineTextFieldCustom(
     textValue: String,
     textValueChange: (String) -> Unit,
     labelText: String,
     isError: Boolean = false,
-    errorMessage: String,
+    singleLine: Boolean = true,
+    errorMessage: String? = null,
     keyboardType: KeyboardType,
     keyboardActionOnDone: (KeyboardActionScope.() -> Unit),
 ) {
@@ -31,7 +32,7 @@ fun SingleLineOutlineTextFieldCustom(
             value = textValue,
             onValueChange = textValueChange,
             label = { Text(text = labelText) },
-            singleLine = true,
+            singleLine = singleLine,
             modifier = Modifier
                 .fillMaxWidth(),
             keyboardOptions = KeyboardOptions(
@@ -54,7 +55,7 @@ fun SingleLineOutlineTextFieldCustom(
         )
         if (isError) {
             Text(
-                text = errorMessage,
+                text = errorMessage ?: "",
                 color = MaterialTheme.colors.error,
                 style = MaterialTheme.typography.caption
             )
