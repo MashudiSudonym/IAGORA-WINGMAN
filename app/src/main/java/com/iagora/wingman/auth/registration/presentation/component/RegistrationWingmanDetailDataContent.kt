@@ -1,14 +1,14 @@
 package com.iagora.wingman.auth.registration.presentation.component
 
+import androidx.compose.foundation.gestures.forEachGesture
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.input.pointer.PointerEvent
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,6 +21,8 @@ import com.iagora.wingman.common.presentation.ui.component.AppBarTitleText
 import com.iagora.wingman.common.presentation.ui.component.CommonPrimaryColorButton
 import com.iagora.wingman.common.presentation.ui.component.OutlineTextFieldCustom
 import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
+import com.iagora.wingman.user_profile.presentation.component.MenuTitle
+import kotlinx.coroutines.coroutineScope
 
 @Composable
 fun RegistrationWingmanDetailDataContent(
@@ -44,11 +46,7 @@ fun RegistrationWingmanDetailDataContent(
             verticalArrangement = Arrangement.Top,
         ) {
             Spacer(modifier = Modifier.size(16.dp))
-            Text(
-                text = "Nama Lengkap",
-                style = MaterialTheme.typography.subtitle1,
-                fontWeight = FontWeight.Medium
-            )
+            MenuTitle(title = "Nama Lengkap")
             Spacer(modifier = Modifier.size(4.dp))
             OutlineTextFieldCustom(
                 textValue = registrationWingmanDetailDataState.name,
@@ -64,11 +62,7 @@ fun RegistrationWingmanDetailDataContent(
                 keyboardActionOnDone = { this.defaultKeyboardAction(ImeAction.Next) }
             )
             Spacer(modifier = Modifier.size(16.dp))
-            Text(
-                text = "Email",
-                style = MaterialTheme.typography.subtitle1,
-                fontWeight = FontWeight.Medium
-            )
+            MenuTitle(title = "Email")
             Spacer(modifier = Modifier.size(4.dp))
             OutlineTextFieldCustom(
                 textValue = registrationWingmanDetailDataState.email,
@@ -86,11 +80,7 @@ fun RegistrationWingmanDetailDataContent(
                 }
             )
             Spacer(modifier = Modifier.size(16.dp))
-            Text(
-                text = "Alamat Lengkap",
-                style = MaterialTheme.typography.subtitle1,
-                fontWeight = FontWeight.Medium
-            )
+            MenuTitle(title = "Alamat Lengkap")
             Spacer(modifier = Modifier.size(4.dp))
             OutlineTextFieldCustom(
                 textValue = registrationWingmanDetailDataState.address,
@@ -101,17 +91,13 @@ fun RegistrationWingmanDetailDataContent(
                 },
                 isError = registrationWingmanDetailDataState.addressFieldError != null,
                 errorMessage = registrationWingmanDetailDataState.addressFieldError?.asString(),
-                labelText = "Jl. Pahlawanku. No.10. Desaku. Kecamatanku. Depan Toko AprilMart",
+                labelText = "Contoh : Jl. Pahlawanku. No.10. Desaku. Kecamatanku. Depan Toko AprilMart",
                 keyboardType = KeyboardType.Text,
                 keyboardActionOnDone = { this.defaultKeyboardAction(ImeAction.Next) },
                 singleLine = false
             )
             Spacer(modifier = Modifier.size(16.dp))
-            Text(
-                text = "Kota Registrasi",
-                style = MaterialTheme.typography.subtitle1,
-                fontWeight = FontWeight.Medium
-            )
+            MenuTitle(title = "Kota Registrasi")
             Spacer(modifier = Modifier.size(4.dp))
             OutlineTextFieldCustom(
                 textValue = registrationWingmanDetailDataState.city,
@@ -122,7 +108,7 @@ fun RegistrationWingmanDetailDataContent(
                 },
                 isError = registrationWingmanDetailDataState.cityFieldError != null,
                 errorMessage = registrationWingmanDetailDataState.cityFieldError?.asString(),
-                labelText = "Jepara",
+                labelText = "Contoh : Medan",
                 keyboardType = KeyboardType.Text,
                 keyboardActionOnDone = {
                     registrationWingmanDetailDataViewModel.onEvent(WingmanDetailDataEvent.Submit)

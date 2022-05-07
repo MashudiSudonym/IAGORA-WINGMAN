@@ -22,4 +22,10 @@
     <string name="error_validation_name_is_blank" translatable="false">Nama wajib diisi!</string>
     <string name="error_validation_address_is_blank" translatable="false">Alamat wajib diisi!</string>
     <string name="error_validation_city_is_blank" translatable="false">Kota wajib diisi!</string>
+    <string name="attention_bank_document" translatable="false"><b>Data rekening Anda diperlukan untuk pencairan dana pendapatan</b>\n\nGunakan Bank BCA/BCA Digital untuk pencairan pendapatan bebas biaya admin</string>
+    <string name="error_validation_bank_account_number_is_blank" translatable="false">Nomor Rekening wajib diisi</string>
+    <string name="error_validation_bank_account_user_name_is_blank" translatable="false">Nama Pemilik Rekening wajib diisi</string>
+    <string name="error_validation_bank_name_is_blank" translatable="false">Nama Bank wajib diisi</string>
+    <string name="error_validation_user_id_card_is_blank" translatable="false">Foto KTP wajib diisi</string>
+    <string name="error_validation_user_police_agreement_letter_is_blank" translatable="false">Foto SKCK wajib diisi</string>
 </resources>

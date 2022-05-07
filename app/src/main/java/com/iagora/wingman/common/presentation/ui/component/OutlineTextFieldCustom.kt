@@ -18,14 +18,16 @@ import androidx.compose.ui.text.input.KeyboardType
 
 @Composable
 fun OutlineTextFieldCustom(
+    modifier: Modifier = Modifier,
     textValue: String,
     textValueChange: (String) -> Unit,
     labelText: String,
-    isError: Boolean = false,
     singleLine: Boolean = true,
+    isError: Boolean = false,
     errorMessage: String? = null,
     keyboardType: KeyboardType,
     keyboardActionOnDone: (KeyboardActionScope.() -> Unit),
+    readOnly: Boolean = false,
 ) {
     Column {
         OutlinedTextField(
@@ -33,7 +35,7 @@ fun OutlineTextFieldCustom(
             onValueChange = textValueChange,
             label = { Text(text = labelText) },
             singleLine = singleLine,
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth(),
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done,
@@ -42,6 +44,7 @@ fun OutlineTextFieldCustom(
             keyboardActions = KeyboardActions(
                 onDone = keyboardActionOnDone
             ),
+            readOnly = readOnly,
             isError = isError,
             trailingIcon = {
                 if (isError) {

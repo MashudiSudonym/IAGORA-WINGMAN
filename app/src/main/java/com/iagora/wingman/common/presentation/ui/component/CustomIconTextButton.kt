@@ -20,9 +20,10 @@ fun CustomIconTextButton(
     buttonTitle: String,
     icon: ImageVector,
     clickEvent: () -> Unit,
-    fontWeight: FontWeight? = null
+    fontWeight: FontWeight? = null,
+    modifier: Modifier = Modifier
 ) {
-    TextButton(onClick = clickEvent, modifier = Modifier.fillMaxWidth()) {
+    TextButton(onClick = clickEvent, modifier = modifier.fillMaxWidth()) {
         Icon(imageVector = icon, contentDescription = null, tint = Color.Black)
         Spacer(modifier = Modifier.size(4.dp))
         Text(text = buttonTitle, style = MaterialTheme.typography.body1, color = Color.Black, fontWeight = fontWeight)

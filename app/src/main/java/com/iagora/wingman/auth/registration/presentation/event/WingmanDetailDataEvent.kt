@@ -5,5 +5,6 @@ sealed class WingmanDetailDataEvent {
     data class EmailFieldChange(val email: String) : WingmanDetailDataEvent()
     data class AddressFieldChange(val address: String) : WingmanDetailDataEvent()
     data class CityFieldChange(val city: String) : WingmanDetailDataEvent()
+
     object Submit : WingmanDetailDataEvent()
 }
