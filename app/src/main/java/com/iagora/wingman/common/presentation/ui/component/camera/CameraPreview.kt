@@ -1,4 +1,4 @@
-package com.iagora.wingman.common.presentation.camera
+package com.iagora.wingman.common.presentation.ui.component.camera
 
 import android.view.ViewGroup
 import androidx.camera.core.Preview

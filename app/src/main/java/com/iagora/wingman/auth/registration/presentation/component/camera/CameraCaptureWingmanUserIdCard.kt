@@ -1,4 +1,4 @@
-package com.iagora.wingman.common.presentation.camera
+package com.iagora.wingman.auth.registration.presentation.component.camera
 
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -21,6 +21,10 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.iagora.wingman.common.presentation.ui.component.camera.CameraPreview
+import com.iagora.wingman.common.presentation.ui.component.camera.executor
+import com.iagora.wingman.common.presentation.ui.component.camera.getCameraProvider
+import com.iagora.wingman.common.presentation.ui.component.camera.*
 import com.iagora.wingman.destinations.RegistrationWingmanDocumentDataScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -32,7 +36,7 @@ import timber.log.Timber
 @ExperimentalCoroutinesApi
 @Destination
 @Composable
-fun CameraCapture(
+fun CameraCaptureWingmanIdCard(
     modifier: Modifier = Modifier,
     cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA,
     navigator: DestinationsNavigator

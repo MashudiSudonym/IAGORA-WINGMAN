@@ -29,7 +29,8 @@ import com.iagora.wingman.common.presentation.ui.component.AppBarTitleTextWithBa
 import com.iagora.wingman.common.presentation.ui.component.CommonPrimaryColorButton
 import com.iagora.wingman.common.presentation.ui.component.OutlineTextFieldCustom
 import com.iagora.wingman.common.presentation.ui.component.TakePictureButton
-import com.iagora.wingman.destinations.CameraCaptureDestination
+import com.iagora.wingman.destinations.CameraCaptureWingmanIdCardDestination
+import com.iagora.wingman.destinations.CameraCaptureWingmanPoliceAgreementLetterDestination
 import com.iagora.wingman.user_profile.presentation.component.MenuTitle
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -50,7 +51,7 @@ fun RegistrationWingmanDocumentContent(
         rememberPermissionState(permission = Manifest.permission.CAMERA)
     val emptyImage = Uri.parse("file://dev/null")
 
-    if (onImageFile != emptyImage) {
+    if (onImageFile != emptyImage  || registrationWingmanDocumentDataState.userIdCardImage != emptyImage) {
         registrationWingmanDocumentDataViewModel.onEvent(
             WingmanDocumentDataEvent.UserIdCardImage(
                 onImageFile
@@ -58,7 +59,7 @@ fun RegistrationWingmanDocumentContent(
         )
     }
 
-    if (onImageFile != emptyImage || registrationWingmanDocumentDataState.userIdCardImage != emptyImage) {
+    if (onImageFile != emptyImage || registrationWingmanDocumentDataState.userPoliceAgreementLetterImage != emptyImage) {
         registrationWingmanDocumentDataViewModel.onEvent(
             WingmanDocumentDataEvent.UserPoliceAgreementLetterImage(onImageFile)
         )
@@ -85,7 +86,7 @@ fun RegistrationWingmanDocumentContent(
                 onClick = {
                     when (cameraPermissionState.status) {
                         PermissionStatus.Granted -> {
-                            navigator.navigate(CameraCaptureDestination)
+                            navigator.navigate(CameraCaptureWingmanIdCardDestination)
                         }
                         is PermissionStatus.Denied -> {
                             cameraPermissionState.launchPermissionRequest()
@@ -104,7 +105,7 @@ fun RegistrationWingmanDocumentContent(
                 onClick = {
                     when (cameraPermissionState.status) {
                         PermissionStatus.Granted -> {
-                            navigator.navigate(CameraCaptureDestination)
+                            navigator.navigate(CameraCaptureWingmanPoliceAgreementLetterDestination)
                         }
                         is PermissionStatus.Denied -> {
                             cameraPermissionState.launchPermissionRequest()
