@@ -3,7 +3,7 @@ package com.iagora.wingman.auth.registration.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iagora.wingman.auth.registration.domain.use_case.field_validation_use_case.*
-import com.iagora.wingman.auth.registration.presentation.event.ValidationEvent
+import com.iagora.wingman.common.presentation.event.FormValidationEvent
 import com.iagora.wingman.auth.registration.presentation.event.WingmanDocumentDataEvent
 import com.iagora.wingman.auth.registration.presentation.state.RegistrationWingmanDocumentDataState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +25,7 @@ class RegistrationWingmanDocumentDataViewModel @Inject constructor(
     val registrationWingmanDocumentDataState: StateFlow<RegistrationWingmanDocumentDataState> =
         _registrationWingmanDocumentDataState.asStateFlow()
 
-    private val registrationWingmanDocumentDataEventChannel = Channel<ValidationEvent>()
+    private val registrationWingmanDocumentDataEventChannel = Channel<FormValidationEvent>()
     val registrationWingmanDocumentDateEvents =
         registrationWingmanDocumentDataEventChannel.receiveAsFlow()
 
@@ -85,7 +85,7 @@ class RegistrationWingmanDocumentDataViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            registrationWingmanDocumentDataEventChannel.send(ValidationEvent.Success)
+            registrationWingmanDocumentDataEventChannel.send(FormValidationEvent.Success)
         }
     }
 }

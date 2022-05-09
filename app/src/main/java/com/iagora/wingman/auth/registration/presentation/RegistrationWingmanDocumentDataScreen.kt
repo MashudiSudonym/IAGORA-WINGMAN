@@ -15,15 +15,13 @@ import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.iagora.wingman.auth.registration.presentation.component.RegistrationWingmanDocumentContent
-import com.iagora.wingman.auth.registration.presentation.event.ValidationEvent
+import com.iagora.wingman.common.presentation.event.FormValidationEvent
 import com.iagora.wingman.destinations.RegistrationWingmanDetailDataScreenDestination
 import com.iagora.wingman.destinations.RootScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import timber.log.Timber
-import java.io.File
 
 @ExperimentalCoroutinesApi
 @Suppress("OPT_IN_IS_NOT_ENABLED")
@@ -50,7 +48,7 @@ fun RegistrationWingmanDocumentDataScreen(
         LaunchedEffect(key1 = context) {
             registrationWingmanDocumentDataEvent.collect { event ->
                 when (event) {
-                    ValidationEvent.Success -> {
+                    FormValidationEvent.Success -> {
                         Toast.makeText(context, "Success", Toast.LENGTH_LONG).show()
 
                         // open Dashboard Page

@@ -2,7 +2,7 @@ package com.iagora.wingman.auth.registration.domain.use_case.field_validation_us
 
 import android.net.Uri
 import com.iagora.wingman.R
-import com.iagora.wingman.auth.registration.domain.model.FieldValidationResultData
+import com.iagora.wingman.common.domain.model.FieldValidationResultData
 import com.iagora.wingman.common.util.UIText
 
 class UserPoliceAgreementLetterImageValidationUseCase {

@@ -1,4 +1,4 @@
-package com.iagora.wingman.auth.registration.domain.model
+package com.iagora.wingman.common.domain.model
 
 import com.iagora.wingman.common.util.UIText
 

@@ -6,7 +6,7 @@
     <string name="logo_wingman_desc" translatable="false">Logo Wingman</string>
     <string name="error_phone_number_format" translatable="false">Awali dengan angka 62 pada nomor HP</string>
     <string name="phone_number_lenght_not_valid" translatable="false">Nomor HP tidak valid</string>
-    <string name="phone_number_field_blank" translatable="false">Harap Isi Kolom Nomor HP</string>
+    <string name="error_phone_number_field_blank" translatable="false">Harap Isi Kolom Nomor HP</string>
     <string name="otp_field_blank" translatable="false">Harap Isi Kolom Kode OTP</string>
     <string name="error_phone_number_less_9_char" translatable="false">Format nomor HP salah / kurang dari 9 angka</string>
     <string name="error_phone_number_more_13_char" translatable="false">Format nomor HP salah / lebih dari 13 angka</string>

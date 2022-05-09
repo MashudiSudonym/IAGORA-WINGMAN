@@ -2,6 +2,7 @@ package com.iagora.wingman.auth.otp.di
 
 import com.iagora.wingman.auth.otp.domain.repository.OTPRepository
 import com.iagora.wingman.auth.otp.domain.use_case.count_down_timer_use_case.CountDownTimerUseCase
+import com.iagora.wingman.auth.otp.domain.use_case.field_validation_use_case.PhoneNumberFieldValidationUseCase
 import com.iagora.wingman.auth.otp.domain.use_case.is_aunthenticated_use_case.IsAuthenticatedUseCase
 import com.iagora.wingman.auth.otp.domain.use_case.is_wingman_complete_data_use_case.IsWingmanCompleteDataUseCase
 import com.iagora.wingman.auth.otp.domain.use_case.send_otp_use_case.SendOTPUseCase
@@ -62,5 +63,11 @@ object UseCaseModule {
     @Singleton
     fun providerCountDownTimerUseCase(): CountDownTimerUseCase {
         return CountDownTimerUseCase()
+    }
+
+    @Provides
+    @Singleton
+    fun providePhoneNumberFieldValidationUseCase(): PhoneNumberFieldValidationUseCase {
+        return PhoneNumberFieldValidationUseCase()
     }
 }

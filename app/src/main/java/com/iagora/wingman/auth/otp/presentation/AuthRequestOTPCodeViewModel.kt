@@ -1,23 +1,20 @@
 package com.iagora.wingman.auth.otp.presentation
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.iagora.wingman.R
+import com.iagora.wingman.auth.otp.domain.use_case.field_validation_use_case.PhoneNumberFieldValidationUseCase
 import com.iagora.wingman.auth.otp.domain.use_case.is_aunthenticated_use_case.IsAuthenticatedUseCase
 import com.iagora.wingman.auth.otp.domain.use_case.is_wingman_complete_data_use_case.IsWingmanCompleteDataUseCase
 import com.iagora.wingman.auth.otp.domain.use_case.send_otp_use_case.SendOTPUseCase
+import com.iagora.wingman.auth.otp.presentation.event.InputPhoneNumberDataEvent
+import com.iagora.wingman.auth.otp.presentation.event.AuthRequestOTPCodeEvent
 import com.iagora.wingman.auth.otp.presentation.state.AuthenticationState
 import com.iagora.wingman.auth.otp.presentation.state.InputPhoneNumberState
+import com.iagora.wingman.common.presentation.event.FormValidationEvent
 import com.iagora.wingman.common.util.Resource
 import com.iagora.wingman.common.util.UIText
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,7 +23,8 @@ import javax.inject.Inject
 class AuthRequestOTPCodeViewModel @Inject constructor(
     private val sendOTPUseCase: SendOTPUseCase,
     private val isAuthenticatedUseCase: IsAuthenticatedUseCase,
-    private val isWingmanCompleteDataUseCase: IsWingmanCompleteDataUseCase
+    private val isWingmanCompleteDataUseCase: IsWingmanCompleteDataUseCase,
+    private val phoneNumberFieldValidationUseCase: PhoneNumberFieldValidationUseCase
 ) : ViewModel() {
     private val _authenticationState = MutableStateFlow(AuthenticationState())
     val authenticationState: StateFlow<AuthenticationState> =
@@ -39,11 +37,11 @@ class AuthRequestOTPCodeViewModel @Inject constructor(
     val inputPhoneNumberState: StateFlow<InputPhoneNumberState> =
         _inputPhoneNumberState.asStateFlow()
 
-    private val inputPhoneNumberErrorChannel = Channel<UIText>()
-    val inputPhoneNumberErrors = inputPhoneNumberErrorChannel.receiveAsFlow()
+    private val inputPhoneNumberEventChannel = Channel<FormValidationEvent>()
+    val inputPhoneNumberEvents = inputPhoneNumberEventChannel.receiveAsFlow()
 
-    var phoneNumberText by mutableStateOf("")
-    private var validationStatusIsSuccess by mutableStateOf(false)
+    private val authRequestOTPCodeEventChannel = Channel<AuthRequestOTPCodeEvent>()
+    val authRequestOTPCodeEvents = authRequestOTPCodeEventChannel.receiveAsFlow()
 
     init {
         isAuthenticated()
@@ -52,7 +50,7 @@ class AuthRequestOTPCodeViewModel @Inject constructor(
 
     private fun isWingmanCompleteData() {
         viewModelScope.launch {
-            _isWingmanCompleteDataState.value = isWingmanCompleteDataState.value
+            _isWingmanCompleteDataState.value = isWingmanCompleteDataUseCase()
         }
     }
 
@@ -76,97 +74,58 @@ class AuthRequestOTPCodeViewModel @Inject constructor(
         }
     }
 
-    fun onUpdatedValidationStatusChange(isSuccess: Boolean) {
-        validationStatusIsSuccess = isSuccess
-    }
-
-    fun onPhoneNumberChange(phoneNumber: String) {
-        phoneNumberText = phoneNumber
-    }
-
-    fun changeValidationSuccessScreenStatus() {
-        viewModelScope.launch {
-            _inputPhoneNumberState.update { it.copy(isSuccess = validationStatusIsSuccess) }
+    fun onInputFieldEvent(event: InputPhoneNumberDataEvent) {
+        when (event) {
+            is InputPhoneNumberDataEvent.PhoneNumberFieldChange -> _inputPhoneNumberState.update {
+                it.copy(
+                    phoneNumber = event.phoneNumber
+                )
+            }
+            InputPhoneNumberDataEvent.Submit -> submit()
+            InputPhoneNumberDataEvent.SendRequestOTPCode -> requestOTPCode()
         }
     }
 
-    private var job: Job? = null
-
-    fun validationPhoneNumberTextFieldAndSendOTPRequest() {
-        job?.cancel()
-        job = viewModelScope.launch(Dispatchers.IO) {
-            val regex = "^628[1-9][0-9]{6,9}$".toRegex()
-
-            _inputPhoneNumberState.update { it.copy(isLoading = true) }
-
-            delay(500L)
-
-            when {
-                phoneNumberText.isBlank() -> {
-                    _inputPhoneNumberState.update { data ->
-                        data.copy(
-                            isLoading = false,
-                            isTextFieldError = true,
-                            errorMessage = UIText.StringResource(R.string.phone_number_field_blank)
-                        )
-                    }
-                }
-                phoneNumberText.length <= 9 -> {
-                    _inputPhoneNumberState.update { data ->
-                        data.copy(
-                            isLoading = false,
-                            isTextFieldError = true,
-                            errorMessage = UIText.StringResource(R.string.error_phone_number_less_9_char)
-                        )
-                    }
-                }
-                phoneNumberText.length > 14 -> {
-                    _inputPhoneNumberState.update { data ->
-                        data.copy(
-                            isLoading = false,
-                            isError = true,
-                            errorMessage = UIText.StringResource(R.string.error_phone_number_more_13_char)
-                        )
-                    }
-                }
-                !regex.matches(phoneNumberText) -> {
-                    _inputPhoneNumberState.update { data ->
-                        data.copy(
-                            isLoading = false,
-                            isTextFieldError = true,
-                            errorMessage = UIText.StringResource(R.string.error_phone_number_format)
-                        )
-                    }
-                }
-                else -> {
-                    // request otp code from server
-                    sendOTPUseCase(phoneNumberText).cancellable().collect { result ->
-                        when (result) {
-                            is Resource.Error -> {
-                                _inputPhoneNumberState.update { data ->
-                                    data.copy(
-                                        isLoading = false,
-                                        isError = true,
-                                        isTextFieldError = false
-                                    )
-                                }
-                                inputPhoneNumberErrorChannel.send(
-                                    result.message ?: UIText.unknownError()
-                                )
-                            }
-                            is Resource.Loading -> _inputPhoneNumberState.update { it.copy(isLoading = true) }
-                            is Resource.Success -> _inputPhoneNumberState.update { data ->
-                                data.copy(
-                                    isLoading = false,
-                                    isError = false,
-                                    isTextFieldError = false,
-                                    isSuccess = true,
-                                )
-                            }
+    private fun requestOTPCode() {
+        viewModelScope.launch {
+            sendOTPUseCase(_inputPhoneNumberState.value.phoneNumber).collect { result ->
+                when (result) {
+                    is Resource.Error -> {
+                        _inputPhoneNumberState.update {
+                            it.copy(
+                                isLoading = false,
+                                errorMessage = result.message ?: UIText.unknownError()
+                            )
                         }
+
+                        authRequestOTPCodeEventChannel.send(AuthRequestOTPCodeEvent.Error)
+                    }
+                    is Resource.Loading -> _inputPhoneNumberState.update { it.copy(isLoading = true) }
+                    is Resource.Success -> {
+                        _inputPhoneNumberState.update { it.copy(isLoading = false) }
+                        authRequestOTPCodeEventChannel.send(AuthRequestOTPCodeEvent.Success)
                     }
                 }
             }
+        }
+    }
+
+    private fun submit() {
+        val phoneNumberResult =
+            phoneNumberFieldValidationUseCase.execute(_inputPhoneNumberState.value.phoneNumber)
+        val hasError = listOf(phoneNumberResult).any { !it.successful }
+
+        if (hasError) {
+            _inputPhoneNumberState.update {
+                it.copy(
+                    phoneNumberFieldError = phoneNumberResult.errorMessage
+                )
+            }
+            return
+        }
+
+        viewModelScope.launch {
+            inputPhoneNumberEventChannel.send(FormValidationEvent.Success)
         }
     }
 }

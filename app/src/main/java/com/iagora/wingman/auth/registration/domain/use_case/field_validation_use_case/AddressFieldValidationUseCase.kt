@@ -1,7 +1,7 @@
 package com.iagora.wingman.auth.registration.domain.use_case.field_validation_use_case
 
 import com.iagora.wingman.R
-import com.iagora.wingman.auth.registration.domain.model.FieldValidationResultData
+import com.iagora.wingman.common.domain.model.FieldValidationResultData
 import com.iagora.wingman.common.util.UIText
 
 class AddressFieldValidationUseCase {

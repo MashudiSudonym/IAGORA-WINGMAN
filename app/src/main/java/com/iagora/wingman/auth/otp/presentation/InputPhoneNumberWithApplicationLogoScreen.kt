@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -25,7 +26,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import com.iagora.wingman.R
+import com.iagora.wingman.auth.otp.presentation.event.AuthRequestOTPCodeEvent
+import com.iagora.wingman.auth.otp.presentation.event.InputPhoneNumberDataEvent
 import com.iagora.wingman.auth.otp.presentation.state.InputPhoneNumberState
+import com.iagora.wingman.common.presentation.event.FormValidationEvent
 import com.iagora.wingman.common.presentation.ui.component.CommonPrimaryColorButton
 import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicator
 import com.iagora.wingman.common.presentation.ui.component.OutlineTextFieldCustom
@@ -50,6 +54,8 @@ fun InputPhoneNumberWithApplicationLogoScreen(
     val scaffoldState = rememberScaffoldState()
     val context = LocalContext.current
     val inputPhoneNumberState by authRequestOTPCodeViewModel.inputPhoneNumberState.collectAsState()
+    val inputPhoneNumberEvent = authRequestOTPCodeViewModel.inputPhoneNumberEvents
+    val authRequestOTPCodeEvent = authRequestOTPCodeViewModel.authRequestOTPCodeEvents
     val authenticationState by authRequestOTPCodeViewModel.authenticationState.collectAsState()
     val isWingmanCompleteDataState =
         authRequestOTPCodeViewModel.isWingmanCompleteDataState.collectAsState()
@@ -81,26 +87,30 @@ fun InputPhoneNumberWithApplicationLogoScreen(
             .navigationBarsWithImePadding()
     ) {
         // navigate to input otp code screen after success with phone number input
-        when {
-            inputPhoneNumberState.isError -> LaunchedEffect(scaffoldState) {
-                authRequestOTPCodeViewModel.inputPhoneNumberErrors.collect { data ->
-                    scaffoldState.snackbarHostState.showSnackbar(data.asString(context))
+        LaunchedEffect(key1 = scaffoldState) {
+            inputPhoneNumberEvent.collect { event ->
+                when (event) {
+                    FormValidationEvent.Success -> authRequestOTPCodeViewModel.onInputFieldEvent(
+                        InputPhoneNumberDataEvent.SendRequestOTPCode
+                    )
                 }
             }
-            inputPhoneNumberState.isLoading -> FullScreenLoadingIndicator()
-            inputPhoneNumberState.isSuccess -> {
-                navigator.navigate(
-                    InputOTPCodeScreenDestination(authRequestOTPCodeViewModel.phoneNumberText)
-                ) {
-                    popUpTo(InputPhoneNumberWithApplicationLogoScreenDestination)
-                }
+        }
 
-                /*
-                * Reset field validation status
-                * isSuccess to false
-                */
-                authRequestOTPCodeViewModel.onUpdatedValidationStatusChange(false)
-                authRequestOTPCodeViewModel.changeValidationSuccessScreenStatus()
+        LaunchedEffect(key1 = scaffoldState) {
+            authRequestOTPCodeEvent.collect { event ->
+                when (event) {
+                    AuthRequestOTPCodeEvent.Error -> scaffoldState.snackbarHostState.showSnackbar(
+                        inputPhoneNumberState.errorMessage?.asString(context).toString()
+                    )
+                    AuthRequestOTPCodeEvent.Success -> {
+                        navigator.navigate(
+                            InputOTPCodeScreenDestination(authRequestOTPCodeViewModel.inputPhoneNumberState.value.phoneNumber)
+                        ) {
+                            popUpTo(InputPhoneNumberWithApplicationLogoScreenDestination)
+                        }
+                    }
+                }
             }
         }
 
@@ -113,6 +123,7 @@ fun InputPhoneNumberWithApplicationLogoScreen(
 }
 
 
+@ExperimentalCoroutinesApi
 private fun navigateToRootScreen(navigator: DestinationsNavigator) {
     navigator.navigate(RootScreenDestination) {
         popUpTo(
@@ -129,6 +140,7 @@ private fun InputPhoneNumberWithApplicationLogoContent(
     inputPhoneNumberState: InputPhoneNumberState
 ) {
     val thisScrollState = rememberScrollState()
+    val focusManager = LocalFocusManager.current
 
     Column(
         modifier = Modifier
@@ -160,17 +172,26 @@ private fun InputPhoneNumberWithApplicationLogoContent(
         )
         Spacer(modifier = Modifier.size(24.dp))
         OutlineTextFieldCustom(
-            textValue = authRequestOTPCodeViewModel.phoneNumberText,
-            textValueChange = authRequestOTPCodeViewModel::onPhoneNumberChange,
+            textValue = inputPhoneNumberState.phoneNumber,
+            textValueChange = {
+                authRequestOTPCodeViewModel.onInputFieldEvent(
+                    InputPhoneNumberDataEvent.PhoneNumberFieldChange(
+                        it
+                    )
+                )
+            },
             labelText = "Nomor HP (6285111222333)",
-            isError = inputPhoneNumberState.isTextFieldError,
-            errorMessage = inputPhoneNumberState.errorMessage.asString(),
+            isError = inputPhoneNumberState.phoneNumberFieldError != null,
+            errorMessage = inputPhoneNumberState.phoneNumberFieldError?.asString(),
             keyboardType = KeyboardType.Phone,
-            keyboardActionOnDone = { authRequestOTPCodeViewModel.validationPhoneNumberTextFieldAndSendOTPRequest() }
+            keyboardActionOnDone = {
+                focusManager.clearFocus()
+                authRequestOTPCodeViewModel.onInputFieldEvent(InputPhoneNumberDataEvent.Submit)
+            }
         )
         Spacer(modifier = Modifier.size(24.dp))
         CommonPrimaryColorButton(
-            clickEvent = { authRequestOTPCodeViewModel.validationPhoneNumberTextFieldAndSendOTPRequest() },
+            clickEvent = { authRequestOTPCodeViewModel.onInputFieldEvent(InputPhoneNumberDataEvent.Submit) },
             buttonTitle = "LOGIN",
             isEnable = !inputPhoneNumberState.isLoading
         )

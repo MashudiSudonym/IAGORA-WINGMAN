@@ -6,7 +6,7 @@ import com.iagora.wingman.auth.registration.domain.use_case.field_validation_use
 import com.iagora.wingman.auth.registration.domain.use_case.field_validation_use_case.CityFieldValidationUseCase
 import com.iagora.wingman.auth.registration.domain.use_case.field_validation_use_case.EmailFieldValidationUseCase
 import com.iagora.wingman.auth.registration.domain.use_case.field_validation_use_case.NameFieldValidationUseCase
-import com.iagora.wingman.auth.registration.presentation.event.ValidationEvent
+import com.iagora.wingman.common.presentation.event.FormValidationEvent
 import com.iagora.wingman.auth.registration.presentation.event.WingmanDetailDataEvent
 import com.iagora.wingman.auth.registration.presentation.state.RegistrationWingmanDetailDataState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,7 +27,7 @@ class RegistrationWingmanDetailDataViewModel @Inject constructor(
     val registrationWingmanDetailDataState: StateFlow<RegistrationWingmanDetailDataState> =
         _registrationWingmanDetailDataState.asStateFlow()
 
-    private val registrationWingmanDetailDataEventChannel = Channel<ValidationEvent>()
+    private val registrationWingmanDetailDataEventChannel = Channel<FormValidationEvent>()
     val registrationWingmanDetailDataEvents =
         registrationWingmanDetailDataEventChannel.receiveAsFlow()
 
@@ -83,7 +83,7 @@ class RegistrationWingmanDetailDataViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            registrationWingmanDetailDataEventChannel.send(ValidationEvent.Success)
+            registrationWingmanDetailDataEventChannel.send(FormValidationEvent.Success)
         }
     }
 }

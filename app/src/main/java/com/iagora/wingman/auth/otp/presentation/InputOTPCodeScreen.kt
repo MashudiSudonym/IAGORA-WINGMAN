@@ -35,7 +35,9 @@ import com.iagora.wingman.destinations.RootScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @Destination
 @Composable
 fun InputOTPCodeScreen(

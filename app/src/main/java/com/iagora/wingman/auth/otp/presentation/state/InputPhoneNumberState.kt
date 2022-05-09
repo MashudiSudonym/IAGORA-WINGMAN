@@ -4,8 +4,7 @@ import com.iagora.wingman.common.util.UIText
 
 data class InputPhoneNumberState(
     val isLoading: Boolean = false,
-    val isError: Boolean = false,
-    val isSuccess: Boolean = false,
-    val isTextFieldError: Boolean = false,
-    val errorMessage: UIText = UIText.DynamicString(""),
+    val errorMessage: UIText? = null,
+    val phoneNumber: String = "",
+    val phoneNumberFieldError: UIText? = null
 )

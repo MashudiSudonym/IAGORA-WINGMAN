@@ -14,7 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import com.iagora.wingman.auth.registration.presentation.component.RegistrationWingmanDetailDataContent
-import com.iagora.wingman.auth.registration.presentation.event.ValidationEvent
+import com.iagora.wingman.common.presentation.event.FormValidationEvent
 import com.iagora.wingman.destinations.RegistrationWingmanDetailDataScreenDestination
 import com.iagora.wingman.destinations.RegistrationWingmanDocumentDataScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
@@ -44,7 +44,7 @@ fun RegistrationWingmanDetailDataScreen(
         LaunchedEffect(key1 = context) {
             registrationWingmanDetailDataEvents.collect { event ->
                 when (event) {
-                    ValidationEvent.Success -> {
+                    FormValidationEvent.Success -> {
                         Toast.makeText(context, "Success", Toast.LENGTH_LONG).show()
 
                         // open next registration step screen
