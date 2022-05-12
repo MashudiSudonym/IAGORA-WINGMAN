@@ -83,6 +83,7 @@ fun RegistrationWingmanDetailDataContent(
             MenuTitle(title = "Alamat Lengkap")
             Spacer(modifier = Modifier.size(4.dp))
             OutlineTextFieldCustom(
+                modifier = Modifier.height(150.dp),
                 textValue = registrationWingmanDetailDataState.address,
                 textValueChange = {
                     registrationWingmanDetailDataViewModel.onEvent(
