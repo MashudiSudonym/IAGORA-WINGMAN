@@ -11,8 +11,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -49,6 +51,7 @@ fun InputOTPCodeScreen(
     val countDownState by authVerifyOTPCodeViewModel.countDownState.collectAsState()
     val scaffoldState = rememberScaffoldState()
     val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
 
     // running count down timer
     authVerifyOTPCodeViewModel.countDownTimer()
@@ -101,7 +104,8 @@ fun InputOTPCodeScreen(
             phoneNumber,
             authVerifyOTPCodeViewModel,
             inputOTPCodeState,
-            countDownState
+            countDownState,
+            focusManager
         )
     }
 }
@@ -111,7 +115,8 @@ private fun InputOTPCodeContent(
     phoneNumber: String,
     authVerifyOTPCodeViewModel: AuthVerifyOTPCodeViewModel,
     inputOTPCodeState: InputOTPCodeState,
-    countDownState: CountDownState
+    countDownState: CountDownState,
+    focusManager: FocusManager
 ) {
     val thisScrollState = rememberScrollState()
 
@@ -156,6 +161,7 @@ private fun InputOTPCodeContent(
             errorMessage = inputOTPCodeState.errorMessage.asString(),
             keyboardType = KeyboardType.Number,
             keyboardActionOnDone = {
+                focusManager.clearFocus()
                 authVerifyOTPCodeViewModel.validationOTPCodeTextFieldAndSendOTPVerification(
                     phoneNumber
                 )
@@ -164,6 +170,7 @@ private fun InputOTPCodeContent(
         Spacer(modifier = Modifier.size(16.dp))
         CommonPrimaryColorButton(
             clickEvent = {
+                focusManager.clearFocus()
                 authVerifyOTPCodeViewModel.validationOTPCodeTextFieldAndSendOTPVerification(
                     phoneNumber
                 )

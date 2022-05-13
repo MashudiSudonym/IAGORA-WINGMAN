@@ -22,11 +22,13 @@ import com.iagora.wingman.user_profile.presentation.component.HeaderUserProfileC
 import com.iagora.wingman.user_profile.presentation.component.WingmanUserProfileMenu
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @Composable
 fun UserProfileScreen(
     navigator: DestinationsNavigator,
-    userProfileViewModel: UserProfileViewModel = hiltViewModel()
+    userProfileViewModel: UserProfileViewModel = hiltViewModel(),
 ) {
     val scaffoldState = rememberScaffoldState()
     val context = LocalContext.current
@@ -34,7 +36,7 @@ fun UserProfileScreen(
 
 
     BottomNavigationContentWrapper {
-        Scaffold(scaffoldState = scaffoldState) {
+        Scaffold(scaffoldState = scaffoldState) { padding ->
             // user logout screen state
             when {
                 logoutState.isError -> LaunchedEffect(scaffoldState) {
@@ -52,19 +54,19 @@ fun UserProfileScreen(
                 }
             }
             // default user profile screen
-            UserProfileContent(userProfileViewModel)
+            UserProfileContent(userProfileViewModel, padding)
         }
     }
 }
 
 @Composable
-private fun UserProfileContent(userProfileViewModel: UserProfileViewModel) {
+private fun UserProfileContent(userProfileViewModel: UserProfileViewModel, padding: PaddingValues) {
     val thisScrollState = rememberScrollState()
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(padding)
             .verticalScroll(thisScrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,

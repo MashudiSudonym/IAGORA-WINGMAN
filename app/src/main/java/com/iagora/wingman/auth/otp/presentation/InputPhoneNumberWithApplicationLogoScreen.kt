@@ -137,7 +137,7 @@ private fun navigateToRootScreen(navigator: DestinationsNavigator) {
 @Composable
 private fun InputPhoneNumberWithApplicationLogoContent(
     authRequestOTPCodeViewModel: AuthRequestOTPCodeViewModel,
-    inputPhoneNumberState: InputPhoneNumberState
+    inputPhoneNumberState: InputPhoneNumberState,
 ) {
     val thisScrollState = rememberScrollState()
     val focusManager = LocalFocusManager.current
@@ -191,7 +191,10 @@ private fun InputPhoneNumberWithApplicationLogoContent(
         )
         Spacer(modifier = Modifier.size(24.dp))
         CommonPrimaryColorButton(
-            clickEvent = { authRequestOTPCodeViewModel.onInputFieldEvent(InputPhoneNumberDataEvent.Submit) },
+            clickEvent = {
+                focusManager.clearFocus()
+                authRequestOTPCodeViewModel.onInputFieldEvent(InputPhoneNumberDataEvent.Submit)
+            },
             buttonTitle = "LOGIN",
             isEnable = !inputPhoneNumberState.isLoading
         )

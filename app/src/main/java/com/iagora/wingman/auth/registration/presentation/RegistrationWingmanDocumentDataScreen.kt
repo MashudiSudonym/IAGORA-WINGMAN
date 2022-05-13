@@ -10,6 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
@@ -35,6 +36,7 @@ fun RegistrationWingmanDocumentDataScreen(
 ) {
     val scaffoldState = rememberScaffoldState()
     val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
     val registrationWingmanDocumentDataState by registrationWingmanDocumentDataViewModel.registrationWingmanDocumentDataState.collectAsState()
     val registrationWingmanDocumentDataEvent =
         registrationWingmanDocumentDataViewModel.registrationWingmanDocumentDateEvents
@@ -67,7 +69,8 @@ fun RegistrationWingmanDocumentDataScreen(
             navigator,
             registrationWingmanDocumentDataState,
             registrationWingmanDocumentDataViewModel,
-            onImageFile
+            onImageFile,
+            focusManager
         )
     }
 }

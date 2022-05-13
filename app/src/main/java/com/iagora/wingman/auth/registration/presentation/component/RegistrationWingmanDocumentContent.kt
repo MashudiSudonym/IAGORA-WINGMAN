@@ -13,6 +13,7 @@ import androidx.compose.material.icons.outlined.Camera
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -44,7 +45,8 @@ fun RegistrationWingmanDocumentContent(
     navigator: DestinationsNavigator,
     registrationWingmanDocumentDataState: RegistrationWingmanDocumentDataState,
     registrationWingmanDocumentDataViewModel: RegistrationWingmanDocumentDataViewModel,
-    onImageFile: Uri
+    onImageFile: Uri,
+    focusManager: FocusManager
 ) {
     val thisScrollState = rememberScrollState()
     val cameraPermissionState =
@@ -180,6 +182,7 @@ fun RegistrationWingmanDocumentContent(
                 labelText = "Contoh : Admin Yandi",
                 keyboardType = KeyboardType.Text,
                 keyboardActionOnDone = {
+                    focusManager.clearFocus()
                     registrationWingmanDocumentDataViewModel.onEvent(
                         WingmanDocumentDataEvent.Submit
                     )
@@ -189,6 +192,7 @@ fun RegistrationWingmanDocumentContent(
             )
             Spacer(modifier = Modifier.size(24.dp))
             CommonPrimaryColorButton(clickEvent = {
+                focusManager.clearFocus()
                 registrationWingmanDocumentDataViewModel.onEvent(
                     WingmanDocumentDataEvent.Submit
                 )
