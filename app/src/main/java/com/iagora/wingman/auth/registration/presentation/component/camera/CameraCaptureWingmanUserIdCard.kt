@@ -1,15 +1,18 @@
 package com.iagora.wingman.auth.registration.presentation.component.camera
 
+import android.content.Context
+import android.net.Uri
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY
 import androidx.camera.core.Preview
 import androidx.camera.core.UseCase
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.Lens
 import androidx.compose.runtime.*
@@ -18,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -31,18 +35,31 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import com.iagora.wingman.R
+import com.ramcosta.composedestinations.navigation.popUpTo
 
 @ExperimentalPermissionsApi
 @ExperimentalCoroutinesApi
 @Destination
 @Composable
-fun CameraCaptureWingmanIdCard(
+fun CameraCaptureWingmanUserIdCard(
     modifier: Modifier = Modifier,
     cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA,
-    navigator: DestinationsNavigator
+    navigator: DestinationsNavigator,
 ) {
     val context = LocalContext.current
 
+    CameraCaptureWingmanUserIdCardContent(modifier.navigationBarsPadding().statusBarsPadding(), context, navigator, cameraSelector)
+}
+
+@ExperimentalCoroutinesApi
+@Composable
+private fun CameraCaptureWingmanUserIdCardContent(
+    modifier: Modifier,
+    context: Context,
+    navigator: DestinationsNavigator,
+    cameraSelector: CameraSelector,
+) {
     Box(modifier = modifier) {
         val lifecycleOwner = LocalLifecycleOwner.current
         val coroutineScope = rememberCoroutineScope()
@@ -62,17 +79,34 @@ fun CameraCaptureWingmanIdCard(
                     previewUseCase = it
                 }
             )
+            Image(
+                painter = painterResource(id = R.drawable.frame_user_id_card),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(
+                        Alignment.Center)
+                    .background(Color.Transparent)
+                    .padding(16.dp)
+            )
             Button(
                 modifier = Modifier
                     .wrapContentSize()
                     .padding(16.dp)
                     .align(Alignment.BottomCenter),
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
+                elevation = ButtonDefaults.elevation(0.dp),
                 onClick = {
                     coroutineScope.launch {
                         imageCaptureUseCase.takePicture(context.executor).run {
                             navigator.navigate(
-                                RegistrationWingmanDocumentDataScreenDestination(onImageFile = this.toUri())
-                            )
+                                RegistrationWingmanDocumentDataScreenDestination(imageUserIdCard = this.toUri(),
+                                    imageUserPoliceAgreementLetter = Uri.parse("file://dev/null"))
+                            ) {
+                                popUpTo(RegistrationWingmanDocumentDataScreenDestination) {
+                                    inclusive = true
+                                }
+                            }
                         }
                     }
                 }

@@ -2,6 +2,7 @@ package com.iagora.wingman.auth.registration.presentation
 
 import android.net.Uri
 import android.widget.Toast
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
@@ -27,7 +28,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @Composable
 fun RegistrationWingmanDetailDataScreen(
     navigator: DestinationsNavigator,
-    registrationWingmanDetailDataViewModel: RegistrationWingmanDetailDataViewModel = hiltViewModel()
+    registrationWingmanDetailDataViewModel: RegistrationWingmanDetailDataViewModel = hiltViewModel(),
 ) {
     val scaffoldState = rememberScaffoldState()
     val context = LocalContext.current
@@ -48,7 +49,9 @@ fun RegistrationWingmanDetailDataScreen(
                         Toast.makeText(context, "Success", Toast.LENGTH_LONG).show()
 
                         // open next registration step screen
-                        navigator.navigate(RegistrationWingmanDocumentDataScreenDestination(onImageFile = Uri.parse("file://dev/null"))) {
+                        navigator.navigate(RegistrationWingmanDocumentDataScreenDestination(
+                            imageUserIdCard = Uri.parse("file://dev/null"),
+                            imageUserPoliceAgreementLetter = Uri.parse("file://dev/null"))) {
                             popUpTo(RegistrationWingmanDetailDataScreenDestination) {
                                 inclusive = false
                             }
@@ -59,6 +62,7 @@ fun RegistrationWingmanDetailDataScreen(
         }
 
         // default registration detail data content screen
-        RegistrationWingmanDetailDataContent(registrationWingmanDetailDataState, registrationWingmanDetailDataViewModel)
+        RegistrationWingmanDetailDataContent(registrationWingmanDetailDataState,
+            registrationWingmanDetailDataViewModel)
     }
 }

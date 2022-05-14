@@ -32,7 +32,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 fun RegistrationWingmanDocumentDataScreen(
     navigator: DestinationsNavigator,
     registrationWingmanDocumentDataViewModel: RegistrationWingmanDocumentDataViewModel = hiltViewModel(),
-    onImageFile: Uri
+    imageUserIdCard: Uri,
+    imageUserPoliceAgreementLetter: Uri
 ) {
     val scaffoldState = rememberScaffoldState()
     val context = LocalContext.current
@@ -69,7 +70,8 @@ fun RegistrationWingmanDocumentDataScreen(
             navigator,
             registrationWingmanDocumentDataState,
             registrationWingmanDocumentDataViewModel,
-            onImageFile,
+            imageUserIdCard,
+            imageUserPoliceAgreementLetter,
             focusManager
         )
     }

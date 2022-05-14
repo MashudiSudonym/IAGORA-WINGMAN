@@ -5,7 +5,6 @@ import android.net.Uri
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -30,8 +29,8 @@ import com.iagora.wingman.common.presentation.ui.component.AppBarTitleTextWithBa
 import com.iagora.wingman.common.presentation.ui.component.CommonPrimaryColorButton
 import com.iagora.wingman.common.presentation.ui.component.OutlineTextFieldCustom
 import com.iagora.wingman.common.presentation.ui.component.TakePictureButton
-import com.iagora.wingman.destinations.CameraCaptureWingmanIdCardDestination
 import com.iagora.wingman.destinations.CameraCaptureWingmanPoliceAgreementLetterDestination
+import com.iagora.wingman.destinations.CameraCaptureWingmanUserIdCardDestination
 import com.iagora.wingman.user_profile.presentation.component.MenuTitle
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -39,31 +38,28 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @ExperimentalPermissionsApi
 @Suppress("OPT_IN_IS_NOT_ENABLED")
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RegistrationWingmanDocumentContent(
     navigator: DestinationsNavigator,
     registrationWingmanDocumentDataState: RegistrationWingmanDocumentDataState,
     registrationWingmanDocumentDataViewModel: RegistrationWingmanDocumentDataViewModel,
-    onImageFile: Uri,
-    focusManager: FocusManager
+    imageUserIdCard: Uri,
+    imageUserPoliceAgreementLetter: Uri,
+    focusManager: FocusManager,
 ) {
     val thisScrollState = rememberScrollState()
-    val cameraPermissionState =
-        rememberPermissionState(permission = Manifest.permission.CAMERA)
+    val cameraPermissionState = rememberPermissionState(permission = Manifest.permission.CAMERA)
     val emptyImage = Uri.parse("file://dev/null")
 
-    if (onImageFile != emptyImage  || registrationWingmanDocumentDataState.userIdCardImage != emptyImage) {
+    if (registrationWingmanDocumentDataState.userIdCardImage == emptyImage) {
         registrationWingmanDocumentDataViewModel.onEvent(
-            WingmanDocumentDataEvent.UserIdCardImage(
-                onImageFile
-            )
+            WingmanDocumentDataEvent.UserIdCardImage(imageUserIdCard)
         )
     }
 
-    if (onImageFile != emptyImage || registrationWingmanDocumentDataState.userPoliceAgreementLetterImage != emptyImage) {
+    if (registrationWingmanDocumentDataState.userPoliceAgreementLetterImage == emptyImage) {
         registrationWingmanDocumentDataViewModel.onEvent(
-            WingmanDocumentDataEvent.UserPoliceAgreementLetterImage(onImageFile)
+            WingmanDocumentDataEvent.UserPoliceAgreementLetterImage(imageUserPoliceAgreementLetter)
         )
     }
 
@@ -88,7 +84,7 @@ fun RegistrationWingmanDocumentContent(
                 onClick = {
                     when (cameraPermissionState.status) {
                         PermissionStatus.Granted -> {
-                            navigator.navigate(CameraCaptureWingmanIdCardDestination)
+                            navigator.navigate(CameraCaptureWingmanUserIdCardDestination)
                         }
                         is PermissionStatus.Denied -> {
                             cameraPermissionState.launchPermissionRequest()

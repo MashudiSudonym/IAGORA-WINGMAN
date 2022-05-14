@@ -58,8 +58,7 @@ fun InputPhoneNumberWithApplicationLogoScreen(
     val inputPhoneNumberEvent = authRequestOTPCodeViewModel.inputPhoneNumberEvents
     val authRequestOTPCodeEvent = authRequestOTPCodeViewModel.authRequestOTPCodeEvents
     val authenticationState by authRequestOTPCodeViewModel.authenticationState.collectAsState()
-    val isWingmanCompleteDataState =
-        authRequestOTPCodeViewModel.isWingmanCompleteDataState.collectAsState()
+    val isWingmanCompleteDataState by authRequestOTPCodeViewModel.isWingmanCompleteDataState.collectAsState()
 
     // check user authentication status
     when {
@@ -67,7 +66,7 @@ fun InputPhoneNumberWithApplicationLogoScreen(
         authenticationState.isError -> Text(text = "Error")
         authenticationState.isAuthenticated -> {
             // check user complete data
-            if (!isWingmanCompleteDataState.value) {
+            if (!isWingmanCompleteDataState) {
                 navigator.navigate(RegistrationWingmanDetailDataScreenDestination) {
                     popUpTo(
                         InputPhoneNumberWithApplicationLogoScreenDestination

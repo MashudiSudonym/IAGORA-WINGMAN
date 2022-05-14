@@ -1,5 +1,6 @@
 package com.iagora.wingman.auth.registration.presentation.component.camera
 
+import android.net.Uri
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY
@@ -9,6 +10,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.Lens
@@ -28,6 +30,7 @@ import com.iagora.wingman.common.presentation.ui.component.camera.*
 import com.iagora.wingman.destinations.RegistrationWingmanDocumentDataScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.navigation.popUpTo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -37,13 +40,14 @@ import timber.log.Timber
 @Destination
 @Composable
 fun CameraCaptureWingmanPoliceAgreementLetter(
-    modifier: Modifier = Modifier,
     cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA,
-    navigator: DestinationsNavigator
+    navigator: DestinationsNavigator,
 ) {
     val context = LocalContext.current
 
-    Box(modifier = modifier) {
+    Box(modifier = Modifier
+        .navigationBarsPadding()
+        .statusBarsPadding()) {
         val lifecycleOwner = LocalLifecycleOwner.current
         val coroutineScope = rememberCoroutineScope()
         var previewUseCase by remember { mutableStateOf<UseCase>(Preview.Builder().build()) }
@@ -67,12 +71,20 @@ fun CameraCaptureWingmanPoliceAgreementLetter(
                     .wrapContentSize()
                     .padding(16.dp)
                     .align(Alignment.BottomCenter),
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent),
+                elevation = ButtonDefaults.elevation(0.dp),
                 onClick = {
                     coroutineScope.launch {
                         imageCaptureUseCase.takePicture(context.executor).run {
                             navigator.navigate(
-                                RegistrationWingmanDocumentDataScreenDestination(onImageFile = this.toUri())
-                            )
+                                RegistrationWingmanDocumentDataScreenDestination(imageUserIdCard = Uri.parse(
+                                    "file://dev/null"),
+                                    imageUserPoliceAgreementLetter = this.toUri())
+                            ) {
+                                popUpTo(RegistrationWingmanDocumentDataScreenDestination) {
+                                    inclusive = true
+                                }
+                            }
                         }
                     }
                 }
