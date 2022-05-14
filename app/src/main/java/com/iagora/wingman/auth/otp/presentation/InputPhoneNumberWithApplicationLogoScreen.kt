@@ -42,6 +42,7 @@ import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.coroutineScope
 
 @ExperimentalCoroutinesApi
 @RootNavGraph(start = true)
@@ -86,7 +87,7 @@ fun InputPhoneNumberWithApplicationLogoScreen(
             .statusBarsPadding()
             .navigationBarsWithImePadding()
     ) {
-        // navigate to input otp code screen after success with phone number input
+        // send function request otp code
         LaunchedEffect(key1 = scaffoldState) {
             inputPhoneNumberEvent.collect { event ->
                 when (event) {
@@ -97,6 +98,7 @@ fun InputPhoneNumberWithApplicationLogoScreen(
             }
         }
 
+        // navigate to input otp code screen after success with phone number input or error message when error
         LaunchedEffect(key1 = scaffoldState) {
             authRequestOTPCodeEvent.collect { event ->
                 when (event) {
@@ -112,6 +114,11 @@ fun InputPhoneNumberWithApplicationLogoScreen(
                     }
                 }
             }
+        }
+
+        // is Loading ?
+        if (inputPhoneNumberState.isLoading) {
+            FullScreenLoadingIndicator()
         }
 
         // default screen content
