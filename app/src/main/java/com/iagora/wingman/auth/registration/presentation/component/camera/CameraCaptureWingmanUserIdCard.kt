@@ -29,14 +29,13 @@ import com.iagora.wingman.common.presentation.ui.component.camera.CameraPreview
 import com.iagora.wingman.common.presentation.ui.component.camera.executor
 import com.iagora.wingman.common.presentation.ui.component.camera.getCameraProvider
 import com.iagora.wingman.common.presentation.ui.component.camera.*
-import com.iagora.wingman.destinations.RegistrationWingmanDocumentDataScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import com.iagora.wingman.R
-import com.ramcosta.composedestinations.navigation.popUpTo
+import com.iagora.wingman.common.util.Routing
 
 @ExperimentalPermissionsApi
 @ExperimentalCoroutinesApi
@@ -49,7 +48,12 @@ fun CameraCaptureWingmanUserIdCard(
 ) {
     val context = LocalContext.current
 
-    CameraCaptureWingmanUserIdCardContent(modifier.navigationBarsPadding().statusBarsPadding(), context, navigator, cameraSelector)
+    CameraCaptureWingmanUserIdCardContent(modifier
+        .navigationBarsPadding()
+        .statusBarsPadding(),
+        context,
+        navigator,
+        cameraSelector)
 }
 
 @ExperimentalCoroutinesApi
@@ -59,6 +63,7 @@ private fun CameraCaptureWingmanUserIdCardContent(
     context: Context,
     navigator: DestinationsNavigator,
     cameraSelector: CameraSelector,
+    routing: Routing = Routing,
 ) {
     Box(modifier = modifier) {
         val lifecycleOwner = LocalLifecycleOwner.current
@@ -99,14 +104,12 @@ private fun CameraCaptureWingmanUserIdCardContent(
                 onClick = {
                     coroutineScope.launch {
                         imageCaptureUseCase.takePicture(context.executor).run {
-                            navigator.navigate(
-                                RegistrationWingmanDocumentDataScreenDestination(imageUserIdCard = this.toUri(),
-                                    imageUserPoliceAgreementLetter = Uri.parse("file://dev/null"))
-                            ) {
-                                popUpTo(RegistrationWingmanDocumentDataScreenDestination) {
-                                    inclusive = true
-                                }
-                            }
+                            routing.navigateToWingmanDetailDocumentDataFormScreenBackStackToRegistrationWingmanDetailDataScreen(
+                                navigator = navigator,
+                                imageUserIdCard = this.toUri(),
+                                imageUserPoliceAgreementLetter = Uri.parse("file://dev/null"),
+                                inclusiveStatus = true,
+                            )
                         }
                     }
                 }

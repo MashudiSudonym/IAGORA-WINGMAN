@@ -11,35 +11,44 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @OptIn(ExperimentalPermissionsApi::class)
 object Routing {
-    fun navigateToRootScreen(navigator: DestinationsNavigator) {
+    fun navigateToRootScreenBackStackToInputPhoneNumberWithApplicationLogoScreen(
+        navigator: DestinationsNavigator,
+        inclusiveStatus: Boolean = false,
+    ) {
         navigator.navigate(RootScreenDestination) {
             popUpTo(
                 InputPhoneNumberWithApplicationLogoScreenDestination
             ) {
-                inclusive = true
+                inclusive = inclusiveStatus
             }
         }
     }
 
-    fun navigateToWingmanDetailDataFormScreen(navigator: DestinationsNavigator) {
+    fun navigateToWingmanDetailDataFormScreenBackStackToInputPhoneNumberWithApplicationLogoScreen(
+        navigator: DestinationsNavigator,
+        inclusiveStatus: Boolean = false,
+    ) {
         navigator.navigate(RegistrationWingmanDetailDataScreenDestination) {
             popUpTo(
                 InputPhoneNumberWithApplicationLogoScreenDestination
             ) {
-                inclusive = true
+                inclusive = inclusiveStatus
             }
         }
     }
 
-    fun navigateToWingmanDetailDocumentDataFormScreen(
+    fun navigateToWingmanDetailDocumentDataFormScreenBackStackToRegistrationWingmanDetailDataScreen(
         navigator: DestinationsNavigator,
         imageUserIdCard: Uri,
         imageUserPoliceAgreementLetter: Uri,
+        inclusiveStatus: Boolean = false,
     ) {
         navigator.navigate(RegistrationWingmanDocumentDataScreenDestination(
             imageUserIdCard = imageUserIdCard,
             imageUserPoliceAgreementLetter = imageUserPoliceAgreementLetter)) {
-            popUpTo(RegistrationWingmanDetailDataScreenDestination)
+            popUpTo(RegistrationWingmanDetailDataScreenDestination) {
+                inclusive = inclusiveStatus
+            }
         }
     }
 

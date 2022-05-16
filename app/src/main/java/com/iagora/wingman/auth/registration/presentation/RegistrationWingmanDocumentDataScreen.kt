@@ -10,7 +10,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
@@ -18,11 +17,8 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.iagora.wingman.auth.registration.presentation.component.RegistrationWingmanDocumentContent
 import com.iagora.wingman.common.presentation.event.FormValidationEvent
 import com.iagora.wingman.common.util.Routing
-import com.iagora.wingman.destinations.RegistrationWingmanDetailDataScreenDestination
-import com.iagora.wingman.destinations.RootScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.ramcosta.composedestinations.navigation.popUpTo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
@@ -56,7 +52,7 @@ fun RegistrationWingmanDocumentDataScreen(
                         Toast.makeText(context, "Success", Toast.LENGTH_LONG).show()
 
                         // open Dashboard Page
-                        routing.navigateToRootScreen(navigator)
+                        routing.navigateToRootScreenBackStackToInputPhoneNumberWithApplicationLogoScreen(navigator, true)
                     }
                 }
             }

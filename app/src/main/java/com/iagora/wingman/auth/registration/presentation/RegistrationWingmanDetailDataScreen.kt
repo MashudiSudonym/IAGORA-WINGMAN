@@ -47,7 +47,7 @@ fun RegistrationWingmanDetailDataScreen(
                         Toast.makeText(context, "Success", Toast.LENGTH_LONG).show()
 
                         // open next registration step screen
-                        routing.navigateToWingmanDetailDocumentDataFormScreen(
+                        routing.navigateToWingmanDetailDocumentDataFormScreenBackStackToRegistrationWingmanDetailDataScreen(
                             navigator,
                             Uri.parse("file://dev/null"),
                             Uri.parse("file://dev/null"),

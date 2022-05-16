@@ -50,9 +50,9 @@ fun InputPhoneNumberWithApplicationLogoScreen(
         authenticationState.isAuthenticated -> {
             // check user complete data
             if (!isWingmanCompleteDataState) {
-                routing.navigateToWingmanDetailDataFormScreen(navigator)
+                routing.navigateToWingmanDetailDataFormScreenBackStackToInputPhoneNumberWithApplicationLogoScreen(navigator, inclusiveStatus = false)
             } else {
-                routing.navigateToRootScreen(navigator)
+                routing.navigateToRootScreenBackStackToInputPhoneNumberWithApplicationLogoScreen(navigator, inclusiveStatus = true)
             }
         }
     }

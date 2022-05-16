@@ -27,10 +27,9 @@ import com.iagora.wingman.common.presentation.ui.component.camera.CameraPreview
 import com.iagora.wingman.common.presentation.ui.component.camera.executor
 import com.iagora.wingman.common.presentation.ui.component.camera.getCameraProvider
 import com.iagora.wingman.common.presentation.ui.component.camera.*
-import com.iagora.wingman.destinations.RegistrationWingmanDocumentDataScreenDestination
+import com.iagora.wingman.common.util.Routing
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.ramcosta.composedestinations.navigation.popUpTo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -42,6 +41,7 @@ import timber.log.Timber
 fun CameraCaptureWingmanPoliceAgreementLetter(
     cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA,
     navigator: DestinationsNavigator,
+    routing: Routing = Routing,
 ) {
     val context = LocalContext.current
 
@@ -76,15 +76,12 @@ fun CameraCaptureWingmanPoliceAgreementLetter(
                 onClick = {
                     coroutineScope.launch {
                         imageCaptureUseCase.takePicture(context.executor).run {
-                            navigator.navigate(
-                                RegistrationWingmanDocumentDataScreenDestination(imageUserIdCard = Uri.parse(
-                                    "file://dev/null"),
-                                    imageUserPoliceAgreementLetter = this.toUri())
-                            ) {
-                                popUpTo(RegistrationWingmanDocumentDataScreenDestination) {
-                                    inclusive = true
-                                }
-                            }
+                            routing.navigateToWingmanDetailDocumentDataFormScreenBackStackToRegistrationWingmanDetailDataScreen(
+                                navigator = navigator,
+                                imageUserIdCard = Uri.parse("file://dev/null"),
+                                imageUserPoliceAgreementLetter = this.toUri(),
+                                inclusiveStatus = true,
+                            )
                         }
                     }
                 }
