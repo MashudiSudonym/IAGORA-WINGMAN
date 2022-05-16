@@ -26,7 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import com.iagora.wingman.R
-import com.iagora.wingman.auth.otp.presentation.event.AuthRequestOTPCodeEvent
+import com.iagora.wingman.auth.otp.presentation.event.AuthRequestOTPCodeStatusEvent
 import com.iagora.wingman.auth.otp.presentation.event.InputPhoneNumberDataEvent
 import com.iagora.wingman.auth.otp.presentation.state.InputPhoneNumberState
 import com.iagora.wingman.common.presentation.event.FormValidationEvent
@@ -42,7 +42,7 @@ import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.coroutineScope
+import timber.log.Timber
 
 @ExperimentalCoroutinesApi
 @RootNavGraph(start = true)
@@ -56,7 +56,7 @@ fun InputPhoneNumberWithApplicationLogoScreen(
     val context = LocalContext.current
     val inputPhoneNumberState by authRequestOTPCodeViewModel.inputPhoneNumberState.collectAsState()
     val inputPhoneNumberEvent = authRequestOTPCodeViewModel.inputPhoneNumberEvents
-    val authRequestOTPCodeEvent = authRequestOTPCodeViewModel.authRequestOTPCodeEvents
+    val authRequestOTPCodeStatusEvent = authRequestOTPCodeViewModel.authRequestOTPCodeStatusEvents
     val authenticationState by authRequestOTPCodeViewModel.authenticationState.collectAsState()
     val isWingmanCompleteDataState by authRequestOTPCodeViewModel.isWingmanCompleteDataState.collectAsState()
 
@@ -99,12 +99,12 @@ fun InputPhoneNumberWithApplicationLogoScreen(
 
         // navigate to input otp code screen after success with phone number input or error message when error
         LaunchedEffect(key1 = scaffoldState) {
-            authRequestOTPCodeEvent.collect { event ->
+            authRequestOTPCodeStatusEvent.collect { event ->
                 when (event) {
-                    AuthRequestOTPCodeEvent.Error -> scaffoldState.snackbarHostState.showSnackbar(
+                    AuthRequestOTPCodeStatusEvent.Error -> scaffoldState.snackbarHostState.showSnackbar(
                         inputPhoneNumberState.errorMessage?.asString(context).toString()
                     )
-                    AuthRequestOTPCodeEvent.Success -> {
+                    AuthRequestOTPCodeStatusEvent.Success -> {
                         navigator.navigate(
                             InputOTPCodeScreenDestination(authRequestOTPCodeViewModel.inputPhoneNumberState.value.phoneNumber)
                         ) {

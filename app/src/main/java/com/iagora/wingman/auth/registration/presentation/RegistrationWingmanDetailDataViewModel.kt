@@ -20,7 +20,7 @@ class RegistrationWingmanDetailDataViewModel @Inject constructor(
     private val nameFieldValidationUseCase: NameFieldValidationUseCase,
     private val emailFieldValidationUseCase: EmailFieldValidationUseCase,
     private val addressFieldValidationUseCase: AddressFieldValidationUseCase,
-    private val cityFieldValidationUseCase: CityFieldValidationUseCase
+    private val cityFieldValidationUseCase: CityFieldValidationUseCase,
 ) : ViewModel() {
     private val _registrationWingmanDetailDataState =
         MutableStateFlow(RegistrationWingmanDetailDataState())

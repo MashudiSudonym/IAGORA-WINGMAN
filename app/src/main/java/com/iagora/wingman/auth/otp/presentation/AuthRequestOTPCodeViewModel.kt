@@ -7,7 +7,8 @@ import com.iagora.wingman.auth.otp.domain.use_case.is_aunthenticated_use_case.Is
 import com.iagora.wingman.auth.otp.domain.use_case.is_wingman_complete_data_use_case.IsWingmanCompleteDataUseCase
 import com.iagora.wingman.auth.otp.domain.use_case.send_otp_use_case.SendOTPUseCase
 import com.iagora.wingman.auth.otp.presentation.event.InputPhoneNumberDataEvent
-import com.iagora.wingman.auth.otp.presentation.event.AuthRequestOTPCodeEvent
+import com.iagora.wingman.auth.otp.presentation.event.AuthRequestOTPCodeMessageEvent
+import com.iagora.wingman.auth.otp.presentation.event.AuthRequestOTPCodeStatusEvent
 import com.iagora.wingman.auth.otp.presentation.state.AuthenticationState
 import com.iagora.wingman.auth.otp.presentation.state.InputPhoneNumberState
 import com.iagora.wingman.common.presentation.event.FormValidationEvent
@@ -17,6 +18,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,7 +26,7 @@ class AuthRequestOTPCodeViewModel @Inject constructor(
     private val sendOTPUseCase: SendOTPUseCase,
     private val isAuthenticatedUseCase: IsAuthenticatedUseCase,
     private val isWingmanCompleteDataUseCase: IsWingmanCompleteDataUseCase,
-    private val phoneNumberFieldValidationUseCase: PhoneNumberFieldValidationUseCase
+    private val phoneNumberFieldValidationUseCase: PhoneNumberFieldValidationUseCase,
 ) : ViewModel() {
     private val _authenticationState = MutableStateFlow(AuthenticationState())
     val authenticationState: StateFlow<AuthenticationState> =
@@ -40,8 +42,8 @@ class AuthRequestOTPCodeViewModel @Inject constructor(
     private val inputPhoneNumberEventChannel = Channel<FormValidationEvent>()
     val inputPhoneNumberEvents = inputPhoneNumberEventChannel.receiveAsFlow()
 
-    private val authRequestOTPCodeEventChannel = Channel<AuthRequestOTPCodeEvent>()
-    val authRequestOTPCodeEvents = authRequestOTPCodeEventChannel.receiveAsFlow()
+    private val authRequestOTPCodeStatusEventChannel = Channel<AuthRequestOTPCodeStatusEvent>()
+    val authRequestOTPCodeStatusEvents = authRequestOTPCodeStatusEventChannel.receiveAsFlow()
 
     init {
         isAuthenticated()
@@ -86,24 +88,42 @@ class AuthRequestOTPCodeViewModel @Inject constructor(
         }
     }
 
+    private fun onAuthRequestOTPCodeMessageEvent(event: AuthRequestOTPCodeMessageEvent) {
+        when (event) {
+            is AuthRequestOTPCodeMessageEvent.ErrorMessageChange -> {
+                _inputPhoneNumberState.update {
+                    it.copy(errorMessage = event.errorMessage)
+                }
+            }
+            is AuthRequestOTPCodeMessageEvent.IsLoadingChange -> {
+                _inputPhoneNumberState.update {
+                    it.copy(isLoading = event.isLoading)
+                }
+                Timber.i("${event.isLoading}")
+            }
+        }
+    }
+
     private fun requestOTPCode() {
         viewModelScope.launch {
             sendOTPUseCase(_inputPhoneNumberState.value.phoneNumber).collect { result ->
                 when (result) {
-                    is Resource.Error -> {
-                        _inputPhoneNumberState.update {
-                            it.copy(
-                                isLoading = false,
-                                errorMessage = result.message ?: UIText.unknownError()
-                            )
-                        }
-
-                        authRequestOTPCodeEventChannel.send(AuthRequestOTPCodeEvent.Error)
+                    is Resource.Loading -> {
+                        onAuthRequestOTPCodeMessageEvent(AuthRequestOTPCodeMessageEvent.IsLoadingChange(
+                            true))
                     }
-                    is Resource.Loading -> _inputPhoneNumberState.update { it.copy(isLoading = true) }
+                    is Resource.Error -> {
+                        onAuthRequestOTPCodeMessageEvent(AuthRequestOTPCodeMessageEvent.IsLoadingChange(
+                            false))
+                        onAuthRequestOTPCodeMessageEvent(AuthRequestOTPCodeMessageEvent.ErrorMessageChange(
+                            result.message
+                                ?: UIText.unknownError()))
+                        authRequestOTPCodeStatusEventChannel.send(AuthRequestOTPCodeStatusEvent.Error)
+                    }
                     is Resource.Success -> {
-                        _inputPhoneNumberState.update { it.copy(isLoading = false) }
-                        authRequestOTPCodeEventChannel.send(AuthRequestOTPCodeEvent.Success)
+                        onAuthRequestOTPCodeMessageEvent(AuthRequestOTPCodeMessageEvent.IsLoadingChange(
+                            false))
+                        authRequestOTPCodeStatusEventChannel.send(AuthRequestOTPCodeStatusEvent.Success)
                     }
                 }
             }
@@ -124,6 +144,11 @@ class AuthRequestOTPCodeViewModel @Inject constructor(
             return
         }
 
+        // event to ui is loading status
+        onAuthRequestOTPCodeMessageEvent(AuthRequestOTPCodeMessageEvent.IsLoadingChange(
+            true))
+
+        // event submit form data success
         viewModelScope.launch {
             inputPhoneNumberEventChannel.send(FormValidationEvent.Success)
         }

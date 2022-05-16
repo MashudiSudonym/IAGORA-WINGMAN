@@ -52,9 +52,7 @@ fun RegistrationWingmanDetailDataScreen(
                         navigator.navigate(RegistrationWingmanDocumentDataScreenDestination(
                             imageUserIdCard = Uri.parse("file://dev/null"),
                             imageUserPoliceAgreementLetter = Uri.parse("file://dev/null"))) {
-                            popUpTo(RegistrationWingmanDetailDataScreenDestination) {
-                                inclusive = false
-                            }
+                            popUpTo(RegistrationWingmanDetailDataScreenDestination)
                         }
                     }
                 }
