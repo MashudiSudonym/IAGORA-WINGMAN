@@ -8,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun CommonPrimaryColorButton(
@@ -26,4 +27,10 @@ fun CommonPrimaryColorButton(
             fontWeight = FontWeight.SemiBold
         )
     }
+}
+
+@Preview
+@Composable
+private fun CommonPrimaryColorButton() {
+    CommonPrimaryColorButton(clickEvent = { /*TODO*/ }, buttonTitle = "Default Button")
 }

@@ -14,18 +14,22 @@ import androidx.compose.ui.unit.dp
 import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
 
 @Composable
-fun FullScreenLoadingIndicator() {
+fun FullScreenLoadingIndicator(
+    backgroundColor: Color = Color.White,
+    textColor: Color = Color.Black,
+    loadingIndicatorColor: Color = MaterialTheme.colors.primary,
+) {
     Column(
         modifier = Modifier
-            .background(color = Color.White)
+            .background(color = backgroundColor)
             .fillMaxSize()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        CircularProgressIndicator()
+        CircularProgressIndicator(color = loadingIndicatorColor)
         Spacer(Modifier.size(8.dp))
-        Text(text = "Loading", style = MaterialTheme.typography.overline)
+        Text(text = "Loading", style = MaterialTheme.typography.overline, color = textColor)
     }
 }
 

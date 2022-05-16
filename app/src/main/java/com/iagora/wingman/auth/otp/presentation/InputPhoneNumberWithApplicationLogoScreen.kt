@@ -1,10 +1,5 @@
 package com.iagora.wingman.auth.otp.presentation
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
@@ -12,37 +7,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.imageResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
-import com.iagora.wingman.R
+import com.iagora.wingman.auth.otp.presentation.component.InputPhoneNumberWithApplicationLogoContent
 import com.iagora.wingman.auth.otp.presentation.event.AuthRequestOTPCodeStatusEvent
 import com.iagora.wingman.auth.otp.presentation.event.InputPhoneNumberDataEvent
-import com.iagora.wingman.auth.otp.presentation.state.InputPhoneNumberState
 import com.iagora.wingman.common.presentation.event.FormValidationEvent
-import com.iagora.wingman.common.presentation.ui.component.CommonPrimaryColorButton
 import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicator
-import com.iagora.wingman.common.presentation.ui.component.OutlineTextFieldCustom
+import com.iagora.wingman.common.util.Routing
 import com.iagora.wingman.destinations.InputOTPCodeScreenDestination
 import com.iagora.wingman.destinations.InputPhoneNumberWithApplicationLogoScreenDestination
-import com.iagora.wingman.destinations.RegistrationWingmanDetailDataScreenDestination
-import com.iagora.wingman.destinations.RootScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import timber.log.Timber
 
 @ExperimentalCoroutinesApi
 @RootNavGraph(start = true)
@@ -50,6 +32,7 @@ import timber.log.Timber
 @Composable
 fun InputPhoneNumberWithApplicationLogoScreen(
     navigator: DestinationsNavigator,
+    routing: Routing = Routing,
     authRequestOTPCodeViewModel: AuthRequestOTPCodeViewModel = hiltViewModel(),
 ) {
     val scaffoldState = rememberScaffoldState()
@@ -67,15 +50,9 @@ fun InputPhoneNumberWithApplicationLogoScreen(
         authenticationState.isAuthenticated -> {
             // check user complete data
             if (!isWingmanCompleteDataState) {
-                navigator.navigate(RegistrationWingmanDetailDataScreenDestination) {
-                    popUpTo(
-                        InputPhoneNumberWithApplicationLogoScreenDestination
-                    ) {
-                        inclusive = true
-                    }
-                }
+                routing.navigateToWingmanDetailDataFormScreen(navigator)
             } else {
-                navigateToRootScreen(navigator)
+                routing.navigateToRootScreen(navigator)
             }
         }
     }
@@ -124,85 +101,6 @@ fun InputPhoneNumberWithApplicationLogoScreen(
         InputPhoneNumberWithApplicationLogoContent(
             authRequestOTPCodeViewModel,
             inputPhoneNumberState
-        )
-    }
-}
-
-
-@ExperimentalCoroutinesApi
-private fun navigateToRootScreen(navigator: DestinationsNavigator) {
-    navigator.navigate(RootScreenDestination) {
-        popUpTo(
-            InputPhoneNumberWithApplicationLogoScreenDestination
-        ) {
-            inclusive = true
-        }
-    }
-}
-
-@Composable
-private fun InputPhoneNumberWithApplicationLogoContent(
-    authRequestOTPCodeViewModel: AuthRequestOTPCodeViewModel,
-    inputPhoneNumberState: InputPhoneNumberState,
-) {
-    val thisScrollState = rememberScrollState()
-    val focusManager = LocalFocusManager.current
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-            .verticalScroll(state = thisScrollState),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Image(
-            bitmap = ImageBitmap.imageResource(R.drawable.logo_wingman),
-            contentDescription = stringResource(
-                R.string.logo_wingman_desc
-            )
-        )
-        Spacer(modifier = Modifier.size(16.dp))
-        Text(
-            text = stringResource(id = R.string.app_name),
-            style = MaterialTheme.typography.h6,
-            color = MaterialTheme.colors.primary,
-            fontWeight = FontWeight.SemiBold
-        )
-        Spacer(modifier = Modifier.size(128.dp))
-        Text(
-            text = "Masuk / Daftar sebagai WINGMAN",
-            style = MaterialTheme.typography.subtitle1,
-            color = MaterialTheme.colors.primary,
-            fontWeight = FontWeight.Medium
-        )
-        Spacer(modifier = Modifier.size(24.dp))
-        OutlineTextFieldCustom(
-            textValue = inputPhoneNumberState.phoneNumber,
-            textValueChange = {
-                authRequestOTPCodeViewModel.onInputFieldEvent(
-                    InputPhoneNumberDataEvent.PhoneNumberFieldChange(
-                        it
-                    )
-                )
-            },
-            labelText = "Nomor HP (6285111222333)",
-            isError = inputPhoneNumberState.phoneNumberFieldError != null,
-            errorMessage = inputPhoneNumberState.phoneNumberFieldError?.asString(),
-            keyboardType = KeyboardType.Phone,
-            keyboardActionOnDone = {
-                focusManager.clearFocus()
-                authRequestOTPCodeViewModel.onInputFieldEvent(InputPhoneNumberDataEvent.Submit)
-            }
-        )
-        Spacer(modifier = Modifier.size(24.dp))
-        CommonPrimaryColorButton(
-            clickEvent = {
-                focusManager.clearFocus()
-                authRequestOTPCodeViewModel.onInputFieldEvent(InputPhoneNumberDataEvent.Submit)
-            },
-            buttonTitle = "LOGIN",
-            isEnable = !inputPhoneNumberState.isLoading
         )
     }
 }

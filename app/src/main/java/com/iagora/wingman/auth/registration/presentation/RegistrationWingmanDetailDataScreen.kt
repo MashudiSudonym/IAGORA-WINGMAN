@@ -2,7 +2,6 @@ package com.iagora.wingman.auth.registration.presentation
 
 import android.net.Uri
 import android.widget.Toast
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
@@ -16,11 +15,9 @@ import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import com.iagora.wingman.auth.registration.presentation.component.RegistrationWingmanDetailDataContent
 import com.iagora.wingman.common.presentation.event.FormValidationEvent
-import com.iagora.wingman.destinations.RegistrationWingmanDetailDataScreenDestination
-import com.iagora.wingman.destinations.RegistrationWingmanDocumentDataScreenDestination
+import com.iagora.wingman.common.util.Routing
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.ramcosta.composedestinations.navigation.popUpTo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
@@ -28,6 +25,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @Composable
 fun RegistrationWingmanDetailDataScreen(
     navigator: DestinationsNavigator,
+    routing: Routing = Routing,
     registrationWingmanDetailDataViewModel: RegistrationWingmanDetailDataViewModel = hiltViewModel(),
 ) {
     val scaffoldState = rememberScaffoldState()
@@ -49,11 +47,11 @@ fun RegistrationWingmanDetailDataScreen(
                         Toast.makeText(context, "Success", Toast.LENGTH_LONG).show()
 
                         // open next registration step screen
-                        navigator.navigate(RegistrationWingmanDocumentDataScreenDestination(
-                            imageUserIdCard = Uri.parse("file://dev/null"),
-                            imageUserPoliceAgreementLetter = Uri.parse("file://dev/null"))) {
-                            popUpTo(RegistrationWingmanDetailDataScreenDestination)
-                        }
+                        routing.navigateToWingmanDetailDocumentDataFormScreen(
+                            navigator,
+                            Uri.parse("file://dev/null"),
+                            Uri.parse("file://dev/null"),
+                        )
                     }
                 }
             }

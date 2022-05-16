@@ -1,18 +1,20 @@
-package com.iagora.wingman.user_profile.presentation.component
+package com.iagora.wingman.common.presentation.ui.component
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
 
 @Composable
-fun MenuTitle(title: String) {
+fun MenuTitle(title: String, textColor: Color = Color.Black) {
     Text(
         text = title,
         style = MaterialTheme.typography.subtitle1,
-        fontWeight = FontWeight.SemiBold
+        fontWeight = FontWeight.SemiBold,
+        color = textColor
     )
 }
 

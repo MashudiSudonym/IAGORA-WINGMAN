@@ -17,6 +17,7 @@ import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.iagora.wingman.auth.registration.presentation.component.RegistrationWingmanDocumentContent
 import com.iagora.wingman.common.presentation.event.FormValidationEvent
+import com.iagora.wingman.common.util.Routing
 import com.iagora.wingman.destinations.RegistrationWingmanDetailDataScreenDestination
 import com.iagora.wingman.destinations.RootScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
@@ -31,13 +32,13 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @Composable
 fun RegistrationWingmanDocumentDataScreen(
     navigator: DestinationsNavigator,
+    routing: Routing = Routing,
     registrationWingmanDocumentDataViewModel: RegistrationWingmanDocumentDataViewModel = hiltViewModel(),
     imageUserIdCard: Uri,
-    imageUserPoliceAgreementLetter: Uri
+    imageUserPoliceAgreementLetter: Uri,
 ) {
     val scaffoldState = rememberScaffoldState()
     val context = LocalContext.current
-    val focusManager = LocalFocusManager.current
     val registrationWingmanDocumentDataState by registrationWingmanDocumentDataViewModel.registrationWingmanDocumentDataState.collectAsState()
     val registrationWingmanDocumentDataEvent =
         registrationWingmanDocumentDataViewModel.registrationWingmanDocumentDateEvents
@@ -55,11 +56,7 @@ fun RegistrationWingmanDocumentDataScreen(
                         Toast.makeText(context, "Success", Toast.LENGTH_LONG).show()
 
                         // open Dashboard Page
-                        navigator.navigate(RootScreenDestination) {
-                            popUpTo(RegistrationWingmanDetailDataScreenDestination) {
-                                inclusive = true
-                            }
-                        }
+                        routing.navigateToRootScreen(navigator)
                     }
                 }
             }
@@ -72,7 +69,6 @@ fun RegistrationWingmanDocumentDataScreen(
             registrationWingmanDocumentDataViewModel,
             imageUserIdCard,
             imageUserPoliceAgreementLetter,
-            focusManager
         )
     }
 }

@@ -15,18 +15,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun OutlineTextFieldCustom(
     modifier: Modifier = Modifier,
     textValue: String,
-    textValueChange: (String) -> Unit,
+    textValueChange: (String) -> Unit = {},
     labelText: String,
     singleLine: Boolean = true,
     isError: Boolean = false,
     errorMessage: String? = null,
-    keyboardType: KeyboardType,
-    keyboardActionOnDone: (KeyboardActionScope.() -> Unit),
+    keyboardType: KeyboardType = KeyboardType.Text,
+    keyboardActionOnDone: (KeyboardActionScope.() -> Unit) = {},
     readOnly: Boolean = false,
 ) {
     Column {
@@ -64,4 +65,10 @@ fun OutlineTextFieldCustom(
             )
         }
     }
+}
+
+@Preview
+@Composable
+private fun OutlineTextFieldCustomPreview() {
+    OutlineTextFieldCustom(textValue = "Preview", labelText = "Text Preview")
 }

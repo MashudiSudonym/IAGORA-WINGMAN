@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -25,13 +26,8 @@ import com.iagora.wingman.R
 import com.iagora.wingman.auth.registration.presentation.RegistrationWingmanDocumentDataViewModel
 import com.iagora.wingman.auth.registration.presentation.event.WingmanDocumentDataEvent
 import com.iagora.wingman.auth.registration.presentation.state.RegistrationWingmanDocumentDataState
-import com.iagora.wingman.common.presentation.ui.component.AppBarTitleTextWithBackArrow
-import com.iagora.wingman.common.presentation.ui.component.CommonPrimaryColorButton
-import com.iagora.wingman.common.presentation.ui.component.OutlineTextFieldCustom
-import com.iagora.wingman.common.presentation.ui.component.TakePictureButton
-import com.iagora.wingman.destinations.CameraCaptureWingmanPoliceAgreementLetterDestination
-import com.iagora.wingman.destinations.CameraCaptureWingmanUserIdCardDestination
-import com.iagora.wingman.user_profile.presentation.component.MenuTitle
+import com.iagora.wingman.common.presentation.ui.component.*
+import com.iagora.wingman.common.util.Routing
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -45,8 +41,9 @@ fun RegistrationWingmanDocumentContent(
     registrationWingmanDocumentDataViewModel: RegistrationWingmanDocumentDataViewModel,
     imageUserIdCard: Uri,
     imageUserPoliceAgreementLetter: Uri,
-    focusManager: FocusManager,
+    routing: Routing = Routing,
 ) {
+    val focusManager = LocalFocusManager.current
     val thisScrollState = rememberScrollState()
     val cameraPermissionState = rememberPermissionState(permission = Manifest.permission.CAMERA)
     val emptyImage = Uri.parse("file://dev/null")
@@ -84,7 +81,7 @@ fun RegistrationWingmanDocumentContent(
                 onClick = {
                     when (cameraPermissionState.status) {
                         PermissionStatus.Granted -> {
-                            navigator.navigate(CameraCaptureWingmanUserIdCardDestination)
+                            routing.navigateToCameraCaptureWingmanUserIdCardDestination(navigator)
                         }
                         is PermissionStatus.Denied -> {
                             cameraPermissionState.launchPermissionRequest()
@@ -103,7 +100,8 @@ fun RegistrationWingmanDocumentContent(
                 onClick = {
                     when (cameraPermissionState.status) {
                         PermissionStatus.Granted -> {
-                            navigator.navigate(CameraCaptureWingmanPoliceAgreementLetterDestination)
+                            routing.navigateToCameraCaptureWingmanPoliceAgreementLetterDestination(
+                                navigator)
                         }
                         is PermissionStatus.Denied -> {
                             cameraPermissionState.launchPermissionRequest()

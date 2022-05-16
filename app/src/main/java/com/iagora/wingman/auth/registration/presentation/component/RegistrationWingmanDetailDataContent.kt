@@ -1,14 +1,11 @@
 package com.iagora.wingman.auth.registration.presentation.component
 
-import androidx.compose.foundation.gestures.forEachGesture
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.PointerEvent
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,8 +18,7 @@ import com.iagora.wingman.common.presentation.ui.component.AppBarTitleText
 import com.iagora.wingman.common.presentation.ui.component.CommonPrimaryColorButton
 import com.iagora.wingman.common.presentation.ui.component.OutlineTextFieldCustom
 import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
-import com.iagora.wingman.user_profile.presentation.component.MenuTitle
-import kotlinx.coroutines.coroutineScope
+import com.iagora.wingman.common.presentation.ui.component.MenuTitle
 
 @Composable
 fun RegistrationWingmanDetailDataContent(
