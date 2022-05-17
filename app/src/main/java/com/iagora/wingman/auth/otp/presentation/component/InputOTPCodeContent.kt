@@ -3,6 +3,7 @@ package com.iagora.wingman.auth.otp.presentation.component
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -15,6 +16,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -25,6 +27,8 @@ import com.iagora.wingman.auth.otp.presentation.state.InputOTPCodeState
 import com.iagora.wingman.common.presentation.ui.component.CommonPrimaryColorButton
 import com.iagora.wingman.common.presentation.ui.component.OutlineTextFieldCustom
 import com.iagora.wingman.common.util.Constants
+import com.mukesh.OTP_VIEW_TYPE_UNDERLINE
+import com.mukesh.OtpView
 
 
 @Composable
@@ -70,19 +74,17 @@ fun InputOTPCodeContent(
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.size(64.dp))
-        OutlineTextFieldCustom(
-            textValue = authVerifyOTPCodeViewModel.otpCodeText,
-            textValueChange = authVerifyOTPCodeViewModel::onOTPCodeChange,
-            labelText = "Masukkan 6 digit kode OTP Anda",
-            isError = inputOTPCodeState.isTextFieldError,
-            errorMessage = inputOTPCodeState.errorMessage.asString(),
-            keyboardType = KeyboardType.Number,
-            keyboardActionOnDone = {
-                focusManager.clearFocus()
-                authVerifyOTPCodeViewModel.validationOTPCodeTextFieldAndSendOTPVerification(
-                    phoneNumber
-                )
-            }
+        OtpView(
+            onOtpTextChange = authVerifyOTPCodeViewModel::onOTPCodeChange,
+            otpText = authVerifyOTPCodeViewModel.otpCodeText,
+            type = OTP_VIEW_TYPE_UNDERLINE,
+            password = true,
+            containerSize = 48.dp,
+            passwordChar = "•",
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Done,
+            ),
         )
         Spacer(modifier = Modifier.size(16.dp))
         CommonPrimaryColorButton(
@@ -103,7 +105,7 @@ fun InputOTPCodeContent(
                     text = "MINTA OTP",
                     style = MaterialTheme.typography.subtitle1,
                     fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colors.primary
+                    color = MaterialTheme.colors.primary,
                 )
             }
         } else {
