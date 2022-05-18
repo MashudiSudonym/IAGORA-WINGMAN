@@ -81,9 +81,9 @@ fun InputOTPCodeContent(
             password = true,
             containerSize = 48.dp,
             passwordChar = "•",
+            otpCount = 6,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Done,
             ),
         )
         Spacer(modifier = Modifier.size(16.dp))
