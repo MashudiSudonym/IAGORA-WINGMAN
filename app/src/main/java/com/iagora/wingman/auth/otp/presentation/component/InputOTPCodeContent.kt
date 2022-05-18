@@ -16,7 +16,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -25,7 +24,6 @@ import com.iagora.wingman.auth.otp.presentation.AuthVerifyOTPCodeViewModel
 import com.iagora.wingman.auth.otp.presentation.state.CountDownState
 import com.iagora.wingman.auth.otp.presentation.state.InputOTPCodeState
 import com.iagora.wingman.common.presentation.ui.component.CommonPrimaryColorButton
-import com.iagora.wingman.common.presentation.ui.component.OutlineTextFieldCustom
 import com.iagora.wingman.common.util.Constants
 import com.mukesh.OTP_VIEW_TYPE_UNDERLINE
 import com.mukesh.OtpView
