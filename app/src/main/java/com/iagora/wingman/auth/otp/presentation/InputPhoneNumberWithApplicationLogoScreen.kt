@@ -54,6 +54,9 @@ fun InputPhoneNumberWithApplicationLogoScreen(
 //            } else {
 //                routing.navigateToRootScreenBackStackToInputPhoneNumberWithApplicationLogoScreen(navigator, inclusiveStatus = true)
 //            }
+            routing.navigateToRootScreenBackStackToInputPhoneNumberWithApplicationLogoScreen(
+                navigator,
+                inclusiveStatus = true)
         }
     }
 

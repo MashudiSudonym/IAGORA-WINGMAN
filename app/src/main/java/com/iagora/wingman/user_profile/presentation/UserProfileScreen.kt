@@ -38,7 +38,7 @@ fun UserProfileScreen(
 
 
     BottomNavigationContentWrapper {
-        Scaffold(scaffoldState = scaffoldState) { padding ->
+        Scaffold(scaffoldState = scaffoldState) {
             // user logout screen state
             when {
                 logoutState.isError -> LaunchedEffect(scaffoldState) {
@@ -55,24 +55,26 @@ fun UserProfileScreen(
                     }
                 }
             }
+
             // default user profile screen
-            UserProfileContent(userProfileViewModel, padding)
+            UserProfileContent(userProfileViewModel)
         }
     }
 }
 
 @Composable
-private fun UserProfileContent(userProfileViewModel: UserProfileViewModel, padding: PaddingValues) {
+private fun UserProfileContent(userProfileViewModel: UserProfileViewModel) {
     val thisScrollState = rememberScrollState()
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(padding)
+            .padding(horizontal = 16.dp)
             .verticalScroll(thisScrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
+        Spacer(modifier = Modifier.size(16.dp))
         HeaderUserProfileContent()
         Spacer(modifier = Modifier.size(48.dp))
         WingmanUserProfileMenu(userProfileViewModel)

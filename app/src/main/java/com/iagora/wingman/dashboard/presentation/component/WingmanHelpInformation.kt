@@ -12,8 +12,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.iagora.wingman.R
+import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
 
 @Composable
 fun WingmanHelpInformation() {
@@ -62,10 +64,16 @@ fun WingmanHelpInformation() {
                         style = MaterialTheme.typography.subtitle1,
                         fontWeight = FontWeight.SemiBold
                     )
-
-                    Spacer(modifier = Modifier.size(16.dp))
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun WingmanHelpInformationPreview() {
+    WINGMANTheme {
+        WingmanHelpInformation()
     }
 }

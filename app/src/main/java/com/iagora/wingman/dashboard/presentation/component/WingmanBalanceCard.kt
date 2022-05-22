@@ -1,7 +1,6 @@
 package com.iagora.wingman.dashboard.presentation.component
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
@@ -49,18 +48,19 @@ fun WingmanBalanceCard() {
                     fontWeight = FontWeight.SemiBold
                 )
             }
-            Spacer(modifier = Modifier.size(175.dp))
+            Spacer(modifier = Modifier.weight(1f))
             Image(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_arrow_right_rounded),
                 contentDescription = null
             )
+            Spacer(modifier = Modifier.size(16.dp))
         }
     }
 }
 
 @Preview
 @Composable
-fun WingmanBalanceCardPreview() {
+private fun WingmanBalanceCardPreview() {
     WINGMANTheme {
         WingmanBalanceCard()
     }
