@@ -49,11 +49,11 @@ fun InputPhoneNumberWithApplicationLogoScreen(
         authenticationState.isError -> Text(text = "Error")
         authenticationState.isAuthenticated -> {
             // check user complete data
-            if (!isWingmanCompleteDataState) {
-                routing.navigateToWingmanDetailDataFormScreenBackStackToInputPhoneNumberWithApplicationLogoScreen(navigator, inclusiveStatus = false)
-            } else {
-                routing.navigateToRootScreenBackStackToInputPhoneNumberWithApplicationLogoScreen(navigator, inclusiveStatus = true)
-            }
+//            if (!isWingmanCompleteDataState) {
+//                routing.navigateToWingmanDetailDataFormScreenBackStackToInputPhoneNumberWithApplicationLogoScreen(navigator, inclusiveStatus = false)
+//            } else {
+//                routing.navigateToRootScreenBackStackToInputPhoneNumberWithApplicationLogoScreen(navigator, inclusiveStatus = true)
+//            }
         }
     }
 

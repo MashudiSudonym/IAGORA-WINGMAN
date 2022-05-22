@@ -8,7 +8,9 @@ import com.iagora.wingman.customer_care.presentation.CustomerCareScreen
 import com.iagora.wingman.dashboard.presentation.DashBoardScreen
 import com.iagora.wingman.user_profile.presentation.UserProfileScreen
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @Composable
 fun BottomNavigationBarNavigationConfigurations(
     navigator: DestinationsNavigator,
@@ -19,10 +21,10 @@ fun BottomNavigationBarNavigationConfigurations(
         startDestination = BottomNavigationScreens.Home.route
     ) {
         composable(BottomNavigationScreens.Home.route) {
-            DashBoardScreen()
+            DashBoardScreen(navigator)
         }
         composable(BottomNavigationScreens.CustomerCare.route) {
-            CustomerCareScreen()
+            CustomerCareScreen(navigator)
         }
         composable(BottomNavigationScreens.Profile.route) {
             UserProfileScreen(navigator)

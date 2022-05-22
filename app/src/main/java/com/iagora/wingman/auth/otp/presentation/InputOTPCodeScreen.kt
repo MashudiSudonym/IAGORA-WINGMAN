@@ -1,6 +1,7 @@
 package com.iagora.wingman.auth.otp.presentation
 
-import androidx.compose.material.*
+import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -50,12 +51,15 @@ fun InputOTPCodeScreen(
             inputOTPCodeState.isLoading -> FullScreenLoadingIndicator()
             inputOTPCodeState.isSuccess -> {
                 // check if not user complete registration, open registration screen
-                if (!inputOTPCodeState.isCompleteRegister) {
-                    routing.navigateToWingmanDetailDataFormScreenBackStackToInputPhoneNumberWithApplicationLogoScreen(navigator, true)
-                } else {
-                    // if user complete registration, open dashboard screen
-                    routing.navigateToRootScreenBackStackToInputPhoneNumberWithApplicationLogoScreen(navigator, true)
-                }
+//                if (!inputOTPCodeState.isCompleteRegister) {
+//                    routing.navigateToWingmanDetailDataFormScreenBackStackToInputPhoneNumberWithApplicationLogoScreen(navigator, true)
+//                } else {
+//                    // if user complete registration, open dashboard screen
+//                    routing.navigateToRootScreenBackStackToInputPhoneNumberWithApplicationLogoScreen(navigator, true)
+//                }
+                routing.navigateToRootScreenBackStackToInputPhoneNumberWithApplicationLogoScreen(
+                    navigator,
+                    true)
 
                 /*
                 * Reset field validation status

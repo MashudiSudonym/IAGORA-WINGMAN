@@ -20,11 +20,13 @@ import com.iagora.wingman.destinations.InputPhoneNumberWithApplicationLogoScreen
 import com.iagora.wingman.destinations.RootScreenDestination
 import com.iagora.wingman.user_profile.presentation.component.HeaderUserProfileContent
 import com.iagora.wingman.user_profile.presentation.component.WingmanUserProfileMenu
+import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.popUpTo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
+@Destination
 @Composable
 fun UserProfileScreen(
     navigator: DestinationsNavigator,

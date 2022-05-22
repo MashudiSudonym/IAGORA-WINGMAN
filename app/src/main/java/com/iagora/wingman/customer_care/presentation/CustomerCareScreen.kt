@@ -11,9 +11,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.iagora.wingman.common.presentation.ui.component.BottomNavigationContentWrapper
 import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicator
 import com.iagora.wingman.customer_care.presentation.state.AccessTokenState
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
+@Destination
 @Composable
-fun CustomerCareScreen(customerCareViewModel: CustomerCareViewModel = hiltViewModel()) {
+fun CustomerCareScreen(
+    navigator: DestinationsNavigator,
+    customerCareViewModel: CustomerCareViewModel = hiltViewModel(),
+) {
     val accessTokenState by customerCareViewModel.accessTokenState.collectAsState()
 
     BottomNavigationContentWrapper {

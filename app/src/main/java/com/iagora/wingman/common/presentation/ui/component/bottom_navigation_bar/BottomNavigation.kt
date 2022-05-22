@@ -1,6 +1,5 @@
 package com.iagora.wingman.common.presentation.ui.component.bottom_navigation_bar
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Text

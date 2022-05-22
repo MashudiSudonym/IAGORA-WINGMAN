@@ -7,12 +7,17 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.statusBarsPadding
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.iagora.wingman.common.presentation.ui.component.bottom_navigation_bar.BottomNavigationBarNavigationConfigurations
 import com.iagora.wingman.common.presentation.ui.component.bottom_navigation_bar.BottomNavigationScreen
 import com.iagora.wingman.common.presentation.ui.component.bottom_navigation_bar.BottomNavigationScreens
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@Suppress("OPT_IN_IS_NOT_ENABLED")
+@OptIn(ExperimentalPermissionsApi::class)
+@ExperimentalCoroutinesApi
 @Destination
 @Composable
 fun RootScreen(navigator: DestinationsNavigator) {
