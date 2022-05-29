@@ -51,6 +51,7 @@ Class di lapisan ini biasanya disebut kasus penggunaan atau pemicu interaksi. Se
 Untuk lebih detail tentang arsitektur yang digunakan pada kode ini silahkan kunjungi [Android Architecture](https://developer.android.com/jetpack/guide#recommended-app-arch) dan [Playlist MAD : Architecture](https://youtube.com/playlist?list=PLWz5rJ2EKKc8GZWCbUm3tBXKeqIi3rcVX).
 
 ## Teknologi yang digunakan
+
 - **Dependency Injection : Dagger - Hilt**
 - **Jetpack Compose**
 - **Kotlin**
@@ -62,19 +63,23 @@ Untuk lebih detail tentang arsitektur yang digunakan pada kode ini silahkan kunj
 - *selanjutnya jika ada tambahan terbaru akan ditambahkan*
 
 ## Pengaturan Awal Sebelum Memulai
+
 buka terminal / cmd dan pastikan anda sudah menginstall git
 
-`git clone -b mashudi-dev https://github.com/IAGORA-Project/IAGORA-WINGMAN.git`
+`git clone https://github.com/IAGORA-Project/IAGORA-WINGMAN.git`
 
 sebelum anda memulai membuka android studio pastikan anda membuat branch lokal untuk version control anda.
 
 `git checkout -b <your branch name>`
 
-buka android studio anda, jika mengalami error saat build gradle, buka file `local.properties` dan tambahkan ini 
+buka android studio anda, jika mengalami error saat build gradle, buka file `local.properties` dan tambahkan ini
 
 `baseURL="alamat url iagora wingman api"`
 
 lakukan kembali gradle sync.
 
+##
+
 ### Informasi Update
+
 *dokumen ini akan ditambahkan jika ada perubahan kode yang perlu dibuat catatannya*
