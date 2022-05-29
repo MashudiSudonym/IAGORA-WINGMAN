@@ -81,9 +81,11 @@ lakukan kembali gradle sync.
 ## Alur aplikasi yang sudah diterapkan
 
 - Alur authentikasi wingman
+
 ![wingman authentication](https://github.com/MashudiSudonym/IAGORA-WINGMAN/blob/mashudi-dev/documentation/flow_user_authentication_iagora_wingman.png)
 
 - Alur wingman login atau registrasi di aplikasi
+
 ![wingman login or sign up](https://github.com/MashudiSudonym/IAGORA-WINGMAN/blob/mashudi-dev/documentation/user_login_iagora_wingman.png)
 
 ### Informasi Update
