@@ -18,12 +18,9 @@ import com.iagora.wingman.auth.otp.presentation.event.InputPhoneNumberDataEvent
 import com.iagora.wingman.common.presentation.event.FormValidationEvent
 import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicatorCustom
 import com.iagora.wingman.common.util.Routing
-import com.iagora.wingman.destinations.InputOTPCodeScreenDestination
-import com.iagora.wingman.destinations.InputPhoneNumberWithApplicationLogoScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.ramcosta.composedestinations.navigation.popUpTo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
@@ -85,11 +82,10 @@ fun InputPhoneNumberWithApplicationLogoScreen(
                         inputPhoneNumberState.errorMessage?.asString(context).toString()
                     )
                     AuthRequestOTPCodeStatusEvent.Success -> {
-                        navigator.navigate(
-                            InputOTPCodeScreenDestination(authRequestOTPCodeViewModel.inputPhoneNumberState.value.phoneNumber)
-                        ) {
-                            popUpTo(InputPhoneNumberWithApplicationLogoScreenDestination)
-                        }
+                        routing.navigateToOTPInputScreenBackStackToInputPhoneNumberWithApplicationLogoScreen(
+                            navigator,
+                            authRequestOTPCodeViewModel.inputPhoneNumberState.value.phoneNumber,
+                        )
                     }
                 }
             }

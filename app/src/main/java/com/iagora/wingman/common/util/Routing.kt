@@ -11,6 +11,19 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @OptIn(ExperimentalPermissionsApi::class)
 object Routing {
+    // Navigate to OTP input screen, for back stack to input phone number with application logo screen
+    fun navigateToOTPInputScreenBackStackToInputPhoneNumberWithApplicationLogoScreen(
+        navigator: DestinationsNavigator,
+        phoneNumber: String,
+    ) {
+        navigator.navigate(
+            InputOTPCodeScreenDestination(phoneNumber)
+        ) {
+            popUpTo(InputPhoneNumberWithApplicationLogoScreenDestination)
+        }
+    }
+
+    // Navigate to root screen, for back stack to input phone number with application logo screen
     fun navigateToRootScreenBackStackToInputPhoneNumberWithApplicationLogoScreen(
         navigator: DestinationsNavigator,
         inclusiveStatus: Boolean = false,
@@ -24,6 +37,8 @@ object Routing {
         }
     }
 
+    // Navigate to wingman detail data form screen,
+    // for back stack to input phone number with application logo screen
     fun navigateToWingmanDetailDataFormScreenBackStackToInputPhoneNumberWithApplicationLogoScreen(
         navigator: DestinationsNavigator,
         inclusiveStatus: Boolean = false,
@@ -37,6 +52,8 @@ object Routing {
         }
     }
 
+    // Navigate to wingman detail document data form screen,
+    // for back stack to registration wingman detail data screen
     fun navigateToWingmanDetailDocumentDataFormScreenBackStackToRegistrationWingmanDetailDataScreen(
         navigator: DestinationsNavigator,
         imageUserIdCard: Uri,
@@ -52,11 +69,13 @@ object Routing {
         }
     }
 
-    fun navigateToCameraCaptureWingmanUserIdCardDestination(navigator: DestinationsNavigator) {
+    // Navigate to camera capture wingman user id card
+    fun navigateToCameraCaptureWingmanUserIdCardScreen(navigator: DestinationsNavigator) {
         navigator.navigate(CameraCaptureWingmanUserIdCardDestination)
     }
 
-    fun navigateToCameraCaptureWingmanPoliceAgreementLetterDestination(navigator: DestinationsNavigator) {
+    // Navigate to camera capture wingman police agreement letter
+    fun navigateToCameraCaptureWingmanPoliceAgreementLetterScreen(navigator: DestinationsNavigator) {
         navigator.navigate(CameraCaptureWingmanPoliceAgreementLetterDestination)
     }
 }

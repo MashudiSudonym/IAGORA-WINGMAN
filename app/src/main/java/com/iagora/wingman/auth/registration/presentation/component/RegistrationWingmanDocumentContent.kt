@@ -80,7 +80,7 @@ fun RegistrationWingmanDocumentContent(
                 onClick = {
                     when (cameraPermissionState.status) {
                         PermissionStatus.Granted -> {
-                            routing.navigateToCameraCaptureWingmanUserIdCardDestination(navigator)
+                            routing.navigateToCameraCaptureWingmanUserIdCardScreen(navigator)
                         }
                         is PermissionStatus.Denied -> {
                             cameraPermissionState.launchPermissionRequest()
@@ -99,7 +99,7 @@ fun RegistrationWingmanDocumentContent(
                 onClick = {
                     when (cameraPermissionState.status) {
                         PermissionStatus.Granted -> {
-                            routing.navigateToCameraCaptureWingmanPoliceAgreementLetterDestination(
+                            routing.navigateToCameraCaptureWingmanPoliceAgreementLetterScreen(
                                 navigator)
                         }
                         is PermissionStatus.Denied -> {
