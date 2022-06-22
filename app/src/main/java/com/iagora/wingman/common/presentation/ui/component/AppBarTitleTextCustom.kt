@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
 
 @Composable
-fun AppBarTitleText(title: String, textColor: Color = Color.Black) {
+fun AppBarTitleTextCustom(title: String, textColor: Color = Color.Black) {
     Row(
         modifier = Modifier.padding(vertical = 16.dp),
         horizontalArrangement = Arrangement.Center,
@@ -32,6 +32,6 @@ fun AppBarTitleText(title: String, textColor: Color = Color.Black) {
 @Composable
 private fun AppBarTitleTextPreview() {
     WINGMANTheme {
-        AppBarTitleText(title = "Your Title")
+        AppBarTitleTextCustom(title = "Your Title")
     }
 }

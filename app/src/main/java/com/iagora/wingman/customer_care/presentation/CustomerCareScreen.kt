@@ -8,8 +8,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.iagora.wingman.common.presentation.ui.component.BottomNavigationContentWrapper
-import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicator
+import com.iagora.wingman.common.presentation.ui.component.BottomNavigationContentWrapperCustom
+import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicatorCustom
 import com.iagora.wingman.customer_care.presentation.state.AccessTokenState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -22,7 +22,7 @@ fun CustomerCareScreen(
 ) {
     val accessTokenState by customerCareViewModel.accessTokenState.collectAsState()
 
-    BottomNavigationContentWrapper {
+    BottomNavigationContentWrapperCustom {
         CustomerScreenContent(accessTokenState)
     }
 }
@@ -34,7 +34,7 @@ private fun CustomerScreenContent(accessTokenState: AccessTokenState) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         when {
-            accessTokenState.isLoading -> FullScreenLoadingIndicator()
+            accessTokenState.isLoading -> FullScreenLoadingIndicatorCustom()
             accessTokenState.isError -> Text(text = accessTokenState.accessToken)
             else -> Text(text = accessTokenState.accessToken)
         }

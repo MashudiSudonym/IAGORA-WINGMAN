@@ -14,11 +14,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.iagora.wingman.auth.registration.presentation.RegistrationWingmanDetailDataViewModel
 import com.iagora.wingman.auth.registration.presentation.event.WingmanDetailDataEvent
 import com.iagora.wingman.auth.registration.presentation.state.RegistrationWingmanDetailDataState
-import com.iagora.wingman.common.presentation.ui.component.AppBarTitleText
-import com.iagora.wingman.common.presentation.ui.component.CommonPrimaryColorButton
+import com.iagora.wingman.common.presentation.ui.component.AppBarTitleTextCustom
+import com.iagora.wingman.common.presentation.ui.component.MenuTitleCustom
 import com.iagora.wingman.common.presentation.ui.component.OutlineTextFieldCustom
+import com.iagora.wingman.common.presentation.ui.component.PrimaryColorButtonCustom
 import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
-import com.iagora.wingman.common.presentation.ui.component.MenuTitle
 
 @Composable
 fun RegistrationWingmanDetailDataContent(
@@ -33,7 +33,7 @@ fun RegistrationWingmanDetailDataContent(
             .padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.Center
     ) {
-        AppBarTitleText(title = "Lengkapi Data Diri")
+        AppBarTitleTextCustom(title = "Lengkapi Data Diri")
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -42,7 +42,7 @@ fun RegistrationWingmanDetailDataContent(
             verticalArrangement = Arrangement.Top,
         ) {
             Spacer(modifier = Modifier.size(16.dp))
-            MenuTitle(title = "Nama Lengkap")
+            MenuTitleCustom(title = "Nama Lengkap")
             Spacer(modifier = Modifier.size(4.dp))
             OutlineTextFieldCustom(
                 textValue = registrationWingmanDetailDataState.name,
@@ -58,7 +58,7 @@ fun RegistrationWingmanDetailDataContent(
                 keyboardActionOnDone = { this.defaultKeyboardAction(ImeAction.Next) }
             )
             Spacer(modifier = Modifier.size(16.dp))
-            MenuTitle(title = "Email")
+            MenuTitleCustom(title = "Email")
             Spacer(modifier = Modifier.size(4.dp))
             OutlineTextFieldCustom(
                 textValue = registrationWingmanDetailDataState.email,
@@ -76,7 +76,7 @@ fun RegistrationWingmanDetailDataContent(
                 }
             )
             Spacer(modifier = Modifier.size(16.dp))
-            MenuTitle(title = "Alamat Lengkap")
+            MenuTitleCustom(title = "Alamat Lengkap")
             Spacer(modifier = Modifier.size(4.dp))
             OutlineTextFieldCustom(
                 modifier = Modifier.height(150.dp),
@@ -94,7 +94,7 @@ fun RegistrationWingmanDetailDataContent(
                 singleLine = false
             )
             Spacer(modifier = Modifier.size(16.dp))
-            MenuTitle(title = "Kota Registrasi")
+            MenuTitleCustom(title = "Kota Registrasi")
             Spacer(modifier = Modifier.size(4.dp))
             OutlineTextFieldCustom(
                 textValue = registrationWingmanDetailDataState.city,
@@ -112,7 +112,7 @@ fun RegistrationWingmanDetailDataContent(
                 }
             )
             Spacer(modifier = Modifier.size(24.dp))
-            CommonPrimaryColorButton(clickEvent = {
+            PrimaryColorButtonCustom(clickEvent = {
                 registrationWingmanDetailDataViewModel.onEvent(
                     WingmanDetailDataEvent.Submit
                 )

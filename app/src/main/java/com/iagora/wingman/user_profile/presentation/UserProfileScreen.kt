@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.iagora.wingman.common.presentation.ui.component.BottomNavigationContentWrapper
-import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicator
+import com.iagora.wingman.common.presentation.ui.component.BottomNavigationContentWrapperCustom
+import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicatorCustom
 import com.iagora.wingman.destinations.InputPhoneNumberWithApplicationLogoScreenDestination
 import com.iagora.wingman.destinations.RootScreenDestination
 import com.iagora.wingman.user_profile.presentation.component.HeaderUserProfileContent
@@ -37,7 +37,7 @@ fun UserProfileScreen(
     val logoutState by userProfileViewModel.logoutState.collectAsState()
 
 
-    BottomNavigationContentWrapper {
+    BottomNavigationContentWrapperCustom {
         Scaffold(scaffoldState = scaffoldState) {
             // user logout screen state
             when {
@@ -46,7 +46,7 @@ fun UserProfileScreen(
                         scaffoldState.snackbarHostState.showSnackbar(data.asString(context))
                     }
                 }
-                logoutState.isLoading -> FullScreenLoadingIndicator()
+                logoutState.isLoading -> FullScreenLoadingIndicatorCustom()
                 logoutState.logoutSuccess -> navigator.navigate(
                     InputPhoneNumberWithApplicationLogoScreenDestination
                 ) {

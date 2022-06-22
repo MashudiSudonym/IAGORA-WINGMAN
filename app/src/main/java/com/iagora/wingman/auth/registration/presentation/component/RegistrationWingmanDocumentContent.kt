@@ -12,7 +12,6 @@ import androidx.compose.material.icons.outlined.Camera
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -67,7 +66,7 @@ fun RegistrationWingmanDocumentContent(
             .padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.Center
     ) {
-        AppBarTitleTextWithBackArrow(title = "Lengkapi Dokumen") {
+        AppBarTitleTextWithBackArrowCustom(title = "Lengkapi Dokumen") {
             navigator.navigateUp()
         }
         Column(
@@ -77,7 +76,7 @@ fun RegistrationWingmanDocumentContent(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top,
         ) {
-            TakePictureButton(
+            TakePictureButtonCustom(
                 onClick = {
                     when (cameraPermissionState.status) {
                         PermissionStatus.Granted -> {
@@ -96,7 +95,7 @@ fun RegistrationWingmanDocumentContent(
                 errorMessage = registrationWingmanDocumentDataState.userIdCardImageFieldError?.asString()
             )
             Spacer(modifier = Modifier.size(16.dp))
-            TakePictureButton(
+            TakePictureButtonCustom(
                 onClick = {
                     when (cameraPermissionState.status) {
                         PermissionStatus.Granted -> {
@@ -122,7 +121,7 @@ fun RegistrationWingmanDocumentContent(
                 textAlign = TextAlign.Justify
             )
             Spacer(modifier = Modifier.size(16.dp))
-            MenuTitle(title = "Nama Bank")
+            MenuTitleCustom(title = "Nama Bank")
             Spacer(modifier = Modifier.size(8.dp))
             OutlineTextFieldCustom(
                 textValue = registrationWingmanDocumentDataState.bankName,
@@ -142,7 +141,7 @@ fun RegistrationWingmanDocumentContent(
                 errorMessage = registrationWingmanDocumentDataState.bankNameFieldError?.asString()
             )
             Spacer(modifier = Modifier.size(16.dp))
-            MenuTitle(title = "Nomor Rekening Bank")
+            MenuTitleCustom(title = "Nomor Rekening Bank")
             Spacer(modifier = Modifier.size(8.dp))
             OutlineTextFieldCustom(
                 textValue = registrationWingmanDocumentDataState.bankAccountNumber,
@@ -162,7 +161,7 @@ fun RegistrationWingmanDocumentContent(
                 errorMessage = registrationWingmanDocumentDataState.bankAccountNumberFieldError?.asString()
             )
             Spacer(modifier = Modifier.size(16.dp))
-            MenuTitle(title = "Nama Pemilik Rekening")
+            MenuTitleCustom(title = "Nama Pemilik Rekening")
             Spacer(modifier = Modifier.size(8.dp))
             OutlineTextFieldCustom(
                 textValue = registrationWingmanDocumentDataState.bankAccountUserName,
@@ -185,7 +184,7 @@ fun RegistrationWingmanDocumentContent(
                 errorMessage = registrationWingmanDocumentDataState.bankAccountUserNameFieldError?.asString()
             )
             Spacer(modifier = Modifier.size(24.dp))
-            CommonPrimaryColorButton(clickEvent = {
+            PrimaryColorButtonCustom(clickEvent = {
                 focusManager.clearFocus()
                 registrationWingmanDocumentDataViewModel.onEvent(
                     WingmanDocumentDataEvent.Submit

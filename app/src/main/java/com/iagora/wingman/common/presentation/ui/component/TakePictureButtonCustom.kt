@@ -4,7 +4,7 @@ import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -16,14 +16,14 @@ import coil.compose.rememberImagePainter
 @Suppress("OPT_IN_IS_NOT_ENABLED")
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun TakePictureButton(
+fun TakePictureButtonCustom(
     onClick: () -> Unit,
     title: String,
     icon: ImageVector,
     subtitle: String,
     image: Uri,
     isError: Boolean = false,
-    errorMessage: String? = null
+    errorMessage: String? = null,
 ) {
     Card(
         onClick = { onClick() },
@@ -39,7 +39,7 @@ fun TakePictureButton(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Center
         ) {
-            MenuTitle(title = title)
+            MenuTitleCustom(title = title)
             Spacer(modifier = Modifier.size(16.dp))
             Column(
                 modifier = Modifier

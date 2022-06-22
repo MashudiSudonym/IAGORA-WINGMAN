@@ -1,6 +1,8 @@
 package com.iagora.wingman.common.presentation.ui.component
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -16,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CustomIconTextButton(
+fun IconTextButtonCustom(
     modifier: Modifier = Modifier,
     buttonTitle: String,
     icon: ImageVector,
@@ -39,7 +41,7 @@ fun CustomIconTextButton(
 @Preview
 @Composable
 private fun CustomIconTextButtonPreview() {
-    CustomIconTextButton(buttonTitle = "Button Title",
+    IconTextButtonCustom(buttonTitle = "Button Title",
         icon = Icons.Default.Android,
         clickEvent = { /*TODO*/ })
 }

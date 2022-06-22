@@ -23,7 +23,7 @@ import com.iagora.wingman.R
 import com.iagora.wingman.auth.otp.presentation.AuthVerifyOTPCodeViewModel
 import com.iagora.wingman.auth.otp.presentation.state.CountDownState
 import com.iagora.wingman.auth.otp.presentation.state.InputOTPCodeState
-import com.iagora.wingman.common.presentation.ui.component.CommonPrimaryColorButton
+import com.iagora.wingman.common.presentation.ui.component.PrimaryColorButtonCustom
 import com.iagora.wingman.common.util.Constants
 import com.mukesh.OTP_VIEW_TYPE_UNDERLINE
 import com.mukesh.OtpView
@@ -85,7 +85,7 @@ fun InputOTPCodeContent(
             ),
         )
         Spacer(modifier = Modifier.size(16.dp))
-        CommonPrimaryColorButton(
+        PrimaryColorButtonCustom(
             clickEvent = {
                 focusManager.clearFocus()
                 authVerifyOTPCodeViewModel.validationOTPCodeTextFieldAndSendOTPVerification(

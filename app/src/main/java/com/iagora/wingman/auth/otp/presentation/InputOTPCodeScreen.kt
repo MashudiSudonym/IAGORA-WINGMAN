@@ -12,7 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 import com.iagora.wingman.auth.otp.presentation.component.InputOTPCodeContent
-import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicator
+import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicatorCustom
 import com.iagora.wingman.common.util.Routing
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -48,7 +48,7 @@ fun InputOTPCodeScreen(
                     scaffoldState.snackbarHostState.showSnackbar(data.asString(context))
                 }
             }
-            inputOTPCodeState.isLoading -> FullScreenLoadingIndicator()
+            inputOTPCodeState.isLoading -> FullScreenLoadingIndicatorCustom()
             inputOTPCodeState.isSuccess -> {
                 // check if not user complete registration, open registration screen
 //                if (!inputOTPCodeState.isCompleteRegister) {

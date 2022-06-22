@@ -1,6 +1,5 @@
 package com.iagora.wingman.common.presentation.ui.component
 
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -11,7 +10,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun CommonPrimaryColorButton(
+fun PrimaryColorButtonCustom(
     isEnable: Boolean = true,
     clickEvent: () -> Unit,
     buttonTitle: String,
@@ -31,6 +30,6 @@ fun CommonPrimaryColorButton(
 
 @Preview
 @Composable
-private fun CommonPrimaryColorButton() {
-    CommonPrimaryColorButton(clickEvent = { /*TODO*/ }, buttonTitle = "Default Button")
+private fun PrimaryColorButtonCustom() {
+    PrimaryColorButtonCustom(clickEvent = { /*TODO*/ }, buttonTitle = "Default Button")
 }

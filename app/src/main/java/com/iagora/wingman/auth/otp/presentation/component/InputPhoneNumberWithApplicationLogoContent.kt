@@ -20,8 +20,8 @@ import com.iagora.wingman.R
 import com.iagora.wingman.auth.otp.presentation.AuthRequestOTPCodeViewModel
 import com.iagora.wingman.auth.otp.presentation.event.InputPhoneNumberDataEvent
 import com.iagora.wingman.auth.otp.presentation.state.InputPhoneNumberState
-import com.iagora.wingman.common.presentation.ui.component.CommonPrimaryColorButton
 import com.iagora.wingman.common.presentation.ui.component.OutlineTextFieldCustom
+import com.iagora.wingman.common.presentation.ui.component.PrimaryColorButtonCustom
 
 @Composable
 fun InputPhoneNumberWithApplicationLogoContent(
@@ -79,7 +79,7 @@ fun InputPhoneNumberWithApplicationLogoContent(
             }
         )
         Spacer(modifier = Modifier.size(24.dp))
-        CommonPrimaryColorButton(
+        PrimaryColorButtonCustom(
             clickEvent = {
                 focusManager.clearFocus()
                 authRequestOTPCodeViewModel.onInputFieldEvent(InputPhoneNumberDataEvent.Submit)

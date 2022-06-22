@@ -16,7 +16,7 @@ import com.iagora.wingman.auth.otp.presentation.component.InputPhoneNumberWithAp
 import com.iagora.wingman.auth.otp.presentation.event.AuthRequestOTPCodeStatusEvent
 import com.iagora.wingman.auth.otp.presentation.event.InputPhoneNumberDataEvent
 import com.iagora.wingman.common.presentation.event.FormValidationEvent
-import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicator
+import com.iagora.wingman.common.presentation.ui.component.FullScreenLoadingIndicatorCustom
 import com.iagora.wingman.common.util.Routing
 import com.iagora.wingman.destinations.InputOTPCodeScreenDestination
 import com.iagora.wingman.destinations.InputPhoneNumberWithApplicationLogoScreenDestination
@@ -45,7 +45,7 @@ fun InputPhoneNumberWithApplicationLogoScreen(
 
     // check user authentication status
     when {
-        authenticationState.isLoading -> FullScreenLoadingIndicator()
+        authenticationState.isLoading -> FullScreenLoadingIndicatorCustom()
         authenticationState.isError -> Text(text = "Error")
         authenticationState.isAuthenticated -> {
             // check user complete data
@@ -97,7 +97,7 @@ fun InputPhoneNumberWithApplicationLogoScreen(
 
         // is Loading ?
         if (inputPhoneNumberState.isLoading) {
-            FullScreenLoadingIndicator()
+            FullScreenLoadingIndicatorCustom()
         }
 
         // default screen content

@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
 
 @Composable
-fun FullScreenLoadingIndicator(
+fun FullScreenLoadingIndicatorCustom(
     backgroundColor: Color = Color.White,
     textColor: Color = Color.Black,
     loadingIndicatorColor: Color = MaterialTheme.colors.primary,
@@ -37,6 +37,6 @@ fun FullScreenLoadingIndicator(
 @Composable
 fun FullScreenLoadingIndicatorPreview() {
     WINGMANTheme {
-        FullScreenLoadingIndicator()
+        FullScreenLoadingIndicatorCustom()
     }
 }

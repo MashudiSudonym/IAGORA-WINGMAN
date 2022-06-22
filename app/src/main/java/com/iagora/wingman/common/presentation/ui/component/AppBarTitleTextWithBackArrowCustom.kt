@@ -19,7 +19,7 @@ import com.iagora.wingman.R
 import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
 
 @Composable
-fun AppBarTitleTextWithBackArrow(
+fun AppBarTitleTextWithBackArrowCustom(
     title: String,
     textColor: Color = Color.Black,
     iconColor: Color = Color.Black,
@@ -54,6 +54,6 @@ fun AppBarTitleTextWithBackArrow(
 @Composable
 private fun AppBarTitleTextWithBackArrowPreview() {
     WINGMANTheme {
-        AppBarTitleTextWithBackArrow(title = stringResource(id = R.string.app_name)) {}
+        AppBarTitleTextWithBackArrowCustom(title = stringResource(id = R.string.app_name)) {}
     }
 }

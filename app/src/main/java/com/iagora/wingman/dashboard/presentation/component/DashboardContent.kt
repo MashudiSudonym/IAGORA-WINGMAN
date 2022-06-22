@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.iagora.wingman.common.presentation.ui.component.CommonPrimaryColorButton
+import com.iagora.wingman.common.presentation.ui.component.PrimaryColorButtonCustom
 import com.iagora.wingman.dashboard.presentation.DashboardViewModel
 
 @Composable
@@ -31,7 +31,7 @@ fun DashboardContent(dashboardViewModel: DashboardViewModel = hiltViewModel()) {
         WingmanOrderInformation()
         Spacer(modifier = Modifier.size(24.dp))
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-            CommonPrimaryColorButton(
+            PrimaryColorButtonCustom(
                 clickEvent = { /*TODO*/ },
                 buttonTitle = "TAMBAH PRODUK",
             )

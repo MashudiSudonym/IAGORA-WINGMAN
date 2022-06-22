@@ -11,8 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.iagora.wingman.common.presentation.ui.component.CustomIconTextButton
-import com.iagora.wingman.common.presentation.ui.component.MenuTitle
+import com.iagora.wingman.common.presentation.ui.component.IconTextButtonCustom
+import com.iagora.wingman.common.presentation.ui.component.MenuTitleCustom
 import com.iagora.wingman.user_profile.presentation.UserProfileViewModel
 import com.iagora.wingman.user_profile.presentation.event.UserProfileEvent
 
@@ -20,43 +20,43 @@ import com.iagora.wingman.user_profile.presentation.event.UserProfileEvent
 fun WingmanUserProfileMenu(userProfileViewModel: UserProfileViewModel) {
 
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.Start) {
-        MenuTitle(title = "Pengaturan Akun")
-        CustomIconTextButton(
+        MenuTitleCustom(title = "Pengaturan Akun")
+        IconTextButtonCustom(
             buttonTitle = "Rekening Pencairan Dana",
             icon = Icons.Outlined.Payment,
             clickEvent = {},
         )
-        CustomIconTextButton(
+        IconTextButtonCustom(
             buttonTitle = "Keamanan Akun",
             icon = Icons.Outlined.Shield,
             clickEvent = {},
         )
         Spacer(modifier = Modifier.size(24.dp))
-        MenuTitle(title = "Pusat Bantuan")
-        CustomIconTextButton(
+        MenuTitleCustom(title = "Pusat Bantuan")
+        IconTextButtonCustom(
             buttonTitle = "FAQ",
             icon = Icons.Outlined.Quiz,
             clickEvent = {},
         )
-        CustomIconTextButton(
+        IconTextButtonCustom(
             buttonTitle = "IAGORA CARE",
             icon = Icons.Outlined.HeadsetMic,
             clickEvent = {},
         )
         Spacer(modifier = Modifier.size(24.dp))
-        MenuTitle(title = "Tentang Kami")
-        CustomIconTextButton(
+        MenuTitleCustom(title = "Tentang Kami")
+        IconTextButtonCustom(
             buttonTitle = "Syarat & Ketentuan",
             icon = Icons.Outlined.Feed,
             clickEvent = {},
         )
-        CustomIconTextButton(
+        IconTextButtonCustom(
             buttonTitle = "Tentang Kami",
             icon = Icons.Outlined.SupportAgent,
             clickEvent = {},
         )
         Spacer(modifier = Modifier.size(24.dp))
-        CustomIconTextButton(
+        IconTextButtonCustom(
             buttonTitle = "Keluar",
             icon = Icons.Outlined.Logout,
             clickEvent = {
