@@ -1,4 +1,4 @@
-package com.iagora.wingman.user_profile.presentation
+package com.iagora.wingman.user_profile.presentation.view_model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

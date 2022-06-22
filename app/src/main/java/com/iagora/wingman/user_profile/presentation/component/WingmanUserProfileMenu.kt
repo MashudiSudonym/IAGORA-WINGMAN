@@ -1,20 +1,18 @@
 package com.iagora.wingman.user_profile.presentation.component
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import com.iagora.wingman.common.presentation.ui.component.IconTextButtonCustom
 import com.iagora.wingman.common.presentation.ui.component.MenuTitleCustom
-import com.iagora.wingman.user_profile.presentation.UserProfileViewModel
+import com.iagora.wingman.common.presentation.ui.component.spacer.StandardSpacer24Dp
 import com.iagora.wingman.user_profile.presentation.event.UserProfileEvent
+import com.iagora.wingman.user_profile.presentation.view_model.UserProfileViewModel
 
 @Composable
 fun WingmanUserProfileMenu(userProfileViewModel: UserProfileViewModel) {
@@ -31,7 +29,7 @@ fun WingmanUserProfileMenu(userProfileViewModel: UserProfileViewModel) {
             icon = Icons.Outlined.Shield,
             clickEvent = {},
         )
-        Spacer(modifier = Modifier.size(24.dp))
+        StandardSpacer24Dp()
         MenuTitleCustom(title = "Pusat Bantuan")
         IconTextButtonCustom(
             buttonTitle = "FAQ",
@@ -43,7 +41,7 @@ fun WingmanUserProfileMenu(userProfileViewModel: UserProfileViewModel) {
             icon = Icons.Outlined.HeadsetMic,
             clickEvent = {},
         )
-        Spacer(modifier = Modifier.size(24.dp))
+        StandardSpacer24Dp()
         MenuTitleCustom(title = "Tentang Kami")
         IconTextButtonCustom(
             buttonTitle = "Syarat & Ketentuan",
@@ -55,7 +53,7 @@ fun WingmanUserProfileMenu(userProfileViewModel: UserProfileViewModel) {
             icon = Icons.Outlined.SupportAgent,
             clickEvent = {},
         )
-        Spacer(modifier = Modifier.size(24.dp))
+        StandardSpacer24Dp()
         IconTextButtonCustom(
             buttonTitle = "Keluar",
             icon = Icons.Outlined.Logout,

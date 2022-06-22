@@ -18,6 +18,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.iagora.wingman.R
+import com.iagora.wingman.common.presentation.ui.component.spacer.StandardSpacer16Dp
+import com.iagora.wingman.common.presentation.ui.component.spacer.StandardSpacer2Dp
+import com.iagora.wingman.common.presentation.ui.component.spacer.StandardSpacer4Dp
+import com.iagora.wingman.common.presentation.ui.component.spacer.StandardSpacer8Dp
 import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
 import com.iagora.wingman.dashboard.presentation.state.GreetingMessageState
 
@@ -39,14 +43,14 @@ fun HeaderDashboardContent(greetingMessageState: GreetingMessageState) {
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.Start,
             ) {
-                Spacer(modifier = Modifier.size(16.dp))
+                StandardSpacer16Dp()
                 Text(
                     text = "Selamat ${greetingMessageState.greeting}, {Jack}",
                     style = MaterialTheme.typography.h6,
                     color = Color.White,
                     fontWeight = FontWeight.SemiBold
                 )
-                Spacer(modifier = Modifier.size(4.dp))
+                StandardSpacer4Dp()
                 Row(
                     horizontalArrangement = Arrangement.Center
                 ) {
@@ -55,7 +59,7 @@ fun HeaderDashboardContent(greetingMessageState: GreetingMessageState) {
                         contentDescription = null,
                         tint = Color.Yellow
                     )
-                    Spacer(modifier = Modifier.size(8.dp))
+                    StandardSpacer8Dp()
                     Text(
                         text = "{4.8} / 5",
                         style = MaterialTheme.typography.subtitle1,
@@ -63,7 +67,7 @@ fun HeaderDashboardContent(greetingMessageState: GreetingMessageState) {
                     )
                 }
             }
-            Spacer(modifier = Modifier.size(8.dp))
+            StandardSpacer8Dp()
             Column(
                 modifier = Modifier
                     .padding(16.dp)
@@ -75,7 +79,7 @@ fun HeaderDashboardContent(greetingMessageState: GreetingMessageState) {
                     style = MaterialTheme.typography.subtitle1,
                     color = Color.White
                 )
-                Spacer(modifier = Modifier.size(2.dp))
+                StandardSpacer2Dp()
                 Switch(
                     checked = checkedState.value,
                     onCheckedChange = {

@@ -1,4 +1,4 @@
-package com.iagora.wingman.dashboard.presentation
+package com.iagora.wingman.dashboard.presentation.view_model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

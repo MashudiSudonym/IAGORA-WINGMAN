@@ -22,10 +22,12 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
 import com.iagora.wingman.R
-import com.iagora.wingman.auth.registration.presentation.RegistrationWingmanDocumentDataViewModel
 import com.iagora.wingman.auth.registration.presentation.event.WingmanDocumentDataEvent
 import com.iagora.wingman.auth.registration.presentation.state.RegistrationWingmanDocumentDataState
+import com.iagora.wingman.auth.registration.presentation.view_model.RegistrationWingmanDocumentDataViewModel
 import com.iagora.wingman.common.presentation.ui.component.*
+import com.iagora.wingman.common.presentation.ui.component.spacer.StandardSpacer16Dp
+import com.iagora.wingman.common.presentation.ui.component.spacer.StandardSpacer24Dp
 import com.iagora.wingman.common.util.Routing
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -94,7 +96,7 @@ fun RegistrationWingmanDocumentContent(
                 isError = registrationWingmanDocumentDataState.userIdCardImageFieldError != null,
                 errorMessage = registrationWingmanDocumentDataState.userIdCardImageFieldError?.asString()
             )
-            Spacer(modifier = Modifier.size(16.dp))
+            StandardSpacer16Dp()
             TakePictureButtonCustom(
                 onClick = {
                     when (cameraPermissionState.status) {
@@ -114,13 +116,13 @@ fun RegistrationWingmanDocumentContent(
                 isError = registrationWingmanDocumentDataState.userPoliceAgreementLetterImageFieldError != null,
                 errorMessage = registrationWingmanDocumentDataState.userPoliceAgreementLetterImageFieldError?.asString()
             )
-            Spacer(modifier = Modifier.size(16.dp))
+            StandardSpacer16Dp()
             Text(
                 text = stringResource(id = R.string.attention_bank_document),
                 style = MaterialTheme.typography.body2,
                 textAlign = TextAlign.Justify
             )
-            Spacer(modifier = Modifier.size(16.dp))
+            StandardSpacer16Dp()
             MenuTitleCustom(title = "Nama Bank")
             Spacer(modifier = Modifier.size(8.dp))
             OutlineTextFieldCustom(
@@ -140,7 +142,7 @@ fun RegistrationWingmanDocumentContent(
                 isError = registrationWingmanDocumentDataState.bankNameFieldError != null,
                 errorMessage = registrationWingmanDocumentDataState.bankNameFieldError?.asString()
             )
-            Spacer(modifier = Modifier.size(16.dp))
+            StandardSpacer16Dp()
             MenuTitleCustom(title = "Nomor Rekening Bank")
             Spacer(modifier = Modifier.size(8.dp))
             OutlineTextFieldCustom(
@@ -160,7 +162,7 @@ fun RegistrationWingmanDocumentContent(
                 isError = registrationWingmanDocumentDataState.bankAccountNumberFieldError != null,
                 errorMessage = registrationWingmanDocumentDataState.bankAccountNumberFieldError?.asString()
             )
-            Spacer(modifier = Modifier.size(16.dp))
+            StandardSpacer16Dp()
             MenuTitleCustom(title = "Nama Pemilik Rekening")
             Spacer(modifier = Modifier.size(8.dp))
             OutlineTextFieldCustom(
@@ -183,14 +185,14 @@ fun RegistrationWingmanDocumentContent(
                 isError = registrationWingmanDocumentDataState.bankAccountUserNameFieldError != null,
                 errorMessage = registrationWingmanDocumentDataState.bankAccountUserNameFieldError?.asString()
             )
-            Spacer(modifier = Modifier.size(24.dp))
+            StandardSpacer24Dp()
             PrimaryColorButtonCustom(clickEvent = {
                 focusManager.clearFocus()
                 registrationWingmanDocumentDataViewModel.onEvent(
                     WingmanDocumentDataEvent.Submit
                 )
             }, buttonTitle = "Kirim Data")
-            Spacer(modifier = Modifier.size(16.dp))
+            StandardSpacer16Dp()
         }
     }
 }

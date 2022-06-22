@@ -1,6 +1,8 @@
 package com.iagora.wingman.dashboard.presentation.component
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
@@ -13,7 +15,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.iagora.wingman.common.presentation.ui.component.PrimaryColorButtonCustom
-import com.iagora.wingman.dashboard.presentation.DashboardViewModel
+import com.iagora.wingman.common.presentation.ui.component.spacer.StandardSpacer16Dp
+import com.iagora.wingman.common.presentation.ui.component.spacer.StandardSpacer24Dp
+import com.iagora.wingman.dashboard.presentation.view_model.DashboardViewModel
 
 @Composable
 fun DashboardContent(dashboardViewModel: DashboardViewModel = hiltViewModel()) {
@@ -27,15 +31,15 @@ fun DashboardContent(dashboardViewModel: DashboardViewModel = hiltViewModel()) {
     ) {
         HeaderDashboardContent(greetingMessageState)
         WingmanBalanceCard()
-        Spacer(modifier = Modifier.size(16.dp))
+        StandardSpacer16Dp()
         WingmanOrderInformation()
-        Spacer(modifier = Modifier.size(24.dp))
+        StandardSpacer24Dp()
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
             PrimaryColorButtonCustom(
                 clickEvent = { /*TODO*/ },
                 buttonTitle = "TAMBAH PRODUK",
             )
-            Spacer(modifier = Modifier.size(24.dp))
+            StandardSpacer24Dp()
             Text(
                 text = "Langkah-langkah memproses pesanan",
                 style = MaterialTheme.typography.subtitle1,
@@ -43,6 +47,6 @@ fun DashboardContent(dashboardViewModel: DashboardViewModel = hiltViewModel()) {
             )
         }
         WingmanHelpInformation()
-        Spacer(modifier = Modifier.size(16.dp))
+        StandardSpacer16Dp()
     }
 }

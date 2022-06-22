@@ -1,11 +1,14 @@
-package com.iagora.wingman.auth.registration.presentation.component.camera
+package com.iagora.wingman.auth.registration.presentation.component.camera_screen
 
+import android.content.Context
 import android.net.Uri
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY
 import androidx.camera.core.Preview
 import androidx.camera.core.UseCase
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -20,13 +23,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.iagora.wingman.R
 import com.iagora.wingman.common.presentation.ui.component.camera.CameraPreview
 import com.iagora.wingman.common.presentation.ui.component.camera.executor
 import com.iagora.wingman.common.presentation.ui.component.camera.getCameraProvider
-import com.iagora.wingman.common.presentation.ui.component.camera.*
+import com.iagora.wingman.common.presentation.ui.component.camera.takePicture
 import com.iagora.wingman.common.util.Routing
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -38,16 +43,31 @@ import timber.log.Timber
 @ExperimentalCoroutinesApi
 @Destination
 @Composable
-fun CameraCaptureWingmanPoliceAgreementLetter(
+fun CameraCaptureWingmanUserIdCardScreen(
+    modifier: Modifier = Modifier,
     cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA,
     navigator: DestinationsNavigator,
-    routing: Routing = Routing,
 ) {
     val context = LocalContext.current
 
-    Box(modifier = Modifier
+    CameraCaptureWingmanUserIdCardContent(modifier
         .navigationBarsPadding()
-        .statusBarsPadding()) {
+        .statusBarsPadding(),
+        context,
+        navigator,
+        cameraSelector)
+}
+
+@ExperimentalCoroutinesApi
+@Composable
+private fun CameraCaptureWingmanUserIdCardContent(
+    modifier: Modifier,
+    context: Context,
+    navigator: DestinationsNavigator,
+    cameraSelector: CameraSelector,
+    routing: Routing = Routing,
+) {
+    Box(modifier = modifier) {
         val lifecycleOwner = LocalLifecycleOwner.current
         val coroutineScope = rememberCoroutineScope()
         var previewUseCase by remember { mutableStateOf<UseCase>(Preview.Builder().build()) }
@@ -66,6 +86,16 @@ fun CameraCaptureWingmanPoliceAgreementLetter(
                     previewUseCase = it
                 }
             )
+            Image(
+                painter = painterResource(id = R.drawable.frame_user_id_card),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(
+                        Alignment.Center)
+                    .background(Color.Transparent)
+                    .padding(16.dp)
+            )
             Button(
                 modifier = Modifier
                     .wrapContentSize()
@@ -78,8 +108,8 @@ fun CameraCaptureWingmanPoliceAgreementLetter(
                         imageCaptureUseCase.takePicture(context.executor).run {
                             routing.navigateToWingmanDetailDocumentDataFormScreenBackStackToRegistrationWingmanDetailDataScreen(
                                 navigator = navigator,
-                                imageUserIdCard = Uri.parse("file://dev/null"),
-                                imageUserPoliceAgreementLetter = this.toUri(),
+                                imageUserIdCard = this.toUri(),
+                                imageUserPoliceAgreementLetter = Uri.parse("file://dev/null"),
                                 inclusiveStatus = true,
                             )
                         }

@@ -1,4 +1,4 @@
-package com.iagora.wingman.auth.registration.presentation
+package com.iagora.wingman.auth.registration.presentation.view_model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,9 +6,9 @@ import com.iagora.wingman.auth.registration.domain.use_case.field_validation_use
 import com.iagora.wingman.auth.registration.domain.use_case.field_validation_use_case.CityFieldValidationUseCase
 import com.iagora.wingman.auth.registration.domain.use_case.field_validation_use_case.EmailFieldValidationUseCase
 import com.iagora.wingman.auth.registration.domain.use_case.field_validation_use_case.NameFieldValidationUseCase
-import com.iagora.wingman.common.presentation.event.FormValidationEvent
 import com.iagora.wingman.auth.registration.presentation.event.WingmanDetailDataEvent
 import com.iagora.wingman.auth.registration.presentation.state.RegistrationWingmanDetailDataState
+import com.iagora.wingman.common.presentation.event.FormValidationEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*

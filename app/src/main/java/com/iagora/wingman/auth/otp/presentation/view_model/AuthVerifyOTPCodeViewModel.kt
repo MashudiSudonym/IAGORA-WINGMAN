@@ -1,4 +1,4 @@
-package com.iagora.wingman.auth.otp.presentation
+package com.iagora.wingman.auth.otp.presentation.view_model
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

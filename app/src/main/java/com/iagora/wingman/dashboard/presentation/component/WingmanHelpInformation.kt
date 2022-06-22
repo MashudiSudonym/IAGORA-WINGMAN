@@ -15,6 +15,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.iagora.wingman.R
+import com.iagora.wingman.common.presentation.ui.component.spacer.StandardSpacer16Dp
+import com.iagora.wingman.common.presentation.ui.component.spacer.StandardSpacerCustomDp
 import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
 
 @Composable
@@ -37,7 +39,7 @@ fun WingmanHelpInformation() {
                     .padding(16.dp),
                 horizontalAlignment = Alignment.Start
             ) {
-                Spacer(modifier = Modifier.size(48.dp))
+                StandardSpacerCustomDp(48.dp)
                 Text(
                     text = "Penjelasan lengkap",
                     style = MaterialTheme.typography.subtitle1,
@@ -50,7 +52,7 @@ fun WingmanHelpInformation() {
                     fontWeight = FontWeight.Medium,
                     color = Color.White
                 )
-                Spacer(modifier = Modifier.size(16.dp))
+                StandardSpacer16Dp()
                 Button(
                     onClick = { /*TODO*/ },
                     shape = RoundedCornerShape(50),

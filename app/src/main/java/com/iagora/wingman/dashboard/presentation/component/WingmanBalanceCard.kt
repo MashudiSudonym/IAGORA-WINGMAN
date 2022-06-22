@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.iagora.wingman.R
+import com.iagora.wingman.common.presentation.ui.component.spacer.StandardSpacer16Dp
 import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
 
 @Suppress("OPT_IN_IS_NOT_ENABLED")
@@ -32,13 +33,12 @@ fun WingmanBalanceCard() {
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Spacer(modifier = Modifier.size(16.dp))
-
+            StandardSpacer16Dp()
             Image(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_wallet),
                 contentDescription = null
             )
-            Spacer(modifier = Modifier.size(16.dp))
+            StandardSpacer16Dp()
             Column(horizontalAlignment = Alignment.Start) {
                 Text(text = "Pendapatan hari ini", style = MaterialTheme.typography.caption)
                 Spacer(modifier = Modifier.size(2.dp))
@@ -53,7 +53,7 @@ fun WingmanBalanceCard() {
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_arrow_right_rounded),
                 contentDescription = null
             )
-            Spacer(modifier = Modifier.size(16.dp))
+            StandardSpacer16Dp()
         }
     }
 }

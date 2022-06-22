@@ -13,7 +13,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
-import com.iagora.wingman.auth.registration.presentation.component.RegistrationWingmanDetailDataContent
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.iagora.wingman.auth.registration.presentation.component.RegistrationWingmanDocumentContent
+import com.iagora.wingman.auth.registration.presentation.view_model.RegistrationWingmanDocumentDataViewModel
 import com.iagora.wingman.common.presentation.event.FormValidationEvent
 import com.iagora.wingman.common.util.Routing
 import com.ramcosta.composedestinations.annotation.Destination
@@ -21,18 +23,22 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
+@Suppress("OPT_IN_IS_NOT_ENABLED")
+@OptIn(ExperimentalPermissionsApi::class)
 @Destination
 @Composable
-fun RegistrationWingmanDetailDataScreen(
+fun RegistrationWingmanDocumentDataScreen(
     navigator: DestinationsNavigator,
     routing: Routing = Routing,
-    registrationWingmanDetailDataViewModel: RegistrationWingmanDetailDataViewModel = hiltViewModel(),
+    registrationWingmanDocumentDataViewModel: RegistrationWingmanDocumentDataViewModel = hiltViewModel(),
+    imageUserIdCard: Uri,
+    imageUserPoliceAgreementLetter: Uri,
 ) {
     val scaffoldState = rememberScaffoldState()
     val context = LocalContext.current
-    val registrationWingmanDetailDataState by registrationWingmanDetailDataViewModel.registrationWingmanDetailDataState.collectAsState()
-    val registrationWingmanDetailDataEvents =
-        registrationWingmanDetailDataViewModel.registrationWingmanDetailDataEvents
+    val registrationWingmanDocumentDataState by registrationWingmanDocumentDataViewModel.registrationWingmanDocumentDataState.collectAsState()
+    val registrationWingmanDocumentDataEvent =
+        registrationWingmanDocumentDataViewModel.registrationWingmanDocumentDateEvents
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -41,24 +47,25 @@ fun RegistrationWingmanDetailDataScreen(
             .navigationBarsWithImePadding()
     ) {
         LaunchedEffect(key1 = context) {
-            registrationWingmanDetailDataEvents.collect { event ->
+            registrationWingmanDocumentDataEvent.collect { event ->
                 when (event) {
                     FormValidationEvent.Success -> {
                         Toast.makeText(context, "Success", Toast.LENGTH_LONG).show()
 
-                        // open next registration step screen
-                        routing.navigateToWingmanDetailDocumentDataFormScreenBackStackToRegistrationWingmanDetailDataScreen(
-                            navigator,
-                            Uri.parse("file://dev/null"),
-                            Uri.parse("file://dev/null"),
-                        )
+                        // open Dashboard Page
+                        routing.navigateToRootScreenBackStackToInputPhoneNumberWithApplicationLogoScreen(navigator, true)
                     }
                 }
             }
         }
 
-        // default registration detail data content screen
-        RegistrationWingmanDetailDataContent(registrationWingmanDetailDataState,
-            registrationWingmanDetailDataViewModel)
+        // this screen content
+        RegistrationWingmanDocumentContent(
+            navigator,
+            registrationWingmanDocumentDataState,
+            registrationWingmanDocumentDataViewModel,
+            imageUserIdCard,
+            imageUserPoliceAgreementLetter,
+        )
     }
 }

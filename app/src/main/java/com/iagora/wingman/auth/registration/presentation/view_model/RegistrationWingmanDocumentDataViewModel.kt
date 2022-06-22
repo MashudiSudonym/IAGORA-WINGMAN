@@ -1,11 +1,11 @@
-package com.iagora.wingman.auth.registration.presentation
+package com.iagora.wingman.auth.registration.presentation.view_model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iagora.wingman.auth.registration.domain.use_case.field_validation_use_case.*
-import com.iagora.wingman.common.presentation.event.FormValidationEvent
 import com.iagora.wingman.auth.registration.presentation.event.WingmanDocumentDataEvent
 import com.iagora.wingman.auth.registration.presentation.state.RegistrationWingmanDocumentDataState
+import com.iagora.wingman.common.presentation.event.FormValidationEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*

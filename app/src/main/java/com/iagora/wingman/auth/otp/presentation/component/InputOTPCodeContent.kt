@@ -20,10 +20,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.iagora.wingman.R
-import com.iagora.wingman.auth.otp.presentation.AuthVerifyOTPCodeViewModel
 import com.iagora.wingman.auth.otp.presentation.state.CountDownState
 import com.iagora.wingman.auth.otp.presentation.state.InputOTPCodeState
+import com.iagora.wingman.auth.otp.presentation.view_model.AuthVerifyOTPCodeViewModel
 import com.iagora.wingman.common.presentation.ui.component.PrimaryColorButtonCustom
+import com.iagora.wingman.common.presentation.ui.component.spacer.StandardSpacer16Dp
+import com.iagora.wingman.common.presentation.ui.component.spacer.StandardSpacer64Dp
 import com.iagora.wingman.common.util.Constants
 import com.mukesh.OTP_VIEW_TYPE_UNDERLINE
 import com.mukesh.OtpView
@@ -53,25 +55,25 @@ fun InputOTPCodeContent(
                 R.string.logo_wingman_desc
             )
         )
-        Spacer(modifier = Modifier.size(16.dp))
+        StandardSpacer16Dp()
         Text(
             text = stringResource(id = R.string.app_name),
             style = MaterialTheme.typography.h6,
             color = MaterialTheme.colors.primary,
             fontWeight = FontWeight.SemiBold
         )
-        Spacer(modifier = Modifier.size(64.dp))
+        StandardSpacer64Dp()
         Text(
             text = "Masukkan Kode OTP",
             style = MaterialTheme.typography.h6,
             fontWeight = FontWeight.SemiBold
         )
-        Spacer(modifier = Modifier.size(16.dp))
+        StandardSpacer16Dp()
         Text(
             text = "Kami telah mengirimkan kode OTP pada nomor WA $phoneNumber silahkan dicek",
             textAlign = TextAlign.Center
         )
-        Spacer(modifier = Modifier.size(64.dp))
+        StandardSpacer16Dp()
         OtpView(
             onOtpTextChange = authVerifyOTPCodeViewModel::onOTPCodeChange,
             otpText = authVerifyOTPCodeViewModel.otpCodeText,
@@ -95,7 +97,7 @@ fun InputOTPCodeContent(
             buttonTitle = "KIRIM OTP",
             isEnable = !inputOTPCodeState.isLoading,
         )
-        Spacer(modifier = Modifier.size(64.dp))
+        StandardSpacer16Dp()
         // If count down timer it's end, show up this button
         if (countDownState.isCountDownStop) {
             TextButton(onClick = { authVerifyOTPCodeViewModel.requestNewOTPCode(phoneNumber) }) {

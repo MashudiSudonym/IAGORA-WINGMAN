@@ -21,6 +21,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.iagora.wingman.R
+import com.iagora.wingman.common.presentation.ui.component.spacer.StandardSpacer16Dp
+import com.iagora.wingman.common.presentation.ui.component.spacer.StandardSpacer8Dp
 import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
 
 @Composable
@@ -36,7 +38,7 @@ fun HeaderUserProfileContent() {
         painter = painterResource(id = R.drawable.logo_wingman),
         contentDescription = "Image User Profile"
     )
-    Spacer(modifier = Modifier.size(16.dp))
+    StandardSpacer16Dp()
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -47,7 +49,7 @@ fun HeaderUserProfileContent() {
             style = MaterialTheme.typography.subtitle1,
             fontWeight = FontWeight.SemiBold
         )
-        Spacer(modifier = Modifier.size(8.dp))
+        StandardSpacer8Dp()
         Row(
             horizontalArrangement = Arrangement.Center,
         ) {
@@ -56,7 +58,7 @@ fun HeaderUserProfileContent() {
                 contentDescription = null,
                 tint = Color.Yellow
             )
-            Spacer(modifier = Modifier.size(8.dp))
+            StandardSpacer8Dp()
             Text(
                 text = "{4.8}",
                 style = MaterialTheme.typography.body1,

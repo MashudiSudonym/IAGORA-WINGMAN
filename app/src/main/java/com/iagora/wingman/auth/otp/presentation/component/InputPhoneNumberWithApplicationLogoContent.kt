@@ -1,7 +1,10 @@
 package com.iagora.wingman.auth.otp.presentation.component
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
@@ -17,11 +20,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.iagora.wingman.R
-import com.iagora.wingman.auth.otp.presentation.AuthRequestOTPCodeViewModel
 import com.iagora.wingman.auth.otp.presentation.event.InputPhoneNumberDataEvent
 import com.iagora.wingman.auth.otp.presentation.state.InputPhoneNumberState
+import com.iagora.wingman.auth.otp.presentation.view_model.AuthRequestOTPCodeViewModel
 import com.iagora.wingman.common.presentation.ui.component.OutlineTextFieldCustom
 import com.iagora.wingman.common.presentation.ui.component.PrimaryColorButtonCustom
+import com.iagora.wingman.common.presentation.ui.component.spacer.StandardSpacer128Dp
+import com.iagora.wingman.common.presentation.ui.component.spacer.StandardSpacer16Dp
+import com.iagora.wingman.common.presentation.ui.component.spacer.StandardSpacer24Dp
 
 @Composable
 fun InputPhoneNumberWithApplicationLogoContent(
@@ -43,21 +49,21 @@ fun InputPhoneNumberWithApplicationLogoContent(
             bitmap = ImageBitmap.imageResource(R.drawable.logo_wingman),
             contentDescription = stringResource(R.string.logo_wingman_desc)
         )
-        Spacer(modifier = Modifier.size(16.dp))
+        StandardSpacer16Dp()
         Text(
             text = stringResource(id = R.string.app_name),
             style = MaterialTheme.typography.h6,
             color = MaterialTheme.colors.primary,
             fontWeight = FontWeight.SemiBold
         )
-        Spacer(modifier = Modifier.size(128.dp))
+        StandardSpacer128Dp()
         Text(
             text = "Masuk / Daftar sebagai WINGMAN",
             style = MaterialTheme.typography.subtitle1,
             color = MaterialTheme.colors.primary,
             fontWeight = FontWeight.Medium
         )
-        Spacer(modifier = Modifier.size(24.dp))
+        StandardSpacer24Dp()
         OutlineTextFieldCustom(
             textValue = inputPhoneNumberState.phoneNumber,
             textValueChange = {
@@ -77,7 +83,7 @@ fun InputPhoneNumberWithApplicationLogoContent(
                 authRequestOTPCodeViewModel.onInputFieldEvent(InputPhoneNumberDataEvent.Submit)
             }
         )
-        Spacer(modifier = Modifier.size(24.dp))
+        StandardSpacer24Dp()
         PrimaryColorButtonCustom(
             clickEvent = {
                 focusManager.clearFocus()

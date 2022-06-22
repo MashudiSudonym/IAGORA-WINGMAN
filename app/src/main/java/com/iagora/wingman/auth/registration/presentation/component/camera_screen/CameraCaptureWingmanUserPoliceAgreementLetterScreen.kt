@@ -1,18 +1,17 @@
-package com.iagora.wingman.auth.registration.presentation.component.camera
+package com.iagora.wingman.auth.registration.presentation.component.camera_screen
 
-import android.content.Context
 import android.net.Uri
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY
 import androidx.camera.core.Preview
 import androidx.camera.core.UseCase
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.Lens
 import androidx.compose.runtime.*
@@ -21,51 +20,34 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.iagora.wingman.common.presentation.ui.component.camera.CameraPreview
 import com.iagora.wingman.common.presentation.ui.component.camera.executor
 import com.iagora.wingman.common.presentation.ui.component.camera.getCameraProvider
-import com.iagora.wingman.common.presentation.ui.component.camera.*
+import com.iagora.wingman.common.presentation.ui.component.camera.takePicture
+import com.iagora.wingman.common.util.Routing
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import com.iagora.wingman.R
-import com.iagora.wingman.common.util.Routing
 
 @ExperimentalPermissionsApi
 @ExperimentalCoroutinesApi
 @Destination
 @Composable
-fun CameraCaptureWingmanUserIdCard(
-    modifier: Modifier = Modifier,
+fun CameraCaptureWingmanPoliceAgreementLetterScreen(
     cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA,
     navigator: DestinationsNavigator,
+    routing: Routing = Routing,
 ) {
     val context = LocalContext.current
 
-    CameraCaptureWingmanUserIdCardContent(modifier
+    Box(modifier = Modifier
         .navigationBarsPadding()
-        .statusBarsPadding(),
-        context,
-        navigator,
-        cameraSelector)
-}
-
-@ExperimentalCoroutinesApi
-@Composable
-private fun CameraCaptureWingmanUserIdCardContent(
-    modifier: Modifier,
-    context: Context,
-    navigator: DestinationsNavigator,
-    cameraSelector: CameraSelector,
-    routing: Routing = Routing,
-) {
-    Box(modifier = modifier) {
+        .statusBarsPadding()) {
         val lifecycleOwner = LocalLifecycleOwner.current
         val coroutineScope = rememberCoroutineScope()
         var previewUseCase by remember { mutableStateOf<UseCase>(Preview.Builder().build()) }
@@ -84,16 +66,6 @@ private fun CameraCaptureWingmanUserIdCardContent(
                     previewUseCase = it
                 }
             )
-            Image(
-                painter = painterResource(id = R.drawable.frame_user_id_card),
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(
-                        Alignment.Center)
-                    .background(Color.Transparent)
-                    .padding(16.dp)
-            )
             Button(
                 modifier = Modifier
                     .wrapContentSize()
@@ -106,8 +78,8 @@ private fun CameraCaptureWingmanUserIdCardContent(
                         imageCaptureUseCase.takePicture(context.executor).run {
                             routing.navigateToWingmanDetailDocumentDataFormScreenBackStackToRegistrationWingmanDetailDataScreen(
                                 navigator = navigator,
-                                imageUserIdCard = this.toUri(),
-                                imageUserPoliceAgreementLetter = Uri.parse("file://dev/null"),
+                                imageUserIdCard = Uri.parse("file://dev/null"),
+                                imageUserPoliceAgreementLetter = this.toUri(),
                                 inclusiveStatus = true,
                             )
                         }

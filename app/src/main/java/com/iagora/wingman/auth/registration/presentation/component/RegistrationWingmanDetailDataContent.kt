@@ -11,19 +11,22 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.iagora.wingman.auth.registration.presentation.RegistrationWingmanDetailDataViewModel
 import com.iagora.wingman.auth.registration.presentation.event.WingmanDetailDataEvent
 import com.iagora.wingman.auth.registration.presentation.state.RegistrationWingmanDetailDataState
+import com.iagora.wingman.auth.registration.presentation.view_model.RegistrationWingmanDetailDataViewModel
 import com.iagora.wingman.common.presentation.ui.component.AppBarTitleTextCustom
 import com.iagora.wingman.common.presentation.ui.component.MenuTitleCustom
 import com.iagora.wingman.common.presentation.ui.component.OutlineTextFieldCustom
 import com.iagora.wingman.common.presentation.ui.component.PrimaryColorButtonCustom
+import com.iagora.wingman.common.presentation.ui.component.spacer.StandardSpacer16Dp
+import com.iagora.wingman.common.presentation.ui.component.spacer.StandardSpacer24Dp
+import com.iagora.wingman.common.presentation.ui.component.spacer.StandardSpacer4Dp
 import com.iagora.wingman.common.presentation.ui.theme.WINGMANTheme
 
 @Composable
 fun RegistrationWingmanDetailDataContent(
     registrationWingmanDetailDataState: RegistrationWingmanDetailDataState,
-    registrationWingmanDetailDataViewModel: RegistrationWingmanDetailDataViewModel
+    registrationWingmanDetailDataViewModel: RegistrationWingmanDetailDataViewModel,
 ) {
     val thisScrollState = rememberScrollState()
 
@@ -41,9 +44,9 @@ fun RegistrationWingmanDetailDataContent(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top,
         ) {
-            Spacer(modifier = Modifier.size(16.dp))
+            StandardSpacer16Dp()
             MenuTitleCustom(title = "Nama Lengkap")
-            Spacer(modifier = Modifier.size(4.dp))
+            StandardSpacer4Dp()
             OutlineTextFieldCustom(
                 textValue = registrationWingmanDetailDataState.name,
                 textValueChange = {
@@ -57,9 +60,9 @@ fun RegistrationWingmanDetailDataContent(
                 keyboardType = KeyboardType.Text,
                 keyboardActionOnDone = { this.defaultKeyboardAction(ImeAction.Next) }
             )
-            Spacer(modifier = Modifier.size(16.dp))
+            StandardSpacer16Dp()
             MenuTitleCustom(title = "Email")
-            Spacer(modifier = Modifier.size(4.dp))
+            StandardSpacer4Dp()
             OutlineTextFieldCustom(
                 textValue = registrationWingmanDetailDataState.email,
                 textValueChange = {
@@ -75,9 +78,9 @@ fun RegistrationWingmanDetailDataContent(
                     this.defaultKeyboardAction(ImeAction.Next)
                 }
             )
-            Spacer(modifier = Modifier.size(16.dp))
+            StandardSpacer16Dp()
             MenuTitleCustom(title = "Alamat Lengkap")
-            Spacer(modifier = Modifier.size(4.dp))
+            StandardSpacer4Dp()
             OutlineTextFieldCustom(
                 modifier = Modifier.height(150.dp),
                 textValue = registrationWingmanDetailDataState.address,
@@ -93,9 +96,9 @@ fun RegistrationWingmanDetailDataContent(
                 keyboardActionOnDone = { this.defaultKeyboardAction(ImeAction.Next) },
                 singleLine = false
             )
-            Spacer(modifier = Modifier.size(16.dp))
+            StandardSpacer16Dp()
             MenuTitleCustom(title = "Kota Registrasi")
-            Spacer(modifier = Modifier.size(4.dp))
+            StandardSpacer4Dp()
             OutlineTextFieldCustom(
                 textValue = registrationWingmanDetailDataState.city,
                 textValueChange = {
@@ -111,7 +114,7 @@ fun RegistrationWingmanDetailDataContent(
                     registrationWingmanDetailDataViewModel.onEvent(WingmanDetailDataEvent.Submit)
                 }
             )
-            Spacer(modifier = Modifier.size(24.dp))
+            StandardSpacer24Dp()
             PrimaryColorButtonCustom(clickEvent = {
                 registrationWingmanDetailDataViewModel.onEvent(
                     WingmanDetailDataEvent.Submit
