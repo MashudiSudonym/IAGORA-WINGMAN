@@ -29,12 +29,14 @@ fun OutlineTextFieldCustom(
     keyboardType: KeyboardType = KeyboardType.Text,
     keyboardActionOnDone: (KeyboardActionScope.() -> Unit) = {},
     readOnly: Boolean = false,
+    enabled: Boolean = true,
 ) {
     Column {
         OutlinedTextField(
             value = textValue,
             onValueChange = textValueChange,
             label = { Text(text = labelText) },
+            enabled = enabled,
             singleLine = singleLine,
             modifier = modifier
                 .fillMaxWidth(),

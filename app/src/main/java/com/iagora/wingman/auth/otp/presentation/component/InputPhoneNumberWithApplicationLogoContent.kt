@@ -67,6 +67,7 @@ fun InputPhoneNumberWithApplicationLogoContent(
                     )
                 )
             },
+            enabled = !inputPhoneNumberState.isLoading,
             labelText = "Nomor HP (6285111222333)",
             isError = inputPhoneNumberState.phoneNumberFieldError != null,
             errorMessage = inputPhoneNumberState.phoneNumberFieldError?.asString(),
