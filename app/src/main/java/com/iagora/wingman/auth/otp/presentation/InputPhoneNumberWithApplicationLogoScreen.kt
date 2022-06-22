@@ -100,7 +100,7 @@ fun InputPhoneNumberWithApplicationLogoScreen(
             FullScreenLoadingIndicatorCustom()
         }
 
-        // default screen content
+        // Screen Content
         InputPhoneNumberWithApplicationLogoContent(
             authRequestOTPCodeViewModel,
             inputPhoneNumberState

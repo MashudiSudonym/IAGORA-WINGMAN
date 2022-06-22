@@ -70,6 +70,7 @@ fun InputOTPCodeScreen(
             }
         }
 
+        // Screen Content
         InputOTPCodeContent(
             phoneNumber,
             authVerifyOTPCodeViewModel,
