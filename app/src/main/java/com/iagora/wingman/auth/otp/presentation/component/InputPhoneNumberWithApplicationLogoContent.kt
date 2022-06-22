@@ -34,16 +34,14 @@ fun InputPhoneNumberWithApplicationLogoContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
             .verticalScroll(state = thisScrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Image(
             bitmap = ImageBitmap.imageResource(R.drawable.logo_wingman),
-            contentDescription = stringResource(
-                R.string.logo_wingman_desc
-            )
+            contentDescription = stringResource(R.string.logo_wingman_desc)
         )
         Spacer(modifier = Modifier.size(16.dp))
         Text(
