@@ -71,11 +71,11 @@ object Routing {
 
     // Navigate to camera capture wingman user id card
     fun navigateToCameraCaptureWingmanUserIdCardScreen(navigator: DestinationsNavigator) {
-        navigator.navigate(CameraCaptureWingmanUserIdCardDestination)
+        //navigator.navigate(CameraCaptureWingmanUserIdCardDestination)
     }
 
     // Navigate to camera capture wingman police agreement letter
     fun navigateToCameraCaptureWingmanPoliceAgreementLetterScreen(navigator: DestinationsNavigator) {
-        navigator.navigate(CameraCaptureWingmanPoliceAgreementLetterDestination)
+        //navigator.navigate(CameraCaptureWingmanPoliceAgreementLetterDestination)
     }
 }
